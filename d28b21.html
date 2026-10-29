@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Urda: When the Safety System Fails Safe and People Take Over</title>
+<title>Urda: What Happens When Automation Hands Control Back to Humans</title>
 <meta name="description" content="A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.">
 <meta name="author" content="Nehemiah Jacob">
 <meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/d28b21.html">
@@ -13,19 +13,19 @@
 <link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
 <meta property="og:site_name" content="nehem.dev">
 <meta property="og:locale" content="en_AU">
-<meta property="og:title" content="Urda: When the Safety System Fails Safe and People Take Over">
+<meta property="og:title" content="Urda: What Happens When Automation Hands Control Back to Humans">
 <meta property="og:description" content="A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.">
 <meta property="og:url" content="https://nehem.dev/d28b21.html">
 <meta property="og:image" content="https://nehem.dev/og/d28b21.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Urda: When the Safety System Fails Safe and People Take Over — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-10-29"><meta property="article:modified_time" content="2026-10-29"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Rail Safety"><meta property="article:tag" content="Incidents"><meta property="article:tag" content="Safety Engineering"><meta property="article:tag" content="AI Safety"><meta property="article:tag" content="Postmortems"><meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Urda: When the Safety System Fails Safe and People Take Over">
+<meta property="og:image:alt" content="Urda: What Happens When Automation Hands Control Back to Humans — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-10-29"><meta property="article:modified_time" content="2026-10-29"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Rail Safety"><meta property="article:tag" content="Incidents"><meta property="article:tag" content="Safety Engineering"><meta property="article:tag" content="AI Safety"><meta property="article:tag" content="Postmortems"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Urda: What Happens When Automation Hands Control Back to Humans">
 <meta name="twitter:description" content="A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.">
 <meta name="twitter:image" content="https://nehem.dev/og/d28b21.png">
-<meta name="twitter:image:alt" content="Urda: When the Safety System Fails Safe and People Take Over — an essay by Nehemiah Jacob on nehem.dev">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/d28b21.html#article","headline":"Urda: When the Safety System Fails Safe and People Take Over","description":"A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/d28b21.png","width":1200,"height":630},"datePublished":"2026-10-29","dateModified":"2026-10-29","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/d28b21.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/d28b21.html","inLanguage":"en-AU","keywords":["Rail Safety","Incidents","Safety Engineering","AI Safety","Postmortems"],"wordCount":3208,"timeRequired":"PT14M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Urda: When the Safety System Fails Safe and People Take Over","item":"https://nehem.dev/d28b21.html"}]}]}</script>
+<meta name="twitter:image:alt" content="Urda: What Happens When Automation Hands Control Back to Humans — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/d28b21.html#article","headline":"Urda: What Happens When Automation Hands Control Back to Humans","description":"A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/d28b21.png","width":1200,"height":630},"datePublished":"2026-10-29","dateModified":"2026-10-29","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/d28b21.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/d28b21.html","inLanguage":"en-AU","keywords":["Rail Safety","Incidents","Safety Engineering","AI Safety","Postmortems"],"wordCount":3210,"timeRequired":"PT14M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Urda: What Happens When Automation Hands Control Back to Humans","item":"https://nehem.dev/d28b21.html"}]}]}</script>
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
 <script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
@@ -79,7 +79,7 @@
 <article class="article">
   <header class="page-head">
     <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
-    <h1 class="display long">Urda: When the Safety System Fails Safe and People Take Over</h1>
+    <h1 class="display long">Urda: What Happens When Automation Hands Control Back to Humans</h1>
   </header>
   <div class="sec post-body">
     <aside class="post-meta" aria-label="Post details">
@@ -131,7 +131,7 @@
 <h2>Why software people should care</h2>
 <p>We build the same shape constantly. A circuit breaker trips, a deploy halts, a database fails over. Then someone has to "resume", usually by hand, often by bypassing the very guard that stopped things. Knight Capital lost more than $460 million in 2012, and its improvised fix during the incident made the problem worse. I wrote about that in <a href="/7b5ed3.html">Is Your Ego Running Production?</a>.</p>
 <p>The stakes in Urda are of a completely different order, and I don't want to blur that. But the engineering lesson carries over. Design the recovery path as carefully as the happy path. Make the safe restart the default. Require a second check before anyone overrides a stop. And when it goes wrong, look at the system before the person.</p>
-<h2>What Urda does and doesn't say about AI</h2>
+<h2>What Urda does and doesn't say about AI &amp; Automation</h2>
 <p>One fact first, because it will get lost. Nothing reported so far suggests AI played any part in this. LZB and ASFA are conventional railway signalling: deterministic train protection built to fixed rules (<a href="https://english.elpais.com/spain/2026-10-28/what-is-the-lzb-signaling-system-one-of-the-key-factors-in-the-fatal-train-accident-in-spain.html">El País</a>). Nobody was running a model.</p>
 <p>I still expect Urda to be pulled into the AI debate, so it's worth getting the argument right. It goes like this: as automation becomes more capable, people lose the skill and context to take over when it fails. So slow down, and keep humans firmly in control until we know they can catch the machine.</p>
 <p>That argument deserves a fair hearing, because it rests on real work. Bainbridge put it sharply: "the designer who tries to eliminate the operator still leaves the operator to do the tasks which the designer cannot think how to automate." Parasuraman and Riley described how people come to over-rely on automation and stop monitoring it, and how designers sometimes treat the operator's role as a by-product of the automation (<a href="https://doi.org/10.1518/001872097778543886">Human Factors, 1997</a>). Sarter and Woods documented "automation surprises", where crews lose track of what the system is doing and why (<a href="https://doi.org/10.1518/001872097778667997">Human Factors, 1997</a>). And automation can be the hazard itself. The US House transportation committee found that "faulty assumptions about pilot responses" were among the causes of the two Boeing 737 MAX crashes, which killed 346 people (<a href="https://democrats-transportation.house.gov/imo/media/doc/2020.09.15%20FINAL%20737%20MAX%20Report%20for%20Public%20Release.pdf">House report, 2020</a>).</p>

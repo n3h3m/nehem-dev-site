@@ -9,7 +9,7 @@
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
   <entry>
-    <title>Urda: When the Safety System Fails Safe and People Take Over</title>
+    <title>Urda: What Happens When Automation Hands Control Back to Humans</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/d28b21.html"/>
     <id>https://nehem.dev/d28b21.html</id>
     <published>2026-10-29T00:00:00+10:00</published>
@@ -61,7 +61,7 @@
 &lt;h2&gt;Why software people should care&lt;/h2&gt;
 &lt;p&gt;We build the same shape constantly. A circuit breaker trips, a deploy halts, a database fails over. Then someone has to "resume", usually by hand, often by bypassing the very guard that stopped things. Knight Capital lost more than $460 million in 2012, and its improvised fix during the incident made the problem worse. I wrote about that in &lt;a href="/7b5ed3.html"&gt;Is Your Ego Running Production?&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The stakes in Urda are of a completely different order, and I don't want to blur that. But the engineering lesson carries over. Design the recovery path as carefully as the happy path. Make the safe restart the default. Require a second check before anyone overrides a stop. And when it goes wrong, look at the system before the person.&lt;/p&gt;
-&lt;h2&gt;What Urda does and doesn't say about AI&lt;/h2&gt;
+&lt;h2&gt;What Urda does and doesn't say about AI &amp;amp; Automation&lt;/h2&gt;
 &lt;p&gt;One fact first, because it will get lost. Nothing reported so far suggests AI played any part in this. LZB and ASFA are conventional railway signalling: deterministic train protection built to fixed rules (&lt;a href="https://english.elpais.com/spain/2026-10-28/what-is-the-lzb-signaling-system-one-of-the-key-factors-in-the-fatal-train-accident-in-spain.html"&gt;El País&lt;/a&gt;). Nobody was running a model.&lt;/p&gt;
 &lt;p&gt;I still expect Urda to be pulled into the AI debate, so it's worth getting the argument right. It goes like this: as automation becomes more capable, people lose the skill and context to take over when it fails. So slow down, and keep humans firmly in control until we know they can catch the machine.&lt;/p&gt;
 &lt;p&gt;That argument deserves a fair hearing, because it rests on real work. Bainbridge put it sharply: "the designer who tries to eliminate the operator still leaves the operator to do the tasks which the designer cannot think how to automate." Parasuraman and Riley described how people come to over-rely on automation and stop monitoring it, and how designers sometimes treat the operator's role as a by-product of the automation (&lt;a href="https://doi.org/10.1518/001872097778543886"&gt;Human Factors, 1997&lt;/a&gt;). Sarter and Woods documented "automation surprises", where crews lose track of what the system is doing and why (&lt;a href="https://doi.org/10.1518/001872097778667997"&gt;Human Factors, 1997&lt;/a&gt;). And automation can be the hazard itself. The US House transportation committee found that "faulty assumptions about pilot responses" were among the causes of the two Boeing 737 MAX crashes, which killed 346 people (&lt;a href="https://democrats-transportation.house.gov/imo/media/doc/2020.09.15%20FINAL%20737%20MAX%20Report%20for%20Public%20Release.pdf"&gt;House report, 2020&lt;/a&gt;).&lt;/p&gt;
