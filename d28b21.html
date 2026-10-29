@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Urda: When the Safety System Fails Safe and People Take Over</title>
+<meta name="description" content="A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/d28b21.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/d28b21.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/d28b21.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Urda: When the Safety System Fails Safe and People Take Over">
+<meta property="og:description" content="A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.">
+<meta property="og:url" content="https://nehem.dev/d28b21.html">
+<meta property="og:image" content="https://nehem.dev/og/d28b21.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Urda: When the Safety System Fails Safe and People Take Over — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-10-29"><meta property="article:modified_time" content="2026-10-29"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Rail Safety"><meta property="article:tag" content="Incidents"><meta property="article:tag" content="Safety Engineering"><meta property="article:tag" content="AI Safety"><meta property="article:tag" content="Postmortems"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Urda: When the Safety System Fails Safe and People Take Over">
+<meta name="twitter:description" content="A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.">
+<meta name="twitter:image" content="https://nehem.dev/og/d28b21.png">
+<meta name="twitter:image:alt" content="Urda: When the Safety System Fails Safe and People Take Over — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/d28b21.html#article","headline":"Urda: When the Safety System Fails Safe and People Take Over","description":"A train protection fault near Urda stopped trains safely; a manual restart order ended in a collision. What it teaches about degraded modes, handovers and AI safety.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/d28b21.png","width":1200,"height":630},"datePublished":"2026-10-29","dateModified":"2026-10-29","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/d28b21.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/d28b21.html","inLanguage":"en-AU","keywords":["Rail Safety","Incidents","Safety Engineering","AI Safety","Postmortems"],"wordCount":3208,"timeRequired":"PT14M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Urda: When the Safety System Fails Safe and People Take Over","item":"https://nehem.dev/d28b21.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=a0f1b31d">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e);--fab-d:url(/fabric-dark.svg?v=2693ce61);--fab-dm:url(/fabric-m-dark.svg?v=4da61d1d)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-l">
+      <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Dark theme" title="Switch to dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"/><path d="M16.2 4.2v2.6M14.9 5.5h2.6" stroke-width="1"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M5.4 18.6 7 17M17 7l1.6-1.6"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display long">Urda: When the Safety System Fails Safe and People Take Over</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-10-29">29 Oct 2026</time></p>
+      <p>14 min read</p>
+<ul class="tags" aria-label="Tags"><li>Rail Safety</li><li>Incidents</li><li>Safety Engineering</li><li>AI Safety</li><li>Postmortems</li></ul>    </aside>
+    <div class="prose">
+<p>This is far from my usual topics of Django, Postgres and AWS bills. But I've spent most of my career thinking about what happens when automation stops and people take over. Yesterday that question cost lives in Spain.</p>
+<p>At least 68 people were killed when two high-speed trains collided near Urda, in Toledo province, on the morning of Wednesday 28 October. My thoughts are with them, their families and everyone still in hospital.</p>
+<p>What follows is based only on what officials and reliable outlets had reported <strong>as of the morning of Thursday 29 October in Spain (evening in Sydney)</strong>. The investigation has barely started. Nothing here is a finding, and nobody should be judged on a blog post.</p>
+<h2>What we know so far</h2>
+<ul>
+<li><strong>The collision.</strong> At about 08:53, a Renfe AVE travelling south from Madrid ran into the back of an Iryo train that was stopped on the line. It happened at kilometre 118 of the Madrid–Seville high-speed line, just short of Urda station (<a href="https://elpais.com/espana/2026-10-29/los-cabos-por-atar-del-siniestro-de-urda-en-las-investigaciones-judicial-y-tecnica.html">El País</a>, <a href="https://www.reuters.com/graphics/SPAIN-ACCIDENT/dwvkmmgbrvm/">Reuters</a>).</li>
+<li><strong>The toll.</strong> The regional government's provisional count is 68 dead: 44 on the Iryo and 24 on the AVE. Searchers were still working through the wreckage on Thursday morning, and officials have not ruled out a higher toll. By then 110 injured people had been treated in the region's hospitals, 56 had gone home and 53 were still admitted; Madrid hospitals treated 27 more (<a href="https://www.castillalamancha.es/actualidad/notasdeprensa/el-gobierno-de-castilla-la-mancha-despliega-todos-los-medios-y-recursos-su-alcance-para-hacer-frente">Castilla-La Mancha government</a>, <a href="https://www.lasexta.com/noticias/sociedad/choque-trenes-directo_202610286ae1b2e502501232156a9847.html">laSexta</a>). Officials put the people on board at 544 (<a href="https://www.theguardian.com/world/2026/oct/28/spain-train-crash-high-speed-toledo">The Guardian</a>): Iryo says its train carried 147 passengers, and the regional government's spokesperson said 397 were on the AVE (<a href="https://efe.com/portada-espana/2026-10-28/tren-iryo-ave-accidentados-pasajeros/">EFE</a>).</li>
+<li><strong>The fault.</strong> According to Transport Minister Óscar Puente, at around 08:30 a communication fault between three computers took the LZB train protection system out of service along about 63 km of line. Roughly six trains stopped automatically, and Adif's control centre at Atocha took over (<a href="https://www.euronews.com/2026/10/28/inexplicable-order-by-control-centre-investigated-after-spain-train-crash">Euronews</a>, <a href="https://www.elindependiente.com/espana/2026/10/28/comparecencia-oscar-puente-accidente-renfe-iryo-toledo/">El Independiente</a>). Some outlets give the length as 67–69 km (<a href="https://elpais.com/espana/2026-10-29/los-cabos-por-atar-del-siniestro-de-urda-en-las-investigaciones-judicial-y-tecnica.html">El País</a>).</li>
+<li><strong>The order.</strong> The minister said that at 08:36 the AVE was authorised to resume running "normally", even though a red signal was showing and the track ahead was occupied by the stopped Iryo. Recordings of the call published by Cadena SER and El Mundo match that account: the controller dictated an order to resume "with normal running", and when the AVE driver read it back as a question, the answer was yes (<a href="https://cadenaser.com/nacional/2026/10/28/la-ser-accede-a-los-audios-de-las-conversaciones-entre-el-centro-de-control-de-adif-y-los-maquinistas-de-los-trenes-accidentados-en-urda-reanude-con-marcha-normal-cadena-ser/">Cadena SER</a>, <a href="https://www.elmundo.es/espana/2026/10/28/6ae2624e21efa042438b45b9.html">El Mundo</a>). The AVE travelled about 25 km in 17 minutes before the impact. Its exact speed is still under investigation; the minister said it could have reached about 200 km/h on that section.</li>
+<li><strong>The rule.</strong> In Puente's account, the train should have restarted under <em>marcha a la vista</em>: driving on sight, at a speed low enough to stop short of any obstacle, and never above 40 km/h. He called the decision "inexplicable", said the train drivers were not to blame, said there had been time to correct the order, and left responsibility to the investigation. He also acknowledged that no safety system was in place to stop a human error like this from ending in a collision (<a href="https://www.elespanol.com/espana/20261028/oscar-puente-senala-adif-decidir-tren-renfe-reanudara-marcha-circunstancias-inexplicables/1003744437994_0.html">El Español</a>, <a href="https://www.euronews.com/2026/10/28/inexplicable-order-by-control-centre-investigated-after-spain-train-crash">Euronews</a>, <a href="https://www.elindependiente.com/espana/2026/10/28/comparecencia-oscar-puente-accidente-renfe-iryo-toledo/">El Independiente</a>).</li>
+<li><strong>The written procedure.</strong> Europa Press reports that an Adif instruction issued in February 2025 says that after an LZB failure, trains may only restart under lateral signal block working (BSL), and only when the block ahead is clear of trains (<a href="https://www.europapress.es/economia/transportes-00343/noticia-reglamento-adif-prohibia-centro-control-autorizar-ave-reanudar-marcha-20261028200123.html">Europa Press</a>).</li>
+<li><strong>The Iryo's calls.</strong> In recordings published by Cadena SER, the Iryo driver tells Atocha she is stopped at the Urda entry signal after losing transmission. At 08:41 she too is told to resume "with normal running". She calls back to say the train won't let her restart LZB and she is still stopped; the reply is "whenever you can, and if you have problems, call us". Cadena SER puts that second call at 08:48, five minutes before the impact. As far as reporting shows, no one then told the AVE to stop (<a href="https://cadenaser.com/nacional/2026/10/28/la-maquinista-de-iryo-llamo-al-centro-de-control-de-adif-porque-no-podia-arrancar-el-tren-pues-nada-cuando-pueda-y-si-tiene-problemas-nos-llama-cadena-ser/">Cadena SER</a>, <a href="https://cadenaser.com/nacional/2026/10/29/reconstruccion-del-accidente-de-urda-las-ordenes-que-llevaron-al-ave-a-circular-17-minutos-a-velocidad-normal-cadena-ser/">Cadena SER reconstruction</a>).</li>
+<li><strong>A driver who pushed back.</strong> The minister said the driver of another stopped train, given the same "normal running" order, pointed out that it should be on sight (<a href="https://www.lavanguardia.com/politica/20261028/11670324/puente-ve-inexplicable-operador-adif-autorizara-marchar-tren-renfe-impacto-iryo.html">La Vanguardia</a>). El País reports the controller agreed but, as far as is known, did not correct the order already given to the AVE (<a href="https://elpais.com/espana/2026-10-29/los-cabos-por-atar-del-siniestro-de-urda-en-las-investigaciones-judicial-y-tecnica.html">El País</a>).</li>
+<li><strong>The investigation.</strong> A court in Orgaz has opened a judicial investigation under secrecy. The judge ordered the trains' recorders seized, closed 2 km of line either side of the site, and asked for Adif's traffic data and procedures (<a href="https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/La-jueza-instructora-del-accidente-ferroviario-de-Urda--Toledo--acuerda-la-prohibicion-de-acceso-de-terceras-personas-a-la-zona-del-siniestro">Spanish judiciary</a>). The Guardia Civil and the rail accident investigators (CIAF) have questioned the controller who gave the order (<a href="https://www.rtve.es/noticias/20261028/guardia-civil-interroga-operario-del-centro-control-regulaba-trafico-momento-del-accidente/17287370.shtml">RTVE</a>).</li>
+<li><strong>The aftermath.</strong> The government declared three days of official mourning, 29 to 31 October (<a href="https://www.lamoncloa.gob.es/presidente/actividades/paginas/2026/281026-sanchez-visita-accidente-tren.aspx">La Moncloa</a>). Most parties suspended campaigning for the 29 November general election (<a href="https://elpais.com/espana/2026-10-28/la-tragedia-pone-en-pausa-la-campana-mientras-los-lideres-europeos-mandan-su-apoyo-a-espana.html">El País</a>). It is Spain's deadliest rail crash since 2013, and the second fatal collision on this line in nine months, after Adamuz in January killed 46 (<a href="https://www.reuters.com/graphics/SPAIN-ACCIDENT/dwvkmmgbrvm/">Reuters</a>).</li>
+</ul>
+<figure class="fig fig-tall"><a class="fig-open" href="/media/d28b21/timeline.svg" title="Open full size"><img src="/media/d28b21/timeline.svg" alt="Five stacked panels. One: the LZB line is crossed out and two trains wait at red signals. Two: a control desk with three screens showing both trains, and radio waves towards the trains. Three: the AVE moves past a red signal while the Iryo is stopped ahead; the recorded order reads &quot;under BSL with normal running&quot;. Four: what the rule requires, a train at no more than 40 km/h with a sight line and a stop line short of an obstacle. Five: the two trains meet at the kilometre 118 post, five minutes after the Iryo reported it still could not restart." width="800" height="1560" loading="lazy" decoding="async"></a><figcaption>How it unfolded, according to the transport minister and the published control-centre recordings, as of 29 October. Schematic, not to scale. Tap to open full size.</figcaption></figure>
+<h2>What we don't know yet</h2>
+<p>Why LZB went down, and why the Iryo couldn't restart it. Why the order said "normal running", and whether the decision was individual or collective; the minister said the controller had an assistant and a supervisor, and that this isn't yet clear (<a href="https://es.euronews.com/2026/10/28/oscar-puente-considera-inexplicable-que-el-centro-de-control-autorizara-al-ave-a-reanudar-">Euronews</a>, <a href="https://www.elindependiente.com/espana/2026/10/28/comparecencia-oscar-puente-accidente-renfe-iryo-toledo/">El Independiente</a>). Why the Iryo's 08:48 call and the other driver's challenge didn't lead anyone to stop the AVE. The AVE's speed at impact: unofficial positioning data has circulated, but no official figure yet. And what ASFA, the beacon-based backup, did. RTVE says that without LZB, ASFA was probably the only automatic protection left, and that it doesn't stop a train that has been authorised past a red signal (<a href="https://www.rtve.es/noticias/20261029/accidente-tren-toledo-sistema-seguridad-lzb-como-funciona-ocurre-si-falla/17287266.shtml">RTVE</a>); investigators haven't confirmed that. The recorders and the investigators' report are what matter.</p>
+<h2>The system did the right thing first</h2>
+<p>Start with what worked. LZB continuously supervises a train's speed and can brake it automatically (<a href="https://english.elpais.com/spain/2026-10-28/what-is-the-lzb-signaling-system-one-of-the-key-factors-in-the-fatal-train-accident-in-spain.html">El País</a>). When it lost its data link, it failed safe: every train in the section stopped. Puente made the point himself. The computer fault wasn't the deciding factor, because the safety mechanism stopped the trains (<a href="https://es.euronews.com/2026/10/28/oscar-puente-considera-inexplicable-que-el-centro-de-control-autorizara-al-ave-a-reanudar-">Euronews</a>).</p>
+<p>Stopping is the easy part. <strong>The dangerous part is restarting.</strong></p>
+<p>Once continuous supervision is gone, the railway falls back on older layers: lateral signals, block working, the ASFA beacons and written rules. ASFA reads trackside beacons at fixed points rather than supervising continuously (<a href="https://english.elpais.com/spain/2026-10-28/what-is-the-lzb-signaling-system-one-of-the-key-factors-in-the-fatal-train-accident-in-spain.html">El País</a>). As <a href="https://www.rtve.es/noticias/20261029/accidente-tren-toledo-sistema-seguridad-lzb-como-funciona-ocurre-si-falla/17287266.shtml">RTVE</a> put it, once a control centre authorises a train past a red signal, safety no longer rests on an automatic system. It rests on the driver, which is exactly why the rule demands driving on sight.</p>
+<p>In degraded mode, protection moves out of the machine and into procedures and people's heads.</p>
+<figure class="fig fig-tall"><a class="fig-open" href="/media/d28b21/layers.svg" title="Open full size"><img src="/media/d28b21/layers.svg" alt="Seven stacked layers seen edge-on, each with small ordinary holes. A dashed line runs down through a large hole in LZB, the lateral signals, the control-centre authorisation, the block-clear check and driving on sight, and through an amber hole in the control-room cross-check. ASFA is drawn dashed with a question mark. The line ends at a collision marker." width="800" height="1616" loading="lazy" decoding="async"></a><figcaption>Layers of defence, marked only as far as reporting supports, as of 29 October. Coral: a reported gap. Amber: reported, but details unclear. Dashed: role not confirmed.</figcaption></figure>
+<h2>Accidents need the holes to line up</h2>
+<p>James Reason's <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1117770/">Swiss cheese model</a> describes safety as layers of defence, each with holes that open and close. Harm gets through only when the holes briefly line up. Richard Cook says the same in <a href="https://how.complexsystems.fail/">How Complex Systems Fail</a>: "Catastrophe requires multiple failures – single point failures are not enough."</p>
+<p>Read the reported sequence that way and the computer fault is only the first hole. The trains stopping shows the next layer working. What came after, by the minister's account, was a restart order that didn't match the written procedure. Then two chances to catch it came and went: a driver on another train challenged the same order, and the Iryo called in to say it was still stuck. As far as reporting shows, neither turned into a stop order for the AVE. With continuous protection gone, nothing automatic was left to catch it.</p>
+<p>Cook has another warning that belongs right here: "Hindsight biases post-accident assessments of human performance." Knowing the outcome makes the right call look obvious. It rarely looks that way in a busy control room during a fault. That's why the question investigators ask isn't "who got it wrong" but "what made this action make sense at the time".</p>
+<h2>The recovery path is the least tested path</h2>
+<p>Lisanne Bainbridge described this in 1983. In <a href="https://ckrybus.com/static/papers/Bainbridge_1983_Automatica.pdf">Ironies of Automation</a> she argued that automation takes over the routine work and leaves people the hardest jobs: taking over when something has already gone wrong. Their skills fade because they rarely use them. Her conclusion: "one can argue that the operator needs to be more rather than less skilled, and less rather than more loaded, than average."</p>
+<p>Nancy Leveson's <a href="https://direct.mit.edu/books/oa-monograph/2908/Engineering-a-Safer-WorldSystems-Thinking-Applied">Engineering a Safer World</a> frames safety as a control problem. Accidents happen when a controller issues a command that is unsafe for the real state of the system, often because its picture of that state has drifted from reality. Degraded mode is where that drift is most likely. The automation that kept the picture accurate is the thing that just failed.</p>
+<p>The general lesson is uncomfortable. Normal running happens thousands of times a day and is superbly tested. Restarting traffic manually after a protection failure happens rarely, under pressure, with the strongest safety layer missing. <strong>The recovery path is the least exercised path in the system, and it runs with the fewest guard rails.</strong></p>
+<h2>Make the safe restart the default</h2>
+<p>A few principles follow, for any system that fails safe and then needs people to bring it back:</p>
+<ol>
+<li><strong>The degraded-mode default should be the cautious one.</strong> Driving on sight at 40 km/h should be what a restart <em>means</em>, not an option someone has to remember to say.</li>
+<li><strong>Overriding a stop should need an independent check.</strong> The section-clear condition is the right idea. It works best when a second person or the system itself has to confirm it, not just recall it. The one bright spot reported so far is that on another train, a driver questioned the order. That's the second check working, but by El País's account it didn't reach the order already given to the AVE. A check only protects you if what it finds is applied to everything already in motion.</li>
+<li><strong>Rehearse the restart.</strong> If manual recovery is rare, practise it, the way Bainbridge recommended simulator time for rare failures.</li>
+<li><strong>Give the people in the loop the same picture the automation had.</strong> If the panel shows a train in the section ahead, the restart procedure should refuse to proceed without an explicit, recorded override.</li>
+</ol>
+<h2>Why software people should care</h2>
+<p>We build the same shape constantly. A circuit breaker trips, a deploy halts, a database fails over. Then someone has to "resume", usually by hand, often by bypassing the very guard that stopped things. Knight Capital lost more than $460 million in 2012, and its improvised fix during the incident made the problem worse. I wrote about that in <a href="/7b5ed3.html">Is Your Ego Running Production?</a>.</p>
+<p>The stakes in Urda are of a completely different order, and I don't want to blur that. But the engineering lesson carries over. Design the recovery path as carefully as the happy path. Make the safe restart the default. Require a second check before anyone overrides a stop. And when it goes wrong, look at the system before the person.</p>
+<h2>What Urda does and doesn't say about AI</h2>
+<p>One fact first, because it will get lost. Nothing reported so far suggests AI played any part in this. LZB and ASFA are conventional railway signalling: deterministic train protection built to fixed rules (<a href="https://english.elpais.com/spain/2026-10-28/what-is-the-lzb-signaling-system-one-of-the-key-factors-in-the-fatal-train-accident-in-spain.html">El País</a>). Nobody was running a model.</p>
+<p>I still expect Urda to be pulled into the AI debate, so it's worth getting the argument right. It goes like this: as automation becomes more capable, people lose the skill and context to take over when it fails. So slow down, and keep humans firmly in control until we know they can catch the machine.</p>
+<p>That argument deserves a fair hearing, because it rests on real work. Bainbridge put it sharply: "the designer who tries to eliminate the operator still leaves the operator to do the tasks which the designer cannot think how to automate." Parasuraman and Riley described how people come to over-rely on automation and stop monitoring it, and how designers sometimes treat the operator's role as a by-product of the automation (<a href="https://doi.org/10.1518/001872097778543886">Human Factors, 1997</a>). Sarter and Woods documented "automation surprises", where crews lose track of what the system is doing and why (<a href="https://doi.org/10.1518/001872097778667997">Human Factors, 1997</a>). And automation can be the hazard itself. The US House transportation committee found that "faulty assumptions about pilot responses" were among the causes of the two Boeing 737 MAX crashes, which killed 346 people (<a href="https://democrats-transportation.house.gov/imo/media/doc/2020.09.15%20FINAL%20737%20MAX%20Report%20for%20Public%20Release.pdf">House report, 2020</a>).</p>
+<p>I take all of that seriously. I just think it points the other way.</p>
+<p>Look at what failed at Urda, on the account we have today. The automation did its job: it lost its data and stopped every train. What failed, according to the minister, was the manual path, where a human authorisation didn't match the written rule. The weak link wasn't the sophisticated machine. It was the assumption that a person can always step in safely.</p>
+<p>That assumption has a poor record. On Air France 447 in 2009, iced airspeed probes caused the autopilot to disconnect. The French investigators, the BEA, found the crew never identified the approach to the stall or the stall itself, and 228 people died (<a href="https://bea.aero/fileadmin/documents/docspa/2009/f-cp090601.en/pdf/f-cp090601.en.pdf">BEA final report</a>). In Tempe in 2018, Uber's test vehicle detected a pedestrian 5.6 seconds before impact but never classified her correctly. Its design relied on the safety operator, not the system, to brake in an emergency. The NTSB found the operator was distracted by her phone and called it "a typical effect of automation complacency" (<a href="https://www.ntsb.gov/investigations/accidentreports/reports/har1903.pdf">NTSB HAR-19/03</a>). In both cases "a human takes over" was the safety plan, and it failed.</p>
+<p>Bainbridge saw the trend coming too: "it is the most successful automated systems, with rare need for manual intervention, which may need the greatest investment in human operator training." The better the automation, the harder the handover. Slowing down doesn't fix that. Only designing the handover does.</p>
+<p>The status quo has its own body count, too. The WHO estimates 1.19 million people died on the world's roads in 2021 (<a href="https://www.who.int/publications/i/item/9789240086517">WHO, 2023</a>). Waymo researchers compared 56.7 million miles of driverless operation against human drivers in the same cities. They found statistically significant reductions in injury, airbag-deployment and serious-injury crashes (<a href="https://doi.org/10.1080/15389588.2025.2499887">Kusano et al., 2025</a>). The authors work for Waymo, and it covers a few cities, so read it as evidence, not proof. But it is peer-reviewed evidence that every year of delay has a cost, and that cost is counted in lives too.</p>
+<h2>Responsible acceleration</h2>
+<p>I'm openly an accelerationist. I want AGI and ASI as soon as we can build them. To me Urda is a case for faster, better engineering, not for slower progress. That means treating the handover as a first-class system, not a footnote:</p>
+<ol>
+<li><strong>Degrade gracefully, and by default.</strong> When capability drops, the system should fall into a bounded, slower mode on its own. The 40 km/h rule belongs in the machine, not in someone's memory.</li>
+<li><strong>Check every override independently.</strong> A separate check should be able to refuse an unsafe command, whether it comes from a person or a model.</li>
+<li><strong>Make the state visible.</strong> Whoever takes over needs what the system knew, not a blank screen and a radio.</li>
+<li><strong>Rehearse recovery.</strong> Test the manual path as often as the happy path. Drills, game days, simulators.</li>
+<li><strong>Let capable automation be the fallback where it can.</strong> A tired human at the worst possible moment is not a safety guarantee. Better automation often is.</li>
+</ol>
+<figure class="fig fig-tall"><a class="fig-open" href="/media/d28b21/handover.svg" title="Open full size"><img src="/media/d28b21/handover.svg" alt="A vertical flow: automation degrades; the system falls back automatically to a slow, bounded safe mode; people are shown the full picture; a person proposes an action; an independent check asks whether it is consistent with reality. If not, it refuses, explains and escalates. If so, the system proceeds in degraded mode, then restores full automation and verifies. A bracket notes the whole path is rehearsed in drills." width="800" height="1440" loading="lazy" decoding="async"></a><figcaption>A handover designed as a system. An illustration of the principles above, not of any real railway's procedure.</figcaption></figure>
+<p>None of this is exotic. It's what aviation, nuclear and the better software teams already do on their best days. The lesson of Urda isn't "fear capable machines". It's "never trust a fragile handover", whoever or whatever sits on either side of it.</p>
+<p>We'll know much more when the investigators report. Until then, the right posture is patience, and respect for the people who lost their lives.</p>
+<h2>Sources</h2>
+<ul>
+<li>Euronews, <a href="https://www.euronews.com/2026/10/28/inexplicable-order-by-control-centre-investigated-after-spain-train-crash">'Inexplicable' order by control centre investigated</a>, 28 Oct 2026</li>
+<li>Reuters, <a href="https://www.reuters.com/graphics/SPAIN-ACCIDENT/dwvkmmgbrvm/">How a high-speed train crash unfolded in central Spain</a>, 28 Oct 2026</li>
+<li>El País English, <a href="https://english.elpais.com/spain/2026-10-28/what-is-the-lzb-signaling-system-one-of-the-key-factors-in-the-fatal-train-accident-in-spain.html">What is the LZB signaling system</a>, 28 Oct 2026</li>
+<li>La Vanguardia, <a href="https://www.lavanguardia.com/politica/20261028/11670324/puente-ve-inexplicable-operador-adif-autorizara-marchar-tren-renfe-impacto-iryo.html">Puente ve "inexplicable"…</a> (Spanish), 28 Oct 2026</li>
+<li>Euronews (Spanish), <a href="https://es.euronews.com/2026/10/28/oscar-puente-considera-inexplicable-que-el-centro-de-control-autorizara-al-ave-a-reanudar-">Óscar Puente considera "inexplicable"…</a>, 28 Oct 2026</li>
+<li>Castilla-La Mancha government, <a href="https://www.castillalamancha.es/actualidad/notasdeprensa/el-gobierno-de-castilla-la-mancha-despliega-todos-los-medios-y-recursos-su-alcance-para-hacer-frente">Press release on the emergency response</a> (Spanish), 28 Oct 2026</li>
+<li>laSexta, <a href="https://www.lasexta.com/noticias/sociedad/choque-trenes-directo_202610286ae1b2e502501232156a9847.html">Última hora del accidente de tren</a> (Spanish, live), 29 Oct 2026</li>
+<li>EFE, <a href="https://efe.com/portada-espana/2026-10-28/tren-iryo-ave-accidentados-pasajeros/">El tren Iryo accidentado viajaba con 147 pasajeros y el AVE con 397</a> (Spanish), 28 Oct 2026</li>
+<li>El Independiente, <a href="https://www.elindependiente.com/espana/2026/10/28/comparecencia-oscar-puente-accidente-renfe-iryo-toledo/">Puente descarta dimitir y achaca el accidente…</a> (Spanish), 28 Oct 2026</li>
+<li>El Español, <a href="https://www.elespanol.com/espana/20261028/oscar-puente-senala-adif-decidir-tren-renfe-reanudara-marcha-circunstancias-inexplicables/1003744437994_0.html">Puente… reconoce que no había ningún sistema de seguridad que impidiera un error humano</a> (Spanish), 28 Oct 2026</li>
+<li>Cadena SER, <a href="https://cadenaser.com/nacional/2026/10/28/la-ser-accede-a-los-audios-de-las-conversaciones-entre-el-centro-de-control-de-adif-y-los-maquinistas-de-los-trenes-accidentados-en-urda-reanude-con-marcha-normal-cadena-ser/">Audios: "Reanude con marcha normal"</a> (Spanish), 28 Oct 2026</li>
+<li>Cadena SER, <a href="https://cadenaser.com/nacional/2026/10/28/la-maquinista-de-iryo-llamo-al-centro-de-control-de-adif-porque-no-podia-arrancar-el-tren-pues-nada-cuando-pueda-y-si-tiene-problemas-nos-llama-cadena-ser/">La maquinista de Iryo llamó al centro de control…</a> (Spanish), 28 Oct 2026</li>
+<li>Cadena SER, <a href="https://cadenaser.com/nacional/2026/10/29/reconstruccion-del-accidente-de-urda-las-ordenes-que-llevaron-al-ave-a-circular-17-minutos-a-velocidad-normal-cadena-ser/">Reconstrucción del accidente de Urda</a> (Spanish), 29 Oct 2026</li>
+<li>El Mundo, <a href="https://www.elmundo.es/espana/2026/10/28/6ae2624e21efa042438b45b9.html">La maquinista del Iryo minutos antes…</a> (Spanish), 28 Oct 2026</li>
+<li>El País, <a href="https://elpais.com/espana/2026-10-29/los-cabos-por-atar-del-siniestro-de-urda-en-las-investigaciones-judicial-y-tecnica.html">Los cabos por atar del siniestro de Urda</a> (Spanish), 29 Oct 2026</li>
+<li>El País, <a href="https://elpais.com/espana/2026-10-28/la-tragedia-pone-en-pausa-la-campana-mientras-los-lideres-europeos-mandan-su-apoyo-a-espana.html">La tragedia pone en pausa la campaña</a> (Spanish), 28 Oct 2026</li>
+<li>Consejo General del Poder Judicial, <a href="https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/La-jueza-instructora-del-accidente-ferroviario-de-Urda--Toledo--acuerda-la-prohibicion-de-acceso-de-terceras-personas-a-la-zona-del-siniestro">La jueza instructora… acuerda la prohibición de acceso</a> (Spanish), 28 Oct 2026</li>
+<li>RTVE, <a href="https://www.rtve.es/noticias/20261028/guardia-civil-interroga-operario-del-centro-control-regulaba-trafico-momento-del-accidente/17287370.shtml">Interrogan al operario del centro de control</a> (Spanish), 28 Oct 2026</li>
+<li>RTVE, <a href="https://www.rtve.es/noticias/20261029/accidente-tren-toledo-sistema-seguridad-lzb-como-funciona-ocurre-si-falla/17287266.shtml">Qué es el sistema LZB y cómo funciona</a> (Spanish), 29 Oct 2026</li>
+<li>Europa Press, <a href="https://www.europapress.es/economia/transportes-00343/noticia-reglamento-adif-prohibia-centro-control-autorizar-ave-reanudar-marcha-20261028200123.html">El reglamento de Adif prohibía…</a> (Spanish), 28 Oct 2026</li>
+<li>La Moncloa, <a href="https://www.lamoncloa.gob.es/presidente/actividades/paginas/2026/281026-sanchez-visita-accidente-tren.aspx">Three days of official mourning</a> (Spanish), 28 Oct 2026</li>
+<li>The Guardian, <a href="https://www.theguardian.com/world/2026/oct/28/spain-train-crash-high-speed-toledo">Sánchez declares three days of mourning</a>, 28 Oct 2026</li>
+<li>James Reason, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1117770/">Human error: models and management</a>, BMJ, 2000</li>
+<li>Richard Cook, <a href="https://how.complexsystems.fail/">How Complex Systems Fail</a>, 1998</li>
+<li>Lisanne Bainbridge, <a href="https://ckrybus.com/static/papers/Bainbridge_1983_Automatica.pdf">Ironies of Automation</a>, Automatica, 1983</li>
+<li>Nancy Leveson, <a href="https://direct.mit.edu/books/oa-monograph/2908/Engineering-a-Safer-WorldSystems-Thinking-Applied">Engineering a Safer World</a>, MIT Press, 2012</li>
+<li>Raja Parasuraman and Victor Riley, <a href="https://doi.org/10.1518/001872097778543886">Humans and Automation: Use, Misuse, Disuse, Abuse</a>, Human Factors, 1997</li>
+<li>Nadine Sarter and David Woods, <a href="https://doi.org/10.1518/001872097778667997">Team play with a powerful and independent agent</a>, Human Factors, 1997</li>
+<li>US House Committee on Transportation and Infrastructure, <a href="https://democrats-transportation.house.gov/imo/media/doc/2020.09.15%20FINAL%20737%20MAX%20Report%20for%20Public%20Release.pdf">Final Committee Report: The Boeing 737 MAX</a>, September 2020</li>
+<li>BEA, <a href="https://bea.aero/fileadmin/documents/docspa/2009/f-cp090601.en/pdf/f-cp090601.en.pdf">Final report on Air France flight AF447</a>, July 2012</li>
+<li>NTSB, <a href="https://www.ntsb.gov/investigations/accidentreports/reports/har1903.pdf">Collision Between Vehicle Controlled by Developmental Automated Driving System and Pedestrian, Tempe, Arizona (HAR-19/03)</a>, 2019</li>
+<li>World Health Organization, <a href="https://www.who.int/publications/i/item/9789240086517">Global status report on road safety 2023</a>, 2023</li>
+<li>Kristofer Kusano et al. (Waymo), <a href="https://doi.org/10.1080/15389588.2025.2499887">Comparison of Waymo rider-only crash rates by crash type to human benchmarks at 56.7 million miles</a>, Traffic Injury Prevention, 2025</li>
+</ul>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/7b5ed3.html"><span class="t">Is Your Ego Running Production?</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-15">Oct 2026</time></a></li>
+  <li><a href="/c261f5.html"><span class="t">Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-29">Oct 2026</time></a></li>
+  <li><a href="/c150db.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-29">Oct 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/c261f5.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</span></a><span class="pn newer empty" aria-hidden="true"></span></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script>
+(function(){
+  var d=document.documentElement,b=document.querySelector('.theme-toggle');if(!b)return;
+  var tc=document.querySelector('meta[name=theme-color]'),cs=document.querySelector('meta[name=color-scheme]');
+  function set(t,save){
+    var dark=t==='dark';
+    if(dark)d.setAttribute('data-theme','dark');else d.removeAttribute('data-theme');
+    b.setAttribute('aria-pressed',dark?'true':'false');b.title=dark?'Switch to light theme':'Switch to dark theme';
+    if(tc)tc.content=dark?'#101114':'#ffffff';if(cs)cs.content=dark?'dark':'light';
+    if(save)try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}
+    document.dispatchEvent(new Event('themechange'));
+  }
+  set(d.getAttribute('data-theme')==='dark'?'dark':'light');
+  b.addEventListener('click',function(){set(d.getAttribute('data-theme')==='dark'?'light':'dark',true);});
+  addEventListener('storage',function(e){if(e.key==='theme')set(e.newValue==='dark'?'dark':'light');});
+})();
+</script>
+<script src="/fabric.js?v=c85b9df8" defer></script>
+</body>
+</html>
