@@ -168,6 +168,85 @@
 &lt;p&gt;Years of Python have taught me that &lt;strong&gt;the most valuable engineering skill is restraint.&lt;/strong&gt; Use the tool everyone understands. Spend novelty only where it creates value customers can feel. Keep the system small enough to fit in one head, and keep a suite of journey tests that will outlive it. It doesn't make for exciting conference talks, but it makes for software that ships, keeps shipping and lets you sleep.&lt;/p&gt;</content>
   </entry>
   <entry>
+    <title>Is Your Ego Running Production?</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/is-your-ego-running-production.html"/>
+    <id>https://nehem.dev/is-your-ego-running-production.html</id>
+    <published>2026-10-15T00:00:00+10:00</published>
+    <updated>2026-10-15T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Postmortems never list ego as a cause, but it's behind big-bang deploys, blame, rewrites and heroics. Public incidents, what experts say, and how to take ego out.</summary>
+    <category term="Engineering Culture"/><category term="Incidents"/><category term="Architecture"/><category term="Postmortems"/>
+    <content type="html">&lt;p&gt;Nobody writes "ego" in the root cause field.&lt;/p&gt;
+&lt;p&gt;The postmortem says a server was missed. A command had a typo. A backup job had been failing quietly for months. Read enough of them, though, and the same shape keeps turning up behind the technical detail: someone was sure, and nothing in the system asked them to prove it.&lt;/p&gt;
+&lt;p&gt;That's what I mean by ego in production. Not arrogance as a personality trait. &lt;strong&gt;Certainty that outruns the evidence&lt;/strong&gt;, and a system built to trust it.&lt;/p&gt;
+&lt;p&gt;It turns up in all sorts of places:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resume-driven architecture.&lt;/li&gt;
+&lt;li&gt;Rewrites, because the old code "is a mess".&lt;/li&gt;
+&lt;li&gt;Big-bang releases that skip review because "I know this code".&lt;/li&gt;
+&lt;li&gt;Refusing to roll back because rolling back means admitting the change was wrong.&lt;/li&gt;
+&lt;li&gt;Hero on-call culture, and the blame that comes with it when the hero is the one who slipped.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/is-your-ego-running-production/hero.svg" alt="On the left, one huge block drops onto a production base in a single move, and its return path is crossed out. On the right, the same change is split into six small blocks, each going down on its own with a small curved arrow back up." width="960" height="540" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same change, two shapes. Only one of them comes with a way back.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;The postmortems don't say ego. They say "nobody checked".&lt;/h2&gt;
+&lt;p&gt;On 1 August 2012, Knight Capital deployed new code for the NYSE's Retail Liquidity Program. According to the &lt;a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf"&gt;SEC's order&lt;/a&gt;, a technician didn't copy the new code to one of the eight servers. The new code reused a flag that used to switch on "Power Peg", logic Knight had stopped using in 2003 but never removed. On the eighth server, that flag woke the dead code up. In about 45 minutes the router sent millions of orders into the market, and Knight lost more than $460 million.&lt;/p&gt;
+&lt;p&gt;The SEC's findings are dull, which is exactly the point. There was no second technician reviewing the deployment and no written procedure requiring one. In the SEC's words, "a written procedure requiring a simple double-check of the deployment of the RLP code could have identified that a server had been missed." It gets worse. During the incident, Knight uninstalled the new code from the seven healthy servers, and that &lt;em&gt;spread&lt;/em&gt; the problem. Their rollback had never been designed or rehearsed. It was improvised under pressure.&lt;/p&gt;
+&lt;p&gt;On 31 January 2017, a GitLab engineer trying to rebuild database replication wiped what they thought was the secondary's data directory. It was the primary. Roughly 300 GB was gone before they stopped it. Then the backups turned out not to exist: &lt;code&gt;pg_dump&lt;/code&gt; was running a 9.2 binary against a 9.6 database, failing every time, and the failure emails were being rejected. GitLab's &lt;a href="https://about.gitlab.com/blog/2017/02/10/postmortem-of-database-outage-of-january-31/"&gt;postmortem&lt;/a&gt; names the deepest cause plainly: nobody owned testing the backups. Their conclusion is the best sentence in the whole document: "An ideal environment is one in which you can make mistakes but easily and quickly recover from them with minimal to no impact."&lt;/p&gt;
+&lt;p&gt;On 28 February 2017, an S3 engineer following an established playbook mistyped one input to a command and &lt;a href="https://aws.amazon.com/message/41926/"&gt;removed far more servers than intended&lt;/a&gt; in US-EAST-1. S3 was down in that region for hours. Amazon's write-up doesn't go looking for someone to blame. It fixes the tool, which "allowed too much capacity to be removed too quickly", so it now removes capacity slowly and refuses to go below a minimum.&lt;/p&gt;
+&lt;p&gt;Notice what none of these say. None of them says "the engineer was arrogant". The ego wasn't in the person at the keyboard. It was baked into a system that assumed a careful person doesn't need a check, a backup doesn't need a restore test, and a rollback doesn't need a rehearsal.&lt;/p&gt;
+&lt;h2&gt;Blame is ego wearing a manager's hat&lt;/h2&gt;
+&lt;p&gt;When things go wrong, the ego move is to find the person. John Allspaw, then at Etsy, called this out in &lt;a href="https://www.etsy.com/codeascraft/blameless-postmortems"&gt;Blameless PostMortems and a Just Culture&lt;/a&gt;, borrowing what Sidney Dekker calls the "Bad Apple Theory": get rid of the bad apples and you get rid of human error. It feels like accountability. It produces the opposite.&lt;/p&gt;
+&lt;p&gt;Allspaw's argument is that engineers have to be able to explain what they did, what they saw and what they expected, "without fear of punishment or retribution". Punish them and they go quiet. You get what he calls "Cover-Your-Ass" engineering, management stops learning how work really gets done, and the same accident comes back with a different name on it.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/is-your-ego-running-production/blame-loop.svg" alt="A closed loop of six circles joined by arrows: an incident, blame, punishment, silence (an amber circle with a closed mouth), less learning, and round again. One coral line leaves the loop and passes through three small notes, the fixes to the system, before ending at a tick." width="960" height="420" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Blame keeps the loop closed. A blameless review is the way out, through fixes to the system rather than the person.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Richard Cook's &lt;a href="https://how.complexsystems.fail/"&gt;How Complex Systems Fail&lt;/a&gt; goes further. Two of his points should be printed on the wall of every incident review: "Post-accident attribution to a 'root cause' is fundamentally wrong", and "Hindsight biases post-accident assessments of human performance". Failures need several things to go wrong at once. After the fact, the one human step looks obvious. It wasn't obvious at the time.&lt;/p&gt;
+&lt;p&gt;Google's SRE book puts the practical version in one line in its &lt;a href="https://sre.google/sre-book/postmortem-culture/"&gt;chapter on postmortem culture&lt;/a&gt;: "You can't 'fix' people, but you can fix systems and processes."&lt;/p&gt;
+&lt;h2&gt;Ego in the architecture&lt;/h2&gt;
+&lt;p&gt;Production incidents are the loud version. The quiet version is architecture chosen to make someone look smart.&lt;/p&gt;
+&lt;p&gt;Dan McKinley's &lt;a href="https://mcfunley.com/choose-boring-technology"&gt;Choose Boring Technology&lt;/a&gt; gives every company "about three innovation tokens". His most useful exercise is to ask how you'd solve the problem without adding anything new. Asking that, he says, catches the case where the real "problem" is that someone wants to use the technology. Resume-driven development fails that test every time. So does the Kubernetes cluster for a three-person team, and the &lt;a href="/why-microservices-are-a-luxury-tax-on-startups.html"&gt;microservices you split out before you had the teams for them&lt;/a&gt;. McKinley's verdict is short: "Technology for its own sake is snake oil."&lt;/p&gt;
+&lt;p&gt;Not-invented-here is the same disease aimed at libraries. Writing your own job queue, your own ORM or your own serialization layer because the existing one offends you is ego with a commit history. (Yes, DRF offends me too. The boring answer is still plain Django views, not my own framework.) And the extra database you added because Postgres felt too ordinary? &lt;a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"&gt;Postgres was probably enough&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then there are rewrites. Fred Brooks warned in &lt;em&gt;The Mythical Man-Month&lt;/em&gt; about the &lt;a href="https://en.wikipedia.org/wiki/Second-system_effect"&gt;second-system effect&lt;/a&gt;: confident after the first success, the designer piles every deferred idea into the next one, and that second system is "the most dangerous system a man ever designs". Joel Spolsky called rewriting from scratch "the single worst strategic mistake that any software company can make" in &lt;a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/"&gt;Things You Should Never Do, Part I&lt;/a&gt;. His explanation is uncomfortably personal: "It's harder to read code than to write it." The old code looks like a mess because we didn't write it. Those ugly lines are often bug fixes we don't understand yet.&lt;/p&gt;
+&lt;h2&gt;Heroes, rollbacks and the 2 am fix&lt;/h2&gt;
+&lt;p&gt;Every team has the engineer who saves the day at 2 am. Celebrate that often enough and you get a team that needs saving at 2 am.&lt;/p&gt;
+&lt;p&gt;The ego trap during an incident is fixing forward because rolling back feels like losing. The Google SRE book has a lovely counter-example. At a company all-hands, an engineer described a release that took down a critical service. It only lasted four minutes because he rolled it back immediately. He got two peer bonuses and a round of applause. That's the culture you want: &lt;strong&gt;the rollback is the heroic move&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Rollbacks only work if they're boring, though. Knight's improvised rollback made things worse. A rollback you've never practised is just another risky deploy.&lt;/p&gt;
+&lt;p&gt;Size matters too. DORA's research on software delivery, behind the book &lt;em&gt;Accelerate&lt;/em&gt;, has found again and again that &lt;a href="https://dora.dev/guides/dora-metrics/"&gt;speed and stability are not tradeoffs&lt;/a&gt;. Their recommended lever is smaller changes: easier to reason about, easier to review, easier to recover from. A big-bang change bets everything on being right once. A small change only has to be right this time, and it's cheap when it isn't.&lt;/p&gt;
+&lt;p&gt;I'll own my bias here. I was a Python 2.7 sympathiser and a late adopter of Python 3. I know exactly how it feels to defend a position past its sell-by date. The fix isn't to never hold strong opinions. It's to know in advance what would change them.&lt;/p&gt;
+&lt;h2&gt;How to tell your ego is running production&lt;/h2&gt;
+&lt;p&gt;A checklist of smells:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;"I know this code"&lt;/strong&gt; is the reason a change skipped review or tests.&lt;/li&gt;
+&lt;li&gt;The release is &lt;strong&gt;one big change&lt;/strong&gt; because splitting it felt like admin.&lt;/li&gt;
+&lt;li&gt;There's &lt;strong&gt;no rollback plan&lt;/strong&gt;, or the rollback has never been run.&lt;/li&gt;
+&lt;li&gt;Rolling back is treated as &lt;strong&gt;failure&lt;/strong&gt; rather than a normal move.&lt;/li&gt;
+&lt;li&gt;The new tool's main argument is that &lt;strong&gt;serious companies use it&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;rewrite&lt;/strong&gt; is pitched as the fix for code nobody has read carefully.&lt;/li&gt;
+&lt;li&gt;Incident reviews end with &lt;strong&gt;a name&lt;/strong&gt; rather than a change to the system.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The most senior voice wins&lt;/strong&gt; design arguments that data could settle.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The same few people&lt;/strong&gt; get paged, and they like it that way.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nobody asks for help&lt;/strong&gt; until the incident is an hour old.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;"Works on my machine"&lt;/strong&gt; ends the conversation instead of starting one.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backups exist&lt;/strong&gt;, but nobody has restored one this quarter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What to do instead&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Evidence over seniority.&lt;/strong&gt; Bring graphs, traces and load tests to design arguments. If the senior person is right, the evidence will say so.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Small, reversible changes.&lt;/strong&gt; Ship in slices behind flags. Make every deploy something you can undo in minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Make rollback a first-class move.&lt;/strong&gt; Rehearse it. Automate it. Praise the person who uses it early.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Two people on risky changes.&lt;/strong&gt; A second pair of eyes on production deploys, migrations and destructive commands. That's what the SEC wanted from Knight.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Guard rails in the tools.&lt;/strong&gt; Do what Amazon did after S3: make dangerous commands slow, bounded and loud, and make it obvious which host you're on.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Blameless reviews.&lt;/strong&gt; Ask what made the action seem reasonable at the time. Fix the system, not the person.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Write the decision down, with how you'd know you're wrong.&lt;/strong&gt; Every architecture choice gets a short note covering the problem, the options and the signal that would make you reverse it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ask "what would change my mind?"&lt;/strong&gt; before the meeting ends. If the answer is "nothing", that's ego, not engineering.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Test the restore, not the backup.&lt;/strong&gt; Restore it on a schedule, and give someone ownership of it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;None of this is exotic. It's boring technology applied to people.&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;Production doesn't care who you are. It doesn't care how senior you are, how clever the design is or how sure you feel. It responds to small changes, real checks, rehearsed rollbacks and honest reviews.&lt;/p&gt;
+&lt;p&gt;Build systems that assume everyone, including you, will be wrong sometimes. Make being wrong cheap, quick to notice and safe to admit.&lt;/p&gt;
+&lt;p&gt;Then let the evidence run production.&lt;/p&gt;
+&lt;p&gt;Not your ego.&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <title>Postgres Is Enough: Skip the Extra Database Until It Hurts</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"/>
     <id>https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html</id>

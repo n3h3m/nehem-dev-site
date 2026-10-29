@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is Your Ego Running Production? — Nehemiah Jacob</title>
+<meta name="description" content="Postmortems never list ego as a cause, but it&#39;s behind big-bang deploys, blame, rewrites and heroics. Public incidents, what experts say, and how to take ego out.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/is-your-ego-running-production.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/is-your-ego-running-production.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/is-your-ego-running-production.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Is Your Ego Running Production?">
+<meta property="og:description" content="Postmortems never list ego as a cause, but it&#39;s behind big-bang deploys, blame, rewrites and heroics. Public incidents, what experts say, and how to take ego out.">
+<meta property="og:url" content="https://nehem.dev/is-your-ego-running-production.html">
+<meta property="og:image" content="https://nehem.dev/og/is-your-ego-running-production.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Is Your Ego Running Production? — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-10-15"><meta property="article:modified_time" content="2026-10-15"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Engineering Culture"><meta property="article:tag" content="Incidents"><meta property="article:tag" content="Architecture"><meta property="article:tag" content="Postmortems"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Is Your Ego Running Production?">
+<meta name="twitter:description" content="Postmortems never list ego as a cause, but it&#39;s behind big-bang deploys, blame, rewrites and heroics. Public incidents, what experts say, and how to take ego out.">
+<meta name="twitter:image" content="https://nehem.dev/og/is-your-ego-running-production.png">
+<meta name="twitter:image:alt" content="Is Your Ego Running Production? — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/is-your-ego-running-production.html#article","headline":"Is Your Ego Running Production?","description":"Postmortems never list ego as a cause, but it's behind big-bang deploys, blame, rewrites and heroics. Public incidents, what experts say, and how to take ego out.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/is-your-ego-running-production.png","width":1200,"height":630},"datePublished":"2026-10-15","dateModified":"2026-10-15","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/is-your-ego-running-production.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/is-your-ego-running-production.html","inLanguage":"en-AU","keywords":["Engineering Culture","Incidents","Architecture","Postmortems"],"wordCount":1760,"timeRequired":"PT8M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Is Your Ego Running Production?","item":"https://nehem.dev/is-your-ego-running-production.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=6a804a6e">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">Is Your Ego Running Production?</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-10-15">15 Oct 2026</time></p>
+      <p>8 min read</p>
+<ul class="tags" aria-label="Tags"><li>Engineering Culture</li><li>Incidents</li><li>Architecture</li><li>Postmortems</li></ul>    </aside>
+    <div class="prose">
+<p>Nobody writes "ego" in the root cause field.</p>
+<p>The postmortem says a server was missed. A command had a typo. A backup job had been failing quietly for months. Read enough of them, though, and the same shape keeps turning up behind the technical detail: someone was sure, and nothing in the system asked them to prove it.</p>
+<p>That's what I mean by ego in production. Not arrogance as a personality trait. <strong>Certainty that outruns the evidence</strong>, and a system built to trust it.</p>
+<p>It turns up in all sorts of places:</p>
+<ul>
+<li>Resume-driven architecture.</li>
+<li>Rewrites, because the old code "is a mess".</li>
+<li>Big-bang releases that skip review because "I know this code".</li>
+<li>Refusing to roll back because rolling back means admitting the change was wrong.</li>
+<li>Hero on-call culture, and the blame that comes with it when the hero is the one who slipped.</li>
+</ul>
+<figure class="fig"><img src="/media/is-your-ego-running-production/hero.svg" alt="On the left, one huge block drops onto a production base in a single move, and its return path is crossed out. On the right, the same change is split into six small blocks, each going down on its own with a small curved arrow back up." width="960" height="540" loading="lazy" decoding="async"><figcaption>Same change, two shapes. Only one of them comes with a way back.</figcaption></figure>
+<h2>The postmortems don't say ego. They say "nobody checked".</h2>
+<p>On 1 August 2012, Knight Capital deployed new code for the NYSE's Retail Liquidity Program. According to the <a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf">SEC's order</a>, a technician didn't copy the new code to one of the eight servers. The new code reused a flag that used to switch on "Power Peg", logic Knight had stopped using in 2003 but never removed. On the eighth server, that flag woke the dead code up. In about 45 minutes the router sent millions of orders into the market, and Knight lost more than $460 million.</p>
+<p>The SEC's findings are dull, which is exactly the point. There was no second technician reviewing the deployment and no written procedure requiring one. In the SEC's words, "a written procedure requiring a simple double-check of the deployment of the RLP code could have identified that a server had been missed." It gets worse. During the incident, Knight uninstalled the new code from the seven healthy servers, and that <em>spread</em> the problem. Their rollback had never been designed or rehearsed. It was improvised under pressure.</p>
+<p>On 31 January 2017, a GitLab engineer trying to rebuild database replication wiped what they thought was the secondary's data directory. It was the primary. Roughly 300 GB was gone before they stopped it. Then the backups turned out not to exist: <code>pg_dump</code> was running a 9.2 binary against a 9.6 database, failing every time, and the failure emails were being rejected. GitLab's <a href="https://about.gitlab.com/blog/2017/02/10/postmortem-of-database-outage-of-january-31/">postmortem</a> names the deepest cause plainly: nobody owned testing the backups. Their conclusion is the best sentence in the whole document: "An ideal environment is one in which you can make mistakes but easily and quickly recover from them with minimal to no impact."</p>
+<p>On 28 February 2017, an S3 engineer following an established playbook mistyped one input to a command and <a href="https://aws.amazon.com/message/41926/">removed far more servers than intended</a> in US-EAST-1. S3 was down in that region for hours. Amazon's write-up doesn't go looking for someone to blame. It fixes the tool, which "allowed too much capacity to be removed too quickly", so it now removes capacity slowly and refuses to go below a minimum.</p>
+<p>Notice what none of these say. None of them says "the engineer was arrogant". The ego wasn't in the person at the keyboard. It was baked into a system that assumed a careful person doesn't need a check, a backup doesn't need a restore test, and a rollback doesn't need a rehearsal.</p>
+<h2>Blame is ego wearing a manager's hat</h2>
+<p>When things go wrong, the ego move is to find the person. John Allspaw, then at Etsy, called this out in <a href="https://www.etsy.com/codeascraft/blameless-postmortems">Blameless PostMortems and a Just Culture</a>, borrowing what Sidney Dekker calls the "Bad Apple Theory": get rid of the bad apples and you get rid of human error. It feels like accountability. It produces the opposite.</p>
+<p>Allspaw's argument is that engineers have to be able to explain what they did, what they saw and what they expected, "without fear of punishment or retribution". Punish them and they go quiet. You get what he calls "Cover-Your-Ass" engineering, management stops learning how work really gets done, and the same accident comes back with a different name on it.</p>
+<figure class="fig"><img src="/media/is-your-ego-running-production/blame-loop.svg" alt="A closed loop of six circles joined by arrows: an incident, blame, punishment, silence (an amber circle with a closed mouth), less learning, and round again. One coral line leaves the loop and passes through three small notes, the fixes to the system, before ending at a tick." width="960" height="420" loading="lazy" decoding="async"><figcaption>Blame keeps the loop closed. A blameless review is the way out, through fixes to the system rather than the person.</figcaption></figure>
+<p>Richard Cook's <a href="https://how.complexsystems.fail/">How Complex Systems Fail</a> goes further. Two of his points should be printed on the wall of every incident review: "Post-accident attribution to a 'root cause' is fundamentally wrong", and "Hindsight biases post-accident assessments of human performance". Failures need several things to go wrong at once. After the fact, the one human step looks obvious. It wasn't obvious at the time.</p>
+<p>Google's SRE book puts the practical version in one line in its <a href="https://sre.google/sre-book/postmortem-culture/">chapter on postmortem culture</a>: "You can't 'fix' people, but you can fix systems and processes."</p>
+<h2>Ego in the architecture</h2>
+<p>Production incidents are the loud version. The quiet version is architecture chosen to make someone look smart.</p>
+<p>Dan McKinley's <a href="https://mcfunley.com/choose-boring-technology">Choose Boring Technology</a> gives every company "about three innovation tokens". His most useful exercise is to ask how you'd solve the problem without adding anything new. Asking that, he says, catches the case where the real "problem" is that someone wants to use the technology. Resume-driven development fails that test every time. So does the Kubernetes cluster for a three-person team, and the <a href="/why-microservices-are-a-luxury-tax-on-startups.html">microservices you split out before you had the teams for them</a>. McKinley's verdict is short: "Technology for its own sake is snake oil."</p>
+<p>Not-invented-here is the same disease aimed at libraries. Writing your own job queue, your own ORM or your own serialization layer because the existing one offends you is ego with a commit history. (Yes, DRF offends me too. The boring answer is still plain Django views, not my own framework.) And the extra database you added because Postgres felt too ordinary? <a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html">Postgres was probably enough</a>.</p>
+<p>Then there are rewrites. Fred Brooks warned in <em>The Mythical Man-Month</em> about the <a href="https://en.wikipedia.org/wiki/Second-system_effect">second-system effect</a>: confident after the first success, the designer piles every deferred idea into the next one, and that second system is "the most dangerous system a man ever designs". Joel Spolsky called rewriting from scratch "the single worst strategic mistake that any software company can make" in <a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/">Things You Should Never Do, Part I</a>. His explanation is uncomfortably personal: "It's harder to read code than to write it." The old code looks like a mess because we didn't write it. Those ugly lines are often bug fixes we don't understand yet.</p>
+<h2>Heroes, rollbacks and the 2 am fix</h2>
+<p>Every team has the engineer who saves the day at 2 am. Celebrate that often enough and you get a team that needs saving at 2 am.</p>
+<p>The ego trap during an incident is fixing forward because rolling back feels like losing. The Google SRE book has a lovely counter-example. At a company all-hands, an engineer described a release that took down a critical service. It only lasted four minutes because he rolled it back immediately. He got two peer bonuses and a round of applause. That's the culture you want: <strong>the rollback is the heroic move</strong>.</p>
+<p>Rollbacks only work if they're boring, though. Knight's improvised rollback made things worse. A rollback you've never practised is just another risky deploy.</p>
+<p>Size matters too. DORA's research on software delivery, behind the book <em>Accelerate</em>, has found again and again that <a href="https://dora.dev/guides/dora-metrics/">speed and stability are not tradeoffs</a>. Their recommended lever is smaller changes: easier to reason about, easier to review, easier to recover from. A big-bang change bets everything on being right once. A small change only has to be right this time, and it's cheap when it isn't.</p>
+<p>I'll own my bias here. I was a Python 2.7 sympathiser and a late adopter of Python 3. I know exactly how it feels to defend a position past its sell-by date. The fix isn't to never hold strong opinions. It's to know in advance what would change them.</p>
+<h2>How to tell your ego is running production</h2>
+<p>A checklist of smells:</p>
+<ul>
+<li><strong>"I know this code"</strong> is the reason a change skipped review or tests.</li>
+<li>The release is <strong>one big change</strong> because splitting it felt like admin.</li>
+<li>There's <strong>no rollback plan</strong>, or the rollback has never been run.</li>
+<li>Rolling back is treated as <strong>failure</strong> rather than a normal move.</li>
+<li>The new tool's main argument is that <strong>serious companies use it</strong>.</li>
+<li>A <strong>rewrite</strong> is pitched as the fix for code nobody has read carefully.</li>
+<li>Incident reviews end with <strong>a name</strong> rather than a change to the system.</li>
+<li><strong>The most senior voice wins</strong> design arguments that data could settle.</li>
+<li><strong>The same few people</strong> get paged, and they like it that way.</li>
+<li><strong>Nobody asks for help</strong> until the incident is an hour old.</li>
+<li><strong>"Works on my machine"</strong> ends the conversation instead of starting one.</li>
+<li><strong>Backups exist</strong>, but nobody has restored one this quarter.</li>
+</ul>
+<h2>What to do instead</h2>
+<ol>
+<li><strong>Evidence over seniority.</strong> Bring graphs, traces and load tests to design arguments. If the senior person is right, the evidence will say so.</li>
+<li><strong>Small, reversible changes.</strong> Ship in slices behind flags. Make every deploy something you can undo in minutes.</li>
+<li><strong>Make rollback a first-class move.</strong> Rehearse it. Automate it. Praise the person who uses it early.</li>
+<li><strong>Two people on risky changes.</strong> A second pair of eyes on production deploys, migrations and destructive commands. That's what the SEC wanted from Knight.</li>
+<li><strong>Guard rails in the tools.</strong> Do what Amazon did after S3: make dangerous commands slow, bounded and loud, and make it obvious which host you're on.</li>
+<li><strong>Blameless reviews.</strong> Ask what made the action seem reasonable at the time. Fix the system, not the person.</li>
+<li><strong>Write the decision down, with how you'd know you're wrong.</strong> Every architecture choice gets a short note covering the problem, the options and the signal that would make you reverse it.</li>
+<li><strong>Ask "what would change my mind?"</strong> before the meeting ends. If the answer is "nothing", that's ego, not engineering.</li>
+<li><strong>Test the restore, not the backup.</strong> Restore it on a schedule, and give someone ownership of it.</li>
+</ol>
+<p>None of this is exotic. It's boring technology applied to people.</p>
+<h2>Bottom line</h2>
+<p>Production doesn't care who you are. It doesn't care how senior you are, how clever the design is or how sure you feel. It responds to small changes, real checks, rehearsed rollbacks and honest reviews.</p>
+<p>Build systems that assume everyone, including you, will be wrong sometimes. Make being wrong cheap, quick to notice and safe to admit.</p>
+<p>Then let the evidence run production.</p>
+<p>Not your ego.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix.html"><span class="t">Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-29">Oct 2026</time></a></li>
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-29">Oct 2026</time></a></li>
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Postgres Is Enough: Skip the Extra Database Until It Hurts</span></a><a class="pn newer" href="/what-a-decade-of-python-taught-me-about-boring-technology.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">What a Decade of Python Taught Me About Boring Technology</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>
