@@ -6,26 +6,26 @@
 <title>The Problems with Django REST Framework — Nehemiah Jacob</title>
 <meta name="description" content="A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.">
 <meta name="author" content="Nehemiah Jacob">
-<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/the-problems-with-django-rest-framework.html">
-<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/the-problems-with-django-rest-framework.html">
-<link rel="alternate" hreflang="x-default" href="https://nehem.dev/the-problems-with-django-rest-framework.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/1b6985.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/1b6985.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/1b6985.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
 <meta property="og:site_name" content="nehem.dev">
 <meta property="og:locale" content="en_AU">
 <meta property="og:title" content="The Problems with Django REST Framework">
 <meta property="og:description" content="A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.">
-<meta property="og:url" content="https://nehem.dev/the-problems-with-django-rest-framework.html">
-<meta property="og:image" content="https://nehem.dev/og/the-problems-with-django-rest-framework.png">
+<meta property="og:url" content="https://nehem.dev/1b6985.html">
+<meta property="og:image" content="https://nehem.dev/og/1b6985.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Problems with Django REST Framework — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2025-02-02"><meta property="article:modified_time" content="2025-02-02"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="django"><meta property="article:tag" content="rest"><meta property="article:tag" content="api"><meta property="article:tag" content="drf"><meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Problems with Django REST Framework">
 <meta name="twitter:description" content="A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.">
-<meta name="twitter:image" content="https://nehem.dev/og/the-problems-with-django-rest-framework.png">
+<meta name="twitter:image" content="https://nehem.dev/og/1b6985.png">
 <meta name="twitter:image:alt" content="The Problems with Django REST Framework — an essay by Nehemiah Jacob on nehem.dev">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/the-problems-with-django-rest-framework.html#article","headline":"The Problems with Django REST Framework","description":"A critique of Django REST Framework: how it inherits Django Forms' design, its boilerplate and performance costs, the one thing it gets right, and why to move on.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/the-problems-with-django-rest-framework.png","width":1200,"height":630},"datePublished":"2025-02-02","dateModified":"2025-02-02","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/the-problems-with-django-rest-framework.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/the-problems-with-django-rest-framework.html","inLanguage":"en-AU","keywords":["django","rest","api","drf"],"wordCount":1102,"timeRequired":"PT6M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"The Problems with Django REST Framework","item":"https://nehem.dev/the-problems-with-django-rest-framework.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/1b6985.html#article","headline":"The Problems with Django REST Framework","description":"A critique of Django REST Framework: how it inherits Django Forms' design, its boilerplate and performance costs, the one thing it gets right, and why to move on.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/1b6985.png","width":1200,"height":630},"datePublished":"2025-02-02","dateModified":"2025-02-02","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/1b6985.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/1b6985.html","inLanguage":"en-AU","keywords":["django","rest","api","drf"],"wordCount":1102,"timeRequired":"PT6M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"The Problems with Django REST Framework","item":"https://nehem.dev/1b6985.html"}]}]}</script>
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
 <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
@@ -203,14 +203,14 @@
 <section class="sec related rv" aria-labelledby="related-h">
   <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
   <div class="sec-b"><ul class="posts">
-  <li><a href="/stop-putting-business-logic-in-django-views-and-serializers.html"><span class="t">Stop Putting Business Logic in Django Views and Serializers</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-04-08">Apr 2025</time></a></li>
-  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
-  <li><a href="/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix.html"><span class="t">Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-29">Oct 2026</time></a></li>
+  <li><a href="/bc771e.html"><span class="t">Stop Putting Business Logic in Django Views and Serializers</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-04-08">Apr 2025</time></a></li>
+  <li><a href="/ffbf73.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+  <li><a href="/c261f5.html"><span class="t">Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-29">Oct 2026</time></a></li>
 </ul></div>
 </section>
 
 <nav class="post-nav rv" aria-label="Older and newer posts">
-<a class="pn older" href="/why-is-python-unsuitable-as-a-mobile-application-development-language.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Why is Python unsuitable as a mobile application development language</span></a><a class="pn newer" href="/stop-putting-business-logic-in-django-views-and-serializers.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Stop Putting Business Logic in Django Views and Serializers</span></a></nav>
+<a class="pn older" href="/17c24e.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Why is Python unsuitable as a mobile application development language</span></a><a class="pn newer" href="/bc771e.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Stop Putting Business Logic in Django Views and Serializers</span></a></nav>
 </main>
 <footer class="foot rv">
   <div class="wrap">

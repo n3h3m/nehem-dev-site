@@ -10,8 +10,8 @@
   <icon>https://nehem.dev/favicon-192.png</icon>
   <entry>
     <title>Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix.html"/>
-    <id>https://nehem.dev/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/c261f5.html"/>
+    <id>https://nehem.dev/c261f5.html</id>
     <published>2026-10-29T00:00:00+10:00</published>
     <updated>2026-10-29T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -25,7 +25,7 @@
 &lt;p&gt;Right?&lt;/p&gt;
 &lt;p&gt;Wrong.&lt;/p&gt;
 &lt;p&gt;This is one of the most expensive mistakes in modern software engineering: &lt;strong&gt;confusing infrastructure complexity with engineering maturity.&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix/hero.svg" alt="On the left, a single small server serves a short line of users. On the right, a large tangle of pods, boxes and arrows. One coral journey line runs through each side, and both arrive at the same tick." width="960" height="560" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same login page, same dashboard, same tick. One side just has a lot more to keep alive.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/c261f5/hero.svg" alt="On the left, a single small server serves a short line of users. On the right, a large tangle of pods, boxes and arrows. One coral journey line runs through each side, and both arrive at the same tick." width="960" height="560" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same login page, same dashboard, same tick. One side just has a lot more to keep alive.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;h2&gt;Great technology, wrong problem&lt;/h2&gt;
 &lt;p&gt;Kubernetes is an incredible piece of technology. It orchestrates containers. It manages workloads across clusters. It handles service discovery, scaling and self-healing. It solves real problems. Big ones.&lt;/p&gt;
 &lt;p&gt;But here's the part the shiny architecture diagrams leave out: &lt;strong&gt;Kubernetes doesn't eliminate complexity. It moves it somewhere else.&lt;/strong&gt; And sometimes it creates more of it.&lt;/p&gt;
@@ -44,7 +44,7 @@
 &lt;p&gt;The migration begins anyway. Now the team needs to understand pods, deployments, services, ingress controllers, ConfigMaps, Secrets, persistent volumes, resource requests and limits, liveness probes, readiness probes and cluster networking. That's before anyone debugs why one service can't reach another at 2 am.&lt;/p&gt;
 &lt;p&gt;Congratulations. You just turned a simple deployment into a distributed infrastructure problem.&lt;/p&gt;
 &lt;p&gt;And your customers? They still see the same login page. The same dashboard. The same API. Nothing changed for them. Your team just has more to maintain, more to monitor, more that can fail and more that needs specialist knowledge. All for a scaling problem you haven't actually had.&lt;/p&gt;
-&lt;p&gt;That's what optimising for imaginary problems instead of real ones looks like. I've made the same argument about &lt;a href="/why-microservices-are-a-luxury-tax-on-startups.html"&gt;microservices&lt;/a&gt;, and it applies here for the same reasons.&lt;/p&gt;
+&lt;p&gt;That's what optimising for imaginary problems instead of real ones looks like. I've made the same argument about &lt;a href="/8f88cf.html"&gt;microservices&lt;/a&gt;, and it applies here for the same reasons.&lt;/p&gt;
 &lt;h2&gt;Kubernetes isn't the villain&lt;/h2&gt;
 &lt;p&gt;Let's be fair. The villain is premature complexity. There's a difference.&lt;/p&gt;
 &lt;p&gt;Kubernetes can be an excellent choice when:&lt;/p&gt;
@@ -70,8 +70,8 @@
 &lt;p&gt;Sometimes a managed container service is enough. Sometimes a platform-as-a-service is enough. Sometimes a virtual machine with a well-understood deployment process is enough.&lt;/p&gt;
 &lt;p&gt;Sometimes a single server is all you need.&lt;/p&gt;
 &lt;p&gt;Yes. A single server. In 2026. No service mesh. No twelve microservices. No elaborate GitOps pipeline.&lt;/p&gt;
-&lt;p&gt;Just an application that works, a database that's backed up, and a deployment process that doesn't require a ritual sacrifice. Imagine that. (The database is probably &lt;a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"&gt;Postgres, and Postgres is probably enough&lt;/a&gt;.)&lt;/p&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix/ladder.svg" alt="A pencil-drawn staircase with three steps: a single server, then managed containers or a platform-as-a-service, then orchestration. A coral arrow climbs one step at a time." width="960" height="360" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Start on the bottom step. Climb when reality demands it.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Just an application that works, a database that's backed up, and a deployment process that doesn't require a ritual sacrifice. Imagine that. (The database is probably &lt;a href="/ffbf73.html"&gt;Postgres, and Postgres is probably enough&lt;/a&gt;.)&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/c261f5/ladder.svg" alt="A pencil-drawn staircase with three steps: a single server, then managed containers or a platform-as-a-service, then orchestration. A coral arrow climbs one step at a time." width="960" height="360" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Start on the bottom step. Climb when reality demands it.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;h2&gt;Complexity is easy to add and hard to remove&lt;/h2&gt;
 &lt;p&gt;You can always add complexity later. Migrate when the constraints are real. Adopt orchestration when managing deployments by hand actually hurts. Invest in sophisticated infrastructure when the business benefits from it.&lt;/p&gt;
 &lt;p&gt;Removing complexity after you've built the organisation around it is much harder.&lt;/p&gt;
@@ -91,14 +91,14 @@
 &lt;p&gt;The goal isn't the most sophisticated infrastructure possible. It's &lt;strong&gt;the simplest infrastructure that reliably meets your requirements&lt;/strong&gt;, evolved as those requirements change.&lt;/p&gt;
 &lt;p&gt;Not before. Not because another startup uses it. Not because someone on YouTube built an impressive homelab. And definitely not because Kubernetes looks good on your CV.&lt;/p&gt;
 &lt;p&gt;Use it when it solves your problems. Avoid it when it creates more than it solves.&lt;/p&gt;
-&lt;p&gt;Engineering maturity isn't about how many tools you can operate. It's about knowing which ones you don't need. Your architecture doesn't need to impress other engineers. It needs to serve your business. Sometimes the most senior decision you can make is to &lt;a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"&gt;leave the shiny thing out&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Engineering maturity isn't about how many tools you can operate. It's about knowing which ones you don't need. Your architecture doesn't need to impress other engineers. It needs to serve your business. Sometimes the most senior decision you can make is to &lt;a href="/c150db.html"&gt;leave the shiny thing out&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Build the product. Get customers. Solve real problems. Let your infrastructure grow when reality demands it.&lt;/p&gt;
 &lt;p&gt;Not when your ego does.&lt;/p&gt;</content>
   </entry>
   <entry>
     <title>What a Decade of Python Taught Me About Boring Technology</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"/>
-    <id>https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/c150db.html"/>
+    <id>https://nehem.dev/c150db.html</id>
     <published>2026-10-29T00:00:00+10:00</published>
     <updated>2026-10-29T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -106,7 +106,7 @@
     <category term="Python"/><category term="Engineering"/><category term="Testing"/><category term="Architecture"/>
     <content type="html">&lt;p&gt;There's a version of a software career where you chase every new framework, rewrite your stack every eighteen months and spend more time on migrations than on the product. Plenty of us have done a stretch of it. The systems that last, the ones that ship features for years without drama, are almost always built on the dullest tools available.&lt;/p&gt;
 &lt;p&gt;The position: &lt;strong&gt;boring technology is a competitive advantage, not a compromise.&lt;/strong&gt; Python, Django, Postgres, a load balancer and a few well-understood AWS services will take most products further than any shiny stack. The skill isn't knowing the newest tool. It's knowing when not to use it.&lt;/p&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/what-a-decade-of-python-taught-me-about-boring-technology/hero.svg" alt="A stack of five layers. One continuous test line runs from a user at the top, straight down through every layer, to a tick at the bottom. The middle layer has been pulled out to the side and a new one sits in its place." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Layers come and go. The journey test runs straight through all of them and still ends in a tick.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/c150db/hero.svg" alt="A stack of five layers. One continuous test line runs from a user at the top, straight down through every layer, to a tick at the bottom. The middle layer has been pulled out to the side and a new one sits in its place." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Layers come and go. The journey test runs straight through all of them and still ends in a tick.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;h2&gt;Boring means understood, not old&lt;/h2&gt;
 &lt;p&gt;Dan McKinley's essay &lt;a href="https://mcfunley.com/choose-boring-technology"&gt;Choose Boring Technology&lt;/a&gt; put it better than anyone: a boring tool is one whose &lt;strong&gt;failure modes are known.&lt;/strong&gt; You can search the error message and find the answer. You know how it behaves under load, how it breaks, and how to fix it at 2 am.&lt;/p&gt;
 &lt;p&gt;That's the real asset. Not features. Not benchmarks. Predictability.&lt;/p&gt;
@@ -132,7 +132,7 @@
 &lt;p&gt;These tests don't import your models. They don't patch your functions. They don't know whether there's a service layer, a serializer or a stored procedure behind the endpoint. That's the point.&lt;/p&gt;
 &lt;p&gt;Everything in your stack is temporary. The framework gets a major version. The database moves. The queue gets swapped for something managed. The cloud service you picked gets deprecated. Python itself moves on, whether you're ready or not. And one day somebody will want to rewrite the whole backend.&lt;/p&gt;
 &lt;p&gt;When that day comes, everyone asks the same question: did we break the product? Unit tests tied to internals can't answer it. They die with the refactor, because they were testing the code you just deleted. A journey suite survives it. It runs against the new system exactly as it ran against the old one, and when it goes green you can say, with evidence, that the product still works.&lt;/p&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/what-a-decade-of-python-taught-me-about-boring-technology/swap-a-layer.svg" alt="A user journey line runs left to right through three boxes and ends in a tick. The middle box has been lifted out and replaced with a new one; the line passes through the new box unchanged." width="960" height="280" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Swap any box. The journey doesn't change, so the test doesn't either.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/c150db/swap-a-layer.svg" alt="A user journey line runs left to right through three boxes and ends in a tick. The middle box has been lifted out and replaced with a new one; the line passes through the new box unchanged." width="960" height="280" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Swap any box. The journey doesn't change, so the test doesn't either.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;p&gt;That's why I call it an asset. It grows. Every journey you add is one more thing you can never silently break again, through any number of rewrites. Most code loses value as it ages. This suite gains it.&lt;/p&gt;
 &lt;p&gt;How I'd keep it boring:&lt;/p&gt;
 &lt;ul&gt;
@@ -169,8 +169,8 @@
   </entry>
   <entry>
     <title>Is Your Ego Running Production?</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/is-your-ego-running-production.html"/>
-    <id>https://nehem.dev/is-your-ego-running-production.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/7b5ed3.html"/>
+    <id>https://nehem.dev/7b5ed3.html</id>
     <published>2026-10-15T00:00:00+10:00</published>
     <updated>2026-10-15T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -187,7 +187,7 @@
 &lt;li&gt;Refusing to roll back because rolling back means admitting the change was wrong.&lt;/li&gt;
 &lt;li&gt;Hero on-call culture, and the blame that comes with it when the hero is the one who slipped.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/is-your-ego-running-production/hero.svg" alt="On the left, one huge block drops onto a production base in a single move, and its return path is crossed out. On the right, the same change is split into six small blocks, each going down on its own with a small curved arrow back up." width="960" height="540" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same change, two shapes. Only one of them comes with a way back.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7b5ed3/hero.svg" alt="On the left, one huge block drops onto a production base in a single move, and its return path is crossed out. On the right, the same change is split into six small blocks, each going down on its own with a small curved arrow back up." width="960" height="540" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same change, two shapes. Only one of them comes with a way back.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;h2&gt;The postmortems don't say ego. They say "nobody checked".&lt;/h2&gt;
 &lt;p&gt;On 1 August 2012, Knight Capital deployed new code for the NYSE's Retail Liquidity Program. According to the &lt;a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf"&gt;SEC's order&lt;/a&gt;, a technician didn't copy the new code to one of the eight servers. The new code reused a flag that used to switch on "Power Peg", logic Knight had stopped using in 2003 but never removed. On the eighth server, that flag woke the dead code up. In about 45 minutes the router sent millions of orders into the market, and Knight lost more than $460 million.&lt;/p&gt;
 &lt;p&gt;The SEC's findings are dull, which is exactly the point. There was no second technician reviewing the deployment and no written procedure requiring one. In the SEC's words, "a written procedure requiring a simple double-check of the deployment of the RLP code could have identified that a server had been missed." It gets worse. During the incident, Knight uninstalled the new code from the seven healthy servers, and that &lt;em&gt;spread&lt;/em&gt; the problem. Their rollback had never been designed or rehearsed. It was improvised under pressure.&lt;/p&gt;
@@ -197,13 +197,13 @@
 &lt;h2&gt;Blame is ego wearing a manager's hat&lt;/h2&gt;
 &lt;p&gt;When things go wrong, the ego move is to find the person. John Allspaw, then at Etsy, called this out in &lt;a href="https://www.etsy.com/codeascraft/blameless-postmortems"&gt;Blameless PostMortems and a Just Culture&lt;/a&gt;, borrowing what Sidney Dekker calls the "Bad Apple Theory": get rid of the bad apples and you get rid of human error. It feels like accountability. It produces the opposite.&lt;/p&gt;
 &lt;p&gt;Allspaw's argument is that engineers have to be able to explain what they did, what they saw and what they expected, "without fear of punishment or retribution". Punish them and they go quiet. You get what he calls "Cover-Your-Ass" engineering, management stops learning how work really gets done, and the same accident comes back with a different name on it.&lt;/p&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/is-your-ego-running-production/blame-loop.svg" alt="A closed loop of six circles joined by arrows: an incident, blame, punishment, silence (an amber circle with a closed mouth), less learning, and round again. One coral line leaves the loop and passes through three small notes, the fixes to the system, before ending at a tick." width="960" height="420" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Blame keeps the loop closed. A blameless review is the way out, through fixes to the system rather than the person.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7b5ed3/blame-loop.svg" alt="A closed loop of six circles joined by arrows: an incident, blame, punishment, silence (an amber circle with a closed mouth), less learning, and round again. One coral line leaves the loop and passes through three small notes, the fixes to the system, before ending at a tick." width="960" height="420" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Blame keeps the loop closed. A blameless review is the way out, through fixes to the system rather than the person.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;p&gt;Richard Cook's &lt;a href="https://how.complexsystems.fail/"&gt;How Complex Systems Fail&lt;/a&gt; goes further. Two of his points should be printed on the wall of every incident review: "Post-accident attribution to a 'root cause' is fundamentally wrong", and "Hindsight biases post-accident assessments of human performance". Failures need several things to go wrong at once. After the fact, the one human step looks obvious. It wasn't obvious at the time.&lt;/p&gt;
 &lt;p&gt;Google's SRE book puts the practical version in one line in its &lt;a href="https://sre.google/sre-book/postmortem-culture/"&gt;chapter on postmortem culture&lt;/a&gt;: "You can't 'fix' people, but you can fix systems and processes."&lt;/p&gt;
 &lt;h2&gt;Ego in the architecture&lt;/h2&gt;
 &lt;p&gt;Production incidents are the loud version. The quiet version is architecture chosen to make someone look smart.&lt;/p&gt;
-&lt;p&gt;Dan McKinley's &lt;a href="https://mcfunley.com/choose-boring-technology"&gt;Choose Boring Technology&lt;/a&gt; gives every company "about three innovation tokens". His most useful exercise is to ask how you'd solve the problem without adding anything new. Asking that, he says, catches the case where the real "problem" is that someone wants to use the technology. Resume-driven development fails that test every time. So does the Kubernetes cluster for a three-person team, and the &lt;a href="/why-microservices-are-a-luxury-tax-on-startups.html"&gt;microservices you split out before you had the teams for them&lt;/a&gt;. McKinley's verdict is short: "Technology for its own sake is snake oil."&lt;/p&gt;
-&lt;p&gt;Not-invented-here is the same disease aimed at libraries. Writing your own job queue, your own ORM or your own serialization layer because the existing one offends you is ego with a commit history. (Yes, DRF offends me too. The boring answer is still plain Django views, not my own framework.) And the extra database you added because Postgres felt too ordinary? &lt;a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"&gt;Postgres was probably enough&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Dan McKinley's &lt;a href="https://mcfunley.com/choose-boring-technology"&gt;Choose Boring Technology&lt;/a&gt; gives every company "about three innovation tokens". His most useful exercise is to ask how you'd solve the problem without adding anything new. Asking that, he says, catches the case where the real "problem" is that someone wants to use the technology. Resume-driven development fails that test every time. So does the Kubernetes cluster for a three-person team, and the &lt;a href="/8f88cf.html"&gt;microservices you split out before you had the teams for them&lt;/a&gt;. McKinley's verdict is short: "Technology for its own sake is snake oil."&lt;/p&gt;
+&lt;p&gt;Not-invented-here is the same disease aimed at libraries. Writing your own job queue, your own ORM or your own serialization layer because the existing one offends you is ego with a commit history. (Yes, DRF offends me too. The boring answer is still plain Django views, not my own framework.) And the extra database you added because Postgres felt too ordinary? &lt;a href="/ffbf73.html"&gt;Postgres was probably enough&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Then there are rewrites. Fred Brooks warned in &lt;em&gt;The Mythical Man-Month&lt;/em&gt; about the &lt;a href="https://en.wikipedia.org/wiki/Second-system_effect"&gt;second-system effect&lt;/a&gt;: confident after the first success, the designer piles every deferred idea into the next one, and that second system is "the most dangerous system a man ever designs". Joel Spolsky called rewriting from scratch "the single worst strategic mistake that any software company can make" in &lt;a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/"&gt;Things You Should Never Do, Part I&lt;/a&gt;. His explanation is uncomfortably personal: "It's harder to read code than to write it." The old code looks like a mess because we didn't write it. Those ugly lines are often bug fixes we don't understand yet.&lt;/p&gt;
 &lt;h2&gt;Heroes, rollbacks and the 2 am fix&lt;/h2&gt;
 &lt;p&gt;Every team has the engineer who saves the day at 2 am. Celebrate that often enough and you get a team that needs saving at 2 am.&lt;/p&gt;
@@ -248,8 +248,8 @@
   </entry>
   <entry>
     <title>Postgres Is Enough: Skip the Extra Database Until It Hurts</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"/>
-    <id>https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/ffbf73.html"/>
+    <id>https://nehem.dev/ffbf73.html</id>
     <published>2026-06-09T00:00:00+10:00</published>
     <updated>2026-06-09T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -371,8 +371,8 @@
   </entry>
   <entry>
     <title>Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html"/>
-    <id>https://nehem.dev/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/2eccb3.html"/>
+    <id>https://nehem.dev/2eccb3.html</id>
     <published>2026-02-19T00:00:00+10:00</published>
     <updated>2026-02-19T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -480,8 +480,8 @@ P_gbs  = price per GB-second         (e.g. 0.0000166667)
   </entry>
   <entry>
     <title>Store Every Datetime as Naive Asia:Shanghai</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html"/>
-    <id>https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/b8dd4a.html"/>
+    <id>https://nehem.dev/b8dd4a.html</id>
     <published>2025-12-31T00:00:00+10:00</published>
     <updated>2025-12-31T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -602,8 +602,8 @@ Beijing should lead with official invitations to these neighbors, framing alignm
   </entry>
   <entry>
     <title>Type Hints Pay Off Only If You Run a Type Checker in CI</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html"/>
-    <id>https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/1cd308.html"/>
+    <id>https://nehem.dev/1cd308.html</id>
     <published>2025-10-14T00:00:00+10:00</published>
     <updated>2025-10-14T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -725,8 +725,8 @@ Beijing should lead with official invitations to these neighbors, framing alignm
   </entry>
   <entry>
     <title>DST Is a Bug, Not a Feature</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/dst-is-a-bug,-not-a-feature.html"/>
-    <id>https://nehem.dev/dst-is-a-bug,-not-a-feature.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/2c2a28.html"/>
+    <id>https://nehem.dev/2c2a28.html</id>
     <published>2025-08-03T00:00:00+10:00</published>
     <updated>2025-08-03T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -765,8 +765,8 @@ Bonus honorable mentions:&lt;/p&gt;
   </entry>
   <entry>
     <title>Why Microservices Are a Luxury Tax on Startups</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/why-microservices-are-a-luxury-tax-on-startups.html"/>
-    <id>https://nehem.dev/why-microservices-are-a-luxury-tax-on-startups.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/8f88cf.html"/>
+    <id>https://nehem.dev/8f88cf.html</id>
     <published>2025-07-02T00:00:00+10:00</published>
     <updated>2025-07-02T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -839,8 +839,8 @@ Bonus honorable mentions:&lt;/p&gt;
   </entry>
   <entry>
     <title>Stop Putting Business Logic in Django Views and Serializers</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html"/>
-    <id>https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/bc771e.html"/>
+    <id>https://nehem.dev/bc771e.html</id>
     <published>2025-04-08T00:00:00+10:00</published>
     <updated>2025-04-08T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -1030,8 +1030,8 @@ Bonus honorable mentions:&lt;/p&gt;
   </entry>
   <entry>
     <title>The Problems with Django REST Framework</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/the-problems-with-django-rest-framework.html"/>
-    <id>https://nehem.dev/the-problems-with-django-rest-framework.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/1b6985.html"/>
+    <id>https://nehem.dev/1b6985.html</id>
     <published>2025-02-02T00:00:00+10:00</published>
     <updated>2025-02-02T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
@@ -1133,8 +1133,8 @@ Bonus honorable mentions:&lt;/p&gt;
   </entry>
   <entry>
     <title>Why is Python unsuitable as a mobile application development language</title>
-    <link rel="alternate" type="text/html" href="https://nehem.dev/why-is-python-unsuitable-as-a-mobile-application-development-language.html"/>
-    <id>https://nehem.dev/why-is-python-unsuitable-as-a-mobile-application-development-language.html</id>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/17c24e.html"/>
+    <id>https://nehem.dev/17c24e.html</id>
     <published>2016-07-16T00:00:00+10:00</published>
     <updated>2016-07-16T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
