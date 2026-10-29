@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What a Decade of Python Taught Me About Boring Technology</title>
+<meta name="description" content="Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="What a Decade of Python Taught Me About Boring Technology">
+<meta property="og:description" content="Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.">
+<meta property="og:url" content="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html">
+<meta property="og:image" content="https://nehem.dev/og/what-a-decade-of-python-taught-me-about-boring-technology.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="What a Decade of Python Taught Me About Boring Technology — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-10-21"><meta property="article:modified_time" content="2026-10-21"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Python"><meta property="article:tag" content="Engineering"><meta property="article:tag" content="Career"><meta property="article:tag" content="Architecture"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What a Decade of Python Taught Me About Boring Technology">
+<meta name="twitter:description" content="Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.">
+<meta name="twitter:image" content="https://nehem.dev/og/what-a-decade-of-python-taught-me-about-boring-technology.png">
+<meta name="twitter:image:alt" content="What a Decade of Python Taught Me About Boring Technology — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html#article","headline":"What a Decade of Python Taught Me About Boring Technology","description":"Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/what-a-decade-of-python-taught-me-about-boring-technology.png","width":1200,"height":630},"datePublished":"2026-10-21","dateModified":"2026-10-21","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html","inLanguage":"en-AU","keywords":["Python","Engineering","Career","Architecture"],"wordCount":923,"timeRequired":"PT5M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"What a Decade of Python Taught Me About Boring Technology","item":"https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display long">What a Decade of Python Taught Me About Boring Technology</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-10-21">21 Oct 2026</time></p>
+      <p>5 min read</p>
+<ul class="tags" aria-label="Tags"><li>Python</li><li>Engineering</li><li>Career</li><li>Architecture</li></ul>    </aside>
+    <div class="prose">
+<p>There's a version of a software career where you chase every new framework, rewrite your stack every eighteen months and spend more time on migrations than on the product. Plenty of us have done a stretch of it. The systems that last, the ones that ship features for years without drama, are almost always built on the dullest tools available.</p>
+<p>The position: <strong>boring technology is a competitive advantage, not a compromise.</strong> Python, Django, Postgres, a load balancer and a few well-understood AWS services will take most products further than any shiny stack. The skill isn't knowing the newest tool. It's knowing when not to use it.</p>
+<h2>Boring means understood, not old</h2>
+<p>Dan McKinley's essay <a href="https://mcfunley.com/choose-boring-technology">Choose Boring Technology</a> put it better than anyone: a boring tool is one whose <strong>failure modes are known.</strong> You can search the error message and find the answer. You know how it behaves under load, how it breaks, and how to fix it at 2 am.</p>
+<p>That's the real asset. Not features. Not benchmarks. Predictability.</p>
+<p>Django is boring in exactly this way. The ORM has its sharp edges, and they're documented. The migration system has its quirks, and Stack Overflow has an answer for each one. Postgres is boring. Gunicorn is boring. SQS is boring. Every one of them has had its corner cases found by many people before you.</p>
+<p>A new tool has failure modes too. You just don't know them yet, and you'll discover them in production.</p>
+<h2>Spend your innovation where customers notice</h2>
+<p>McKinley's other idea is the <strong>innovation token</strong>: every team gets a small number, and each new, unproven technology spends one. Spend them on what makes your product different. Not on the plumbing.</p>
+<p>If your product is a pricing engine, innovate on pricing. Run it on Django and Postgres. If your product is a new kind of search, maybe the search engine is your token, and everything else should be as dull as possible.</p>
+<p>The common failure is the reverse: a completely ordinary CRUD product running on a novel database, a new frontend framework, an event-sourcing library and a service mesh. Four tokens spent, none of them on anything a customer will ever see.</p>
+<h2>The habits that held up</h2>
+<p>Some lessons I'd give my younger self, in no particular order:</p>
+<ul>
+<li><strong>Read the standard library before installing a package.</strong> <code>dataclasses</code>, <code>pathlib</code>, <code>itertools</code>, <code>functools</code>, <code>zoneinfo</code>, <code>concurrent.futures</code>, <code>sqlite3</code>. Python ships a lot. Every dependency is code you didn't write and will have to upgrade.</li>
+<li><strong>Prefer a function to a class, and a module to a framework.</strong> Most abstractions people build in Python are a function with extra steps.</li>
+<li><strong>Plain SQL is a skill, not a smell.</strong> The ORM is great for 90% of queries. For the other 10%, reading <code>EXPLAIN ANALYZE</code> beats any amount of queryset cleverness.</li>
+<li><strong>Delete code aggressively.</strong> Dead feature flags, unused endpoints, compatibility shims for clients that no longer exist. Every line you keep is a line someone has to understand.</li>
+<li><strong>Logs and metrics before features.</strong> You can't fix what you can't see. A structured log line with a request ID has saved more incidents than any architecture change.</li>
+<li><strong>Upgrade little and often.</strong> Staying one minor version behind on Python and Django is cheap. Falling three major versions behind is a project with its own budget.</li>
+<li><strong>Write the boring test.</strong> Not a clever property-based suite for everything. One test per business rule, named after the rule, that fails clearly.</li>
+</ul>
+<h2>Complexity is a loan</h2>
+<p>Every piece of complexity you add is borrowed against future time. Microservices, a second database, a message bus, a custom deploy tool. Each one might be justified. Each one charges interest: on-call load, onboarding time, upgrade work, things that can partially fail.</p>
+<p>The question I ask now before adding anything is simple: <strong>what's the cheapest thing that could possibly work, and what evidence would make me outgrow it?</strong> Write the evidence down. "When the jobs table bloats past what autovacuum can handle." "When two teams are blocked on the same deploy." Then build the cheap thing and watch for the evidence.</p>
+<p>Most of the time, it never shows up.</p>
+<h2>Where boring goes wrong</h2>
+<p>Boring isn't the same as stagnant. A few traps:</p>
+<ul>
+<li><strong>Boring isn't unmaintained.</strong> Running an end-of-life Python version isn't conservative, it's a security liability. Boring tools still need upgrades.</li>
+<li><strong>Boring isn't "what we used last time" forever.</strong> If a new tool is mature, well understood and clearly better for a real problem, like <code>uv</code> for Python packaging or <code>ruff</code> for linting, adopt it. The test is maturity and fit, not age.</li>
+<li><strong>Boring isn't refusing to learn.</strong> Learn the new things. Build side projects with them. Just don't make your production system the place where you learn them.</li>
+</ul>
+<h2>What actually made the difference</h2>
+<p>Looking back, the projects that went well had little to do with the stack. They had:</p>
+<ol>
+<li>A clear understanding of what the business actually needed this quarter.</li>
+<li>A small number of well-understood moving parts.</li>
+<li>Fast, boring deploys, many times a week.</li>
+<li>Engineers who could explain the whole system on a whiteboard.</li>
+</ol>
+<p>The projects that struggled usually had an impressive architecture diagram and nobody who could explain all of it.</p>
+<h2>Bottom line</h2>
+<p>Years of Python have taught me that <strong>the most valuable engineering skill is restraint.</strong> Use the tool everyone understands. Spend novelty only where it creates value customers can feel. Keep the system small enough to fit in one head. It doesn't make for exciting conference talks, but it makes for software that ships, keeps shipping and lets you sleep.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+  <li><a href="/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html"><span class="t">Type Hints Pay Off Only If You Run a Type Checker in CI</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-10-14">Oct 2025</time></a></li>
+  <li><a href="/stop-putting-business-logic-in-django-views-and-serializers.html"><span class="t">Stop Putting Business Logic in Django Views and Serializers</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-04-08">Apr 2025</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Postgres Is Enough: Skip the Extra Database Until It Hurts</span></a><span class="pn newer empty" aria-hidden="true"></span></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

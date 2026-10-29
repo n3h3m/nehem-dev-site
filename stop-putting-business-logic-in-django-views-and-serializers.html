@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stop Putting Business Logic in Django Views and Serializers</title>
+<meta name="description" content="Why Django business logic belongs in plain service functions, not views or DRF serializers, with a before/after order example and tests that need no HTTP.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Stop Putting Business Logic in Django Views and Serializers">
+<meta property="og:description" content="Why Django business logic belongs in plain service functions, not views or DRF serializers, with a before/after order example and tests that need no HTTP.">
+<meta property="og:url" content="https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html">
+<meta property="og:image" content="https://nehem.dev/og/stop-putting-business-logic-in-django-views-and-serializers.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Stop Putting Business Logic in Django Views and Serializers — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2025-04-08"><meta property="article:modified_time" content="2025-04-08"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Django"><meta property="article:tag" content="Architecture"><meta property="article:tag" content="Testing"><meta property="article:tag" content="DRF"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stop Putting Business Logic in Django Views and Serializers">
+<meta name="twitter:description" content="Why Django business logic belongs in plain service functions, not views or DRF serializers, with a before/after order example and tests that need no HTTP.">
+<meta name="twitter:image" content="https://nehem.dev/og/stop-putting-business-logic-in-django-views-and-serializers.png">
+<meta name="twitter:image:alt" content="Stop Putting Business Logic in Django Views and Serializers — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html#article","headline":"Stop Putting Business Logic in Django Views and Serializers","description":"Why Django business logic belongs in plain service functions, not views or DRF serializers, with a before/after order example and tests that need no HTTP.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/stop-putting-business-logic-in-django-views-and-serializers.png","width":1200,"height":630},"datePublished":"2025-04-08","dateModified":"2025-04-08","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html","inLanguage":"en-AU","keywords":["Django","Architecture","Testing","DRF"],"wordCount":998,"timeRequired":"PT8M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Stop Putting Business Logic in Django Views and Serializers","item":"https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+<link rel="stylesheet" href="/code.css?v=a5120a28">
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display long">Stop Putting Business Logic in Django Views and Serializers</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2025-04-08">8 Apr 2025</time></p>
+      <p>8 min read</p>
+<ul class="tags" aria-label="Tags"><li>Django</li><li>Architecture</li><li>Testing</li><li>DRF</li></ul>    </aside>
+    <div class="prose">
+<p>Open any Django codebase that's older than eighteen months and find the most important thing the business does. Placing an order. Approving a loan. Issuing a refund. Now find where that logic lives. Nine times out of ten it's smeared across a view, a serializer's <code>create()</code>, two model <code>save()</code> overrides and a <code>post_save</code> signal somebody added on a Friday.</p>
+<p>Here's the position: <strong>views and serializers are adapters, not homes.</strong> A view translates HTTP into a function call. A serializer translates JSON into Python values. Neither should know what an order <em>is</em>. Put the rules in plain Python functions that take plain arguments, and your app gets easier to test, easier to read and much easier to change.</p>
+<h2>How it goes wrong</h2>
+<p>Nobody decides to put business logic in a serializer. It happens because Django and DRF make the wrong place the convenient place:</p>
+<ul>
+<li><strong><code>ModelSerializer.create()</code> is right there.</strong> It already has validated data and a model. Adding "and also charge the card" is one line.</li>
+<li><strong>Views have the request.</strong> The user, the headers, the session. So the logic that needs the user ends up next to the request.</li>
+<li><strong>Signals look clean.</strong> Until nobody can tell you what happens when an <code>Order</code> is saved, because the answer is spread over four apps.</li>
+<li><strong>Fat models sound like good advice.</strong> And they are, for logic about one row. They fall apart when a use case touches five models and an external API.</li>
+</ul>
+<p>The result is logic you can only reach through HTTP. Want to place an order from a management command, a Celery task or a data migration? You either fake a request or copy the code. Both are bad.</p>
+<h2>Before: the serializer that does everything</h2>
+<p>This is a composite of code I've seen many times. It works. It's also a trap.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">OrderSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">OrderItemSerializer</span><span class="p">(</span><span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Order</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">,</span> <span class="s2">"total"</span><span class="p">]</span>
+        <span class="n">read_only_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"total"</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">validated_data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"items"</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s2">"request"</span><span class="p">]</span><span class="o">.</span><span class="n">user</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">customer</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"0"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">"product"</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">product</span><span class="o">.</span><span class="n">stock</span> <span class="o">&lt;</span> <span class="n">item</span><span class="p">[</span><span class="s2">"quantity"</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">"Out of stock"</span><span class="p">)</span>
+            <span class="n">product</span><span class="o">.</span><span class="n">stock</span> <span class="o">-=</span> <span class="n">item</span><span class="p">[</span><span class="s2">"quantity"</span><span class="p">]</span>
+            <span class="n">product</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">OrderItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span>
+                                     <span class="n">quantity</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">"quantity"</span><span class="p">],</span>
+                                     <span class="n">price</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">product</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">item</span><span class="p">[</span><span class="s2">"quantity"</span><span class="p">]</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">stripe</span><span class="o">.</span><span class="n">PaymentIntent</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="n">currency</span><span class="o">=</span><span class="s2">"aud"</span><span class="p">,</span>
+                                    <span class="n">customer</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">stripe_id</span><span class="p">)</span>
+        <span class="n">send_mail</span><span class="p">(</span><span class="s2">"Order received"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Order </span><span class="si">{</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">order</span>
+</code></pre></div>
+
+<p>Count the problems:</p>
+<ol>
+<li><strong>No transaction.</strong> If the payment call fails, you've already decremented stock and created a half-built order.</li>
+<li><strong>A race on stock.</strong> Two requests read <code>stock = 1</code>, both pass the check, both save <code>0</code>. You've sold the same item twice.</li>
+<li><strong>The email goes out before anything is committed.</strong> The customer gets "Order received" for an order that may roll back.</li>
+<li><strong>The rules are tied to <code>self.context["request"]</code>.</strong> You can't call this without an HTTP request, or a fake one.</li>
+<li><strong>A <code>ValidationError</code> for a business rule.</strong> "Out of stock" isn't malformed input. It's a domain outcome, and it deserves its own type.</li>
+<li><strong>Testing it means testing everything.</strong> To check the stock rule you need a client, auth, JSON and a mocked Stripe.</li>
+</ol>
+<h2>After: a service function</h2>
+<p>Make a <code>services.py</code> (or <code>orders/services/place_order.py</code> when it grows) with a plain function. Keyword-only arguments, explicit dependencies, a clear return type.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># orders/services.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">transaction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">F</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">orders.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Order</span><span class="p">,</span> <span class="n">OrderItem</span><span class="p">,</span> <span class="n">Product</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">orders.notifications</span><span class="w"> </span><span class="kn">import</span> <span class="n">send_order_received</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OutOfStock</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Product </span><span class="si">{</span><span class="n">product_id</span><span class="si">}</span><span class="s2"> is out of stock"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">product_id</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LineRequest</span><span class="p">:</span>
+    <span class="n">product_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">quantity</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">place_order</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LineRequest</span><span class="p">],</span> <span class="n">payments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Order</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">line</span><span class="o">.</span><span class="n">product_id</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">})</span>
+        <span class="n">locked</span> <span class="o">=</span> <span class="p">(</span><span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_for_update</span><span class="p">()</span>
+                  <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk__in</span><span class="o">=</span><span class="n">ids</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">"pk"</span><span class="p">))</span>
+        <span class="n">products</span> <span class="o">=</span> <span class="p">{</span><span class="n">product</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span> <span class="n">product</span> <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">locked</span><span class="p">}</span>
+
+        <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">customer</span><span class="o">=</span><span class="n">customer</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0"</span><span class="p">))</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"0"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="n">products</span><span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">product_id</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">product</span><span class="o">.</span><span class="n">stock</span> <span class="o">&lt;</span> <span class="n">line</span><span class="o">.</span><span class="n">quantity</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">OutOfStock</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+            <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">stock</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s2">"stock"</span><span class="p">)</span> <span class="o">-</span> <span class="n">line</span><span class="o">.</span><span class="n">quantity</span><span class="p">)</span>
+            <span class="n">OrderItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span>
+                                     <span class="n">quantity</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">quantity</span><span class="p">,</span>
+                                     <span class="n">price</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">product</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">line</span><span class="o">.</span><span class="n">quantity</span>
+
+        <span class="n">order</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">update_fields</span><span class="o">=</span><span class="p">[</span><span class="s2">"total"</span><span class="p">])</span>
+        <span class="n">payments</span><span class="o">.</span><span class="n">charge</span><span class="p">(</span><span class="n">customer</span><span class="o">=</span><span class="n">customer</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="n">total</span><span class="p">,</span>
+                        <span class="n">reference</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">order</span><span class="o">.</span><span class="n">pk</span><span class="p">))</span>
+        <span class="n">transaction</span><span class="o">.</span><span class="n">on_commit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">send_order_received</span><span class="p">(</span><span class="n">order</span><span class="o">.</span><span class="n">pk</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">order</span>
+</code></pre></div>
+
+<p>What changed:</p>
+<ul>
+<li><strong><code>transaction.atomic()</code></strong> wraps the whole use case. Any exception, including a payment failure, rolls back the stock and the order.</li>
+<li><strong><code>select_for_update()</code></strong> locks the product rows, in a stable order, so two orders for the last item can't both win.</li>
+<li><strong><code>F("stock") - quantity</code></strong> does the decrement in the database rather than in Python.</li>
+<li><strong><code>transaction.on_commit()</code></strong> sends the email only once the order really exists.</li>
+<li><strong><code>payments</code> is passed in.</strong> In production it's a thin wrapper around your provider. In tests it's a fake. No <code>mock.patch</code> on a module path.</li>
+<li><strong><code>OutOfStock</code> is a real exception.</strong> The caller decides what it means: a 409 for the API, a message in the admin, a log line in a batch job.</li>
+</ul>
+<p>One honest caveat: charging a card inside a database transaction holds row locks while you wait on a network call. For a low-volume shop that's fine. At scale you'd split it into "reserve, then charge, then confirm" steps. The point is that once the logic lives in one function, that refactor is one file, not a hunt through serializers and signals.</p>
+<h2>The view and serializer get boring</h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PlaceOrderInput</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">LineInput</span><span class="p">(</span><span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PlaceOrderView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">PlaceOrderInput</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">LineRequest</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">validated_data</span><span class="p">[</span><span class="s2">"items"</span><span class="p">]]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">place_order</span><span class="p">(</span><span class="n">customer</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="n">lines</span><span class="p">,</span>
+                                <span class="n">payments</span><span class="o">=</span><span class="n">get_payment_gateway</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">OutOfStock</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"out_of_stock"</span><span class="p">,</span> <span class="s2">"product_id"</span><span class="p">:</span> <span class="n">exc</span><span class="o">.</span><span class="n">product_id</span><span class="p">},</span>
+                <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_409_CONFLICT</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">OrderOutput</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The serializer checks shape: is <code>quantity</code> an integer, is <code>product_id</code> present. The view maps HTTP to a call and exceptions to status codes. That's all either of them should ever do. Boring is the goal.</p>
+<h2>Testing without HTTP</h2>
+<p>Now the important rules are tested directly:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FakePayments</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fail</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fail</span> <span class="o">=</span> <span class="n">fail</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">object</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">reference</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"card declined"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">customer</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_payment_failure_rolls_back_stock</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">product_with_stock</span><span class="p">):</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="n">product_with_stock</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"10.00"</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+        <span class="n">place_order</span><span class="p">(</span><span class="n">customer</span><span class="o">=</span><span class="n">customer</span><span class="p">,</span>
+                    <span class="n">lines</span><span class="o">=</span><span class="p">[</span><span class="n">LineRequest</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">pk</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+                    <span class="n">payments</span><span class="o">=</span><span class="n">FakePayments</span><span class="p">(</span><span class="n">fail</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="n">product</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">product</span><span class="o">.</span><span class="n">stock</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</code></pre></div>
+
+<p>No client, no JSON, no auth setup, no patching. The test reads like the rule it protects. Keep one or two API tests per endpoint to check the wiring, and put the volume of your tests at the service level.</p>
+<h2>Rules I actually follow</h2>
+<ul>
+<li><strong>One use case, one function.</strong> <code>place_order</code>, <code>cancel_order</code>, <code>refund_order</code>. Name them after what the business says, not after HTTP verbs.</li>
+<li><strong>Keyword-only arguments.</strong> <code>place_order(customer=..., lines=...)</code> can't be called with arguments in the wrong order.</li>
+<li><strong>Services take values, not requests.</strong> Pass <code>request.user</code>, never <code>request</code>.</li>
+<li><strong>Reads can be selectors.</strong> A <code>selectors.py</code> with query functions keeps complex querysets out of views too. Simple <code>Model.objects.filter()</code> calls in a view are fine. Don't build ceremony for one-liners.</li>
+<li><strong>Models keep row-level logic.</strong> <code>order.is_refundable()</code> belongs on the model. "Refund this order, restock, notify the warehouse and reverse the charge" does not.</li>
+<li><strong>No signals for business flow.</strong> Signals are for decoupled side concerns like cache busting. If it's part of the use case, call it explicitly.</li>
+<li><strong>Don't build a framework.</strong> No abstract base <code>Service</code> class, no command bus, no dependency injection container. Functions and modules. Python already has them.</li>
+</ul>
+<h2>When this is overkill</h2>
+<p>A CRUD admin over a few tables doesn't need a service layer. If a <code>ModelViewSet</code> really is the whole feature, enjoy it. The moment an endpoint does more than save what it was given, such as touching a second model, calling an external API or enforcing a rule the business cares about, move it into a function. It takes ten minutes now, or a week later.</p>
+<h2>Bottom line</h2>
+<p>Django gives you an excellent ORM and a decent request cycle. It doesn't give you a place for your domain, so you have to make one. <strong>Thin views, dumb serializers, plain service functions.</strong> Your rules become callable from anywhere, testable in milliseconds and readable by the next developer, who is usually you, six months from now, at 11 pm, during an incident.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+  <li><a href="/the-problems-with-django-rest-framework.html"><span class="t">The Problems with Django REST Framework</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-02-02">Feb 2025</time></a></li>
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-21">Oct 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/the-problems-with-django-rest-framework.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">The Problems with Django REST Framework</span></a><a class="pn newer" href="/why-microservices-are-a-luxury-tax-on-startups.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Why Microservices Are a Luxury Tax on Startups</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

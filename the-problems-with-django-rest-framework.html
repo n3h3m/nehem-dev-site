@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Problems with Django REST Framework — Nehemiah Jacob</title>
+<meta name="description" content="A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/the-problems-with-django-rest-framework.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/the-problems-with-django-rest-framework.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/the-problems-with-django-rest-framework.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="The Problems with Django REST Framework">
+<meta property="og:description" content="A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.">
+<meta property="og:url" content="https://nehem.dev/the-problems-with-django-rest-framework.html">
+<meta property="og:image" content="https://nehem.dev/og/the-problems-with-django-rest-framework.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Problems with Django REST Framework — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2025-02-02"><meta property="article:modified_time" content="2025-02-02"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="django"><meta property="article:tag" content="rest"><meta property="article:tag" content="api"><meta property="article:tag" content="drf"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Problems with Django REST Framework">
+<meta name="twitter:description" content="A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.">
+<meta name="twitter:image" content="https://nehem.dev/og/the-problems-with-django-rest-framework.png">
+<meta name="twitter:image:alt" content="The Problems with Django REST Framework — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/the-problems-with-django-rest-framework.html#article","headline":"The Problems with Django REST Framework","description":"A critique of Django REST Framework: how it inherits Django Forms' design, its boilerplate and performance costs, the one thing it gets right, and why to move on.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/the-problems-with-django-rest-framework.png","width":1200,"height":630},"datePublished":"2025-02-02","dateModified":"2025-02-02","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/the-problems-with-django-rest-framework.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/the-problems-with-django-rest-framework.html","inLanguage":"en-AU","keywords":["django","rest","api","drf"],"wordCount":1102,"timeRequired":"PT6M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"The Problems with Django REST Framework","item":"https://nehem.dev/the-problems-with-django-rest-framework.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+<link rel="stylesheet" href="/code.css?v=a5120a28">
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">The Problems with Django REST Framework</h1>
+<p class="dek">Django REST Framework: The Over-Engineered Greedy Corpse of Django Forms That Refuses to Die</p>  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2025-02-02">2 Feb 2025</time></p>
+      <p>6 min read</p>
+<ul class="tags" aria-label="Tags"><li>django</li><li>rest</li><li>api</li><li>drf</li></ul>    </aside>
+    <div class="prose">
+<p>Let's start by burying REST itself real quick, because DRF is built on the rotting foundation of a 2000s architectural cargo cult that's been wheezing since <a href="https://graphql.org/">GraphQL</a>, <a href="https://grpc.io/">gRPC</a>, tRPC, and even plain JSON-RPC started laughing at it.</p>
+<p>RESTful, the idea was great in 2006 when <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Roy Fielding</a> was drunk on HTTP verbs and everyone pretended <a href="https://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a> was gonna save, decades later it's mostly a theater:  </p>
+<ul>
+<li>Over-fetching/under-fetching hell  </li>
+<li>N+1 query nightmares hidden behind "pagination"  </li>
+<li>Verb gymnastics for what should just be RPC calls  </li>
+<li>Versioning nightmares because you can't change anything useful without breaking clients  </li>
+<li>Idempotent PUT/DELETE promises that fall apart the second you touch real business logic  </li>
+</ul>
+<p>REST isn't a protocol, it's a style guide nobody follows consistently. Most REST APIs are just RPC dressed in HTTP clothing with extra steps. We could roast REST for a whole post (and we should), but let's save the funeral for later. Today the victim is DRF, the greedy middle child that tried to turn Django into a REST cosplay while dragging the corpse of Django forms/templates into the API era.</p>
+<h2>The original sin: DRF is literally Django Forms 2.0 but for JSON</h2>
+<p>Django had this beautiful (for 2005) story:  </p>
+<ul>
+<li>Models - Forms - Views - Templates  </li>
+<li>ModelForm auto-magics validation + rendering  </li>
+<li>Clean, batteries-included, beginner-friendly magic  </li>
+</ul>
+<p>Then mobile/SPA/React/Vue/Flutter happened. Templates died. Forms became irrelevant for anything except admin/internal tools. The backend's job shrank to "give me JSON, validate it, save it, bye."</p>
+<p>Instead of letting Django evolve into a clean, API-first beast, someone said:<br />
+"Wait… what if we just slap the exact same form/model magic onto APIs? Call it Serializer instead of Form! Call it ViewSet instead of View! Reuse all the terminology so nobody has to learn anything new!"</p>
+<p>Boom, DRF was born. Greedy as hell. It didn't innovate; it ported dying concepts to a new world and pretended it was progress.</p>
+<ul>
+<li><strong>ModelSerializer</strong> = ModelForm but JSON  </li>
+<li><strong>Serializer</strong> = Form  </li>
+<li><strong>Validation</strong> = same clean/validate_{field} hooks  </li>
+<li><strong>to_representation</strong> = basically render_to_response but manual  </li>
+</ul>
+<p>They didn't simplify APIs. They forced every Django dev to keep thinking in form-based, server-rendered mental models when the client is now the one doing rendering/validation/display. The backend should be dumb, stateless, JSON-in/JSON-out. DRF makes it feel like you're still building a monolith MPA with extra steps.</p>
+<h2>The boilerplate apocalypse</h2>
+<p>You want a simple CRUD for a model? In plain Django + JsonResponse:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">thing_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'GET'</span><span class="p">:</span>
+        <span class="n">things</span> <span class="o">=</span> <span class="n">Thing</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">'things'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">things</span><span class="o">.</span><span class="n">values</span><span class="p">())},</span> <span class="n">safe</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span>
+        <span class="c1"># parse, validate, save, return 3-20 lines max</span>
+        <span class="o">...</span>
+</code></pre></div>
+
+<p>20–40 lines tops for basic endpoints. Readable. Controllable. No magic.</p>
+<p>DRF version?  </p>
+<ul>
+<li>Serializer class  </li>
+<li>Meta fields/exclude/depth/nested hell  </li>
+<li>ViewSet (or GenericAPIView + mixins)  </li>
+<li>Router registration  </li>
+<li>Override get_queryset, get_serializer_class, perform_create, etc.  </li>
+<li>Custom actions @action(detail=True)  </li>
+<li>Throttling classes, permission classes, pagination classes  </li>
+</ul>
+<p>Suddenly your "simple" API requires 300+ lines across 7 files for what should be a function. Inheritance chains so deep you need a map to debug why create() is calling update() sideways. New devs stare and go "this is Python?" Nope, it's DRF cult initiation.</p>
+<p>It's not beginner-friendly, it's Django-expert-only. New devs look at DRF code and think "this framework is fighting me." Because it is. The so called magic only works if you surrender to the DRF way. Deviate once (custom validation, non-model data, weird nesting) and you're overriding half the base classes anyway.</p>
+<h2>Performance? What performance?</h2>
+<p>ModelSerializer is infamous for being glacially slow. Benchmarks show it 300–400× slower than plain dict conversion on simple objects. </p>
+<ul>
+<li>ModelSerializer dynamically builds fields every request - perf hit on hot paths  </li>
+<li>Deep nesting + source= tricks = N+1 + slow serialization  </li>
+<li>High-cardinality stuff (like dynamic fields) makes caching/debugging hell  </li>
+<li>ViewSets encourage god-classes with 10+ methods  </li>
+<li>Third-party packages? Either you lock into DRF ecosystem forever or you rewrite  </li>
+</ul>
+<p>Tom Christie (DRF creator) himself warned: <a href="https://hakibenita.com/django-rest-framework-slow">avoid serializers in perf-critical paths</a>. Yet DRF pushes them as default. In 2026, when your API hits 1k+ req/s, you're profiling and cursing because DRF decided "magic" &gt; speed.</p>
+<p>Meanwhile, alternatives like <a href="https://django-ninja.dev/">Django Ninja</a> or plain views + <a href="https://docs.pydantic.dev/">Pydantic</a>/<a href="https://fastapi.tiangolo.com/">FastAPI</a>-style type hints let you write functions that look like functions. Async support? Native in Ninja/FastAPI. Auto OpenAPI? Built-in without extra config. DRF feels like it's still stuck in 2015 sync land.</p>
+<h2>Maintenance &amp; stagnation</h2>
+<p>Last major release? 3.14 in late 2022. Anything since 3.15 is minor fixes which are basically pushing DRF into life support.  </p>
+<ul>
+<li>No real async love, still sync-first, async hacks feel bolted-on. While Django grew async views/ORM, DRF stayed in sync land  </li>
+<li>Community shifting hard: Reddit/HN/Upwork points the trend of moving to FastAPI / Django Ninja for new projects  </li>
+<li>Django Ninja / FastAPI give auto OpenAPI, Pydantic validation, type hints, blazing perf, native async-DRF feels like a Windows XP app next to them  </li>
+</ul>
+<p>Django core in 2025+ basically said "REST? Not our problem—use third-party." And people still defend DRF as "batteries-included" when it's the opposite: extra dependency that locks you out of modern Python niceties.</p>
+<h2>More nails in the coffin</h2>
+<ul>
+<li><strong>Ecosystem lock-in trap</strong> - DRF plugins everywhere, but deviate once (custom auth, weird nesting, non-CRUD) and you're rewriting base classes. Good luck migrating later.  </li>
+<li><strong>Documentation overwhelm</strong> - Official docs are a wiki maze. Click one link - 47 new concepts - infinite tabs. Beginners get lost for weeks.  </li>
+<li><strong>ViewSet god-classes</strong> - One class handles list/create/retrieve/update/partial_update/delete + 10 custom actions. Breaks single-responsibility so hard it's comical.  </li>
+<li><strong>Pagination &amp; throttling good? Sure</strong> - But you can steal throttling in 50 lines. Don't need the whole framework for it.  </li>
+<li><strong>Community burnout signal</strong> - Threads everywhere: "DRF in 2025? Why still third-party for batteries-included Django?" "Moved to Ninja—never looking back." "DRF feels bloated/clunky/stale."  </li>
+</ul>
+<h2>The one good thing (because fairness)</h2>
+<p>Throttling/rate-limiting in DRF is genuinely clean. ScopedThrottler, UserRateThrottle, etc., solid. If I ever touch DRF again, it's probably just to steal the throttling middleware and throw the rest away.</p>
+<p>But that's it. Everything else? You can roll in 20 lines of if/else + JsonResponse + basic validation. DRF is overkill for 80% of APIs and actively harmful for the rest.</p>
+<h2>Verdict 2025: Move on</h2>
+<p>DRF was peak 2015: when REST was king and Django needed API lipstick. In 2025 it's a luxury tax on velocity, perf, and sanity. Here is how to move on:</p>
+<ul>
+<li>For simple APIs use Plain views + JsonResponse </li>
+<li>For complex usecases &amp; API docs stick to Django Ninja (FastAPI syntax + Django ORM/admin) or full FastAPI  </li>
+<li>For existing legacy projects, sure, maintain it. But start writing newer endpoints and versions using Django Ninja or FastAPI</li>
+</ul>
+<p>Whoever starts a greenfield project with full DRF in 2025 is either trying to get paid by the line of code or hasn't profiled serialization lag yet, Or hasn't discovered they can just write functions that return JSON  </p>
+<p>Rest in pieces, DRF. You overstayed your welcome. You were never necessary.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/stop-putting-business-logic-in-django-views-and-serializers.html"><span class="t">Stop Putting Business Logic in Django Views and Serializers</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-04-08">Apr 2025</time></a></li>
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-21">Oct 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/why-is-python-unsuitable-as-a-mobile-application-development-language.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Why is Python unsuitable as a mobile application development language</span></a><a class="pn newer" href="/stop-putting-business-logic-in-django-views-and-serializers.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Stop Putting Business Logic in Django Views and Serializers</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

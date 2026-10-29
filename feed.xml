@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-AU">
+  <title>nehem.dev — Writing by Nehemiah Jacob</title>
+  <subtitle>Essays on Python, Django, APIs and software design.</subtitle>
+  <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
+  <id>https://nehem.dev/writing/</id>
+  <updated>2026-10-21T00:00:00+10:00</updated>
+  <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+  <icon>https://nehem.dev/favicon-192.png</icon>
+  <entry>
+    <title>What a Decade of Python Taught Me About Boring Technology</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"/>
+    <id>https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html</id>
+    <published>2026-10-21T00:00:00+10:00</published>
+    <updated>2026-10-21T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.</summary>
+    <category term="Python"/><category term="Engineering"/><category term="Career"/><category term="Architecture"/>
+    <content type="html">&lt;p&gt;There's a version of a software career where you chase every new framework, rewrite your stack every eighteen months and spend more time on migrations than on the product. Plenty of us have done a stretch of it. The systems that last, the ones that ship features for years without drama, are almost always built on the dullest tools available.&lt;/p&gt;
+&lt;p&gt;The position: &lt;strong&gt;boring technology is a competitive advantage, not a compromise.&lt;/strong&gt; Python, Django, Postgres, a load balancer and a few well-understood AWS services will take most products further than any shiny stack. The skill isn't knowing the newest tool. It's knowing when not to use it.&lt;/p&gt;
+&lt;h2&gt;Boring means understood, not old&lt;/h2&gt;
+&lt;p&gt;Dan McKinley's essay &lt;a href="https://mcfunley.com/choose-boring-technology"&gt;Choose Boring Technology&lt;/a&gt; put it better than anyone: a boring tool is one whose &lt;strong&gt;failure modes are known.&lt;/strong&gt; You can search the error message and find the answer. You know how it behaves under load, how it breaks, and how to fix it at 2 am.&lt;/p&gt;
+&lt;p&gt;That's the real asset. Not features. Not benchmarks. Predictability.&lt;/p&gt;
+&lt;p&gt;Django is boring in exactly this way. The ORM has its sharp edges, and they're documented. The migration system has its quirks, and Stack Overflow has an answer for each one. Postgres is boring. Gunicorn is boring. SQS is boring. Every one of them has had its corner cases found by many people before you.&lt;/p&gt;
+&lt;p&gt;A new tool has failure modes too. You just don't know them yet, and you'll discover them in production.&lt;/p&gt;
+&lt;h2&gt;Spend your innovation where customers notice&lt;/h2&gt;
+&lt;p&gt;McKinley's other idea is the &lt;strong&gt;innovation token&lt;/strong&gt;: every team gets a small number, and each new, unproven technology spends one. Spend them on what makes your product different. Not on the plumbing.&lt;/p&gt;
+&lt;p&gt;If your product is a pricing engine, innovate on pricing. Run it on Django and Postgres. If your product is a new kind of search, maybe the search engine is your token, and everything else should be as dull as possible.&lt;/p&gt;
+&lt;p&gt;The common failure is the reverse: a completely ordinary CRUD product running on a novel database, a new frontend framework, an event-sourcing library and a service mesh. Four tokens spent, none of them on anything a customer will ever see.&lt;/p&gt;
+&lt;h2&gt;The habits that held up&lt;/h2&gt;
+&lt;p&gt;Some lessons I'd give my younger self, in no particular order:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Read the standard library before installing a package.&lt;/strong&gt; &lt;code&gt;dataclasses&lt;/code&gt;, &lt;code&gt;pathlib&lt;/code&gt;, &lt;code&gt;itertools&lt;/code&gt;, &lt;code&gt;functools&lt;/code&gt;, &lt;code&gt;zoneinfo&lt;/code&gt;, &lt;code&gt;concurrent.futures&lt;/code&gt;, &lt;code&gt;sqlite3&lt;/code&gt;. Python ships a lot. Every dependency is code you didn't write and will have to upgrade.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prefer a function to a class, and a module to a framework.&lt;/strong&gt; Most abstractions people build in Python are a function with extra steps.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Plain SQL is a skill, not a smell.&lt;/strong&gt; The ORM is great for 90% of queries. For the other 10%, reading &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt; beats any amount of queryset cleverness.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Delete code aggressively.&lt;/strong&gt; Dead feature flags, unused endpoints, compatibility shims for clients that no longer exist. Every line you keep is a line someone has to understand.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Logs and metrics before features.&lt;/strong&gt; You can't fix what you can't see. A structured log line with a request ID has saved more incidents than any architecture change.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Upgrade little and often.&lt;/strong&gt; Staying one minor version behind on Python and Django is cheap. Falling three major versions behind is a project with its own budget.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Write the boring test.&lt;/strong&gt; Not a clever property-based suite for everything. One test per business rule, named after the rule, that fails clearly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Complexity is a loan&lt;/h2&gt;
+&lt;p&gt;Every piece of complexity you add is borrowed against future time. Microservices, a second database, a message bus, a custom deploy tool. Each one might be justified. Each one charges interest: on-call load, onboarding time, upgrade work, things that can partially fail.&lt;/p&gt;
+&lt;p&gt;The question I ask now before adding anything is simple: &lt;strong&gt;what's the cheapest thing that could possibly work, and what evidence would make me outgrow it?&lt;/strong&gt; Write the evidence down. "When the jobs table bloats past what autovacuum can handle." "When two teams are blocked on the same deploy." Then build the cheap thing and watch for the evidence.&lt;/p&gt;
+&lt;p&gt;Most of the time, it never shows up.&lt;/p&gt;
+&lt;h2&gt;Where boring goes wrong&lt;/h2&gt;
+&lt;p&gt;Boring isn't the same as stagnant. A few traps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Boring isn't unmaintained.&lt;/strong&gt; Running an end-of-life Python version isn't conservative, it's a security liability. Boring tools still need upgrades.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boring isn't "what we used last time" forever.&lt;/strong&gt; If a new tool is mature, well understood and clearly better for a real problem, like &lt;code&gt;uv&lt;/code&gt; for Python packaging or &lt;code&gt;ruff&lt;/code&gt; for linting, adopt it. The test is maturity and fit, not age.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boring isn't refusing to learn.&lt;/strong&gt; Learn the new things. Build side projects with them. Just don't make your production system the place where you learn them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What actually made the difference&lt;/h2&gt;
+&lt;p&gt;Looking back, the projects that went well had little to do with the stack. They had:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A clear understanding of what the business actually needed this quarter.&lt;/li&gt;
+&lt;li&gt;A small number of well-understood moving parts.&lt;/li&gt;
+&lt;li&gt;Fast, boring deploys, many times a week.&lt;/li&gt;
+&lt;li&gt;Engineers who could explain the whole system on a whiteboard.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The projects that struggled usually had an impressive architecture diagram and nobody who could explain all of it.&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;Years of Python have taught me that &lt;strong&gt;the most valuable engineering skill is restraint.&lt;/strong&gt; Use the tool everyone understands. Spend novelty only where it creates value customers can feel. Keep the system small enough to fit in one head. It doesn't make for exciting conference talks, but it makes for software that ships, keeps shipping and lets you sleep.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Postgres Is Enough: Skip the Extra Database Until It Hurts</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"/>
+    <id>https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html</id>
+    <published>2026-06-09T00:00:00+10:00</published>
+    <updated>2026-06-09T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Postgres can run your job queue, full-text search, JSON documents and cache. How to do each one, with SQL and Django examples, and the signs it's time to add more.</summary>
+    <category term="Postgres"/><category term="Django"/><category term="Architecture"/><category term="Databases"/>
+    <content type="html">&lt;p&gt;Every new project seems to start with the same architecture diagram: Postgres for data, Redis for cache, RabbitMQ or SQS for jobs, Elasticsearch for search, maybe MongoDB "for the flexible stuff". Five systems to provision, secure, back up, monitor and keep consistent, for an app with three hundred users.&lt;/p&gt;
+&lt;p&gt;The position: &lt;strong&gt;Postgres is enough for far longer than you think.&lt;/strong&gt; It's a queue, a search engine, a document store and a cache, all with transactions, one backup and one connection string. Add another datastore when Postgres is measurably hurting, not when a blog post says you'll need it "at scale".&lt;/p&gt;
+&lt;h2&gt;The real cost of the extra box&lt;/h2&gt;
+&lt;p&gt;Every additional datastore costs more than its hosting bill:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Consistency.&lt;/strong&gt; Write an order to Postgres and a job to Redis. Postgres commits, Redis is unreachable. Now you have an order nobody will ever process. Or the reverse: the job runs before the transaction commits and can't find the row.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operations.&lt;/strong&gt; Another thing to patch, monitor, alert on, upgrade and restore. Another set of credentials. Another failure mode at 3 am.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local development and CI.&lt;/strong&gt; Every service is one more container in &lt;code&gt;docker compose&lt;/code&gt;, one more thing to seed in tests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Knowledge.&lt;/strong&gt; Your team needs to understand the failure semantics of each system. Most teams deeply understand one database at best.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When the queue lives in the same database as the data, &lt;strong&gt;enqueuing a job is part of the same transaction.&lt;/strong&gt; Commit the order and the job together, or neither. That one property eliminates a whole category of bugs.&lt;/p&gt;
+&lt;h2&gt;A job queue with SKIP LOCKED&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;FOR UPDATE SKIP LOCKED&lt;/code&gt; (since Postgres 9.5) is what makes a Postgres queue practical. Workers lock the next available row and skip rows other workers already hold, so they never block on each other or grab the same job.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;TABLE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;jobs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="nb"&gt;bigint&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;GENERATED&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ALWAYS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;AS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;IDENTITY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;PRIMARY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;KEY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;NOT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DEFAULT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'default'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;payload&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;jsonb&lt;/span&gt;&lt;span class="w"&gt;       &lt;/span&gt;&lt;span class="k"&gt;NOT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;run_at&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;timestamptz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NOT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DEFAULT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;attempts&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="k"&gt;NOT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DEFAULT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;CREATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;INDEX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;jobs_ready_idx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;ON&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;jobs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;run_at&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A worker runs this inside a transaction, does the work, then deletes the row and commits:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;BEGIN&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;payload&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;jobs&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'default'&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;AND&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;run_at&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;run_at&lt;/span&gt;
+&lt;span class="k"&gt;LIMIT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="k"&gt;FOR&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;UPDATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SKIP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;LOCKED&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- do the work in application code, then:&lt;/span&gt;
+&lt;span class="k"&gt;DELETE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;jobs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;COMMIT&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If the worker crashes mid-job, the transaction rolls back, the lock is released and the job becomes available again. No visibility timeouts, no lost messages. For failures you catch, bump &lt;code&gt;attempts&lt;/code&gt; and push &lt;code&gt;run_at&lt;/code&gt; forward for a retry with backoff.&lt;/p&gt;
+&lt;p&gt;The trade-off: the transaction stays open while the job runs, so keep jobs short. For long jobs, claim the row with a &lt;code&gt;locked_until&lt;/code&gt; column instead, and reclaim expired ones.&lt;/p&gt;
+&lt;p&gt;You don't have to build this yourself. In Python, &lt;strong&gt;Procrastinate&lt;/strong&gt; is a Postgres-backed task queue, and since Django 6.0 there's a built-in Tasks API (&lt;code&gt;django.tasks&lt;/code&gt;) with database-backed workers available through the &lt;code&gt;django-tasks-db&lt;/code&gt; package. Postgres also has &lt;code&gt;LISTEN&lt;/code&gt;/&lt;code&gt;NOTIFY&lt;/code&gt; for waking workers without polling.&lt;/p&gt;
+&lt;h2&gt;Full-text search that's good enough&lt;/h2&gt;
+&lt;p&gt;Before standing up Elasticsearch, try a generated &lt;code&gt;tsvector&lt;/code&gt; column with a GIN index:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;ALTER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;TABLE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;ADD&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;COLUMN&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;search&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tsvector&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;GENERATED&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ALWAYS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;AS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;setweight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;to_tsvector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;coalesce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'A'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;setweight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;to_tsvector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;coalesce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'B'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;STORED&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;CREATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;INDEX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;articles_search_idx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;ON&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;USING&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;search&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ts_rank&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;search&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;AS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rank&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;websearch_to_tsquery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'django "service layer" -celery'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="k"&gt;AS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;search&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;@@&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DESC&lt;/span&gt;
+&lt;span class="k"&gt;LIMIT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That gives you stemming ("orders" matches "order"), weighted fields, quoted phrases and exclusions through &lt;code&gt;websearch_to_tsquery&lt;/code&gt;, which accepts the kind of syntax people type into search boxes. Add the &lt;code&gt;pg_trgm&lt;/code&gt; extension for typo-tolerant matching on names and short strings.&lt;/p&gt;
+&lt;p&gt;Django supports this directly through &lt;code&gt;django.contrib.postgres.search&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;django.contrib.postgres.search&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SearchQuery&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SearchRank&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;django.db.models&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;F&lt;/span&gt;
+
+&lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SearchQuery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"django service layer"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;search_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"websearch"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"english"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;Article&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;annotate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;SearchRank&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"search"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;order_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"-rank"&lt;/span&gt;&lt;span class="p"&gt;)[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It won't match a dedicated search engine on relevance tuning, faceting at huge scale or multi-language analysis. For a product catalogue, a help centre or an admin search box, it's usually plenty.&lt;/p&gt;
+&lt;h2&gt;JSON when the schema really is flexible&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;jsonb&lt;/code&gt; stores JSON in a binary, indexable form. Need to store webhook payloads, per-tenant settings or third-party API responses? You don't need a document database.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;INDEX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;events_payload_idx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;ON&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;events&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;USING&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;payload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;jsonb_path_ops&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;events&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;payload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;@&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'{"type": "invoice.paid"}'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In Django, &lt;code&gt;models.JSONField&lt;/code&gt; maps to &lt;code&gt;jsonb&lt;/code&gt; on Postgres, and lookups like &lt;code&gt;filter(payload__type="invoice.paid")&lt;/code&gt; work out of the box.&lt;/p&gt;
+&lt;p&gt;One warning: &lt;code&gt;jsonb&lt;/code&gt; is a pressure valve, not a design. If you're querying the same keys in every request, they're columns. Promote them.&lt;/p&gt;
+&lt;h2&gt;A cache that's one table&lt;/h2&gt;
+&lt;p&gt;For many apps the "cache" is a handful of expensive computed values. Postgres can hold those in an &lt;code&gt;UNLOGGED&lt;/code&gt; table, which skips the write-ahead log, so writes are cheaper. The catch is that it's truncated after a crash, which is exactly the durability a cache needs.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNLOGGED&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;TABLE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;cache&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;key&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;PRIMARY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;KEY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;jsonb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NOT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;expires_at&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;timestamptz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NOT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;NULL&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;INSERT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;INTO&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;cache&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;expires_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;VALUES&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'dashboard:42'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'{"orders": 118}'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;interval&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'5 minutes'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;ON&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;CONFLICT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DO&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;UPDATE&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;SET&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;EXCLUDED&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;expires_at&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;EXCLUDED&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expires_at&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Django also ships a database cache backend, &lt;code&gt;django.core.cache.backends.db.DatabaseCache&lt;/code&gt;, set up with &lt;code&gt;manage.py createcachetable&lt;/code&gt;. Before you add a cache at all, check whether the real fix is an index, a &lt;code&gt;select_related()&lt;/code&gt; or a materialized view.&lt;/p&gt;
+&lt;h2&gt;When it actually hurts&lt;/h2&gt;
+&lt;p&gt;I'm not saying never. I'm saying wait for evidence. Signs that it's time:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Queue throughput.&lt;/strong&gt; Sustained high job volume where the jobs table churns faster than autovacuum keeps up, and the bloat shows in your metrics. That's when SQS or a dedicated broker earns its keep.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cache hit volume.&lt;/strong&gt; You need very high read rates on hot keys with sub-millisecond latency, and the cache traffic is competing with your real queries for connections and CPU. That's what Redis or Valkey is for.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Search quality.&lt;/strong&gt; Users need faceting, synonyms, typo tolerance across large corpora or relevance tuning you can't get from &lt;code&gt;ts_rank&lt;/code&gt;. Bring in OpenSearch, Meilisearch or similar.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analytics.&lt;/strong&gt; Large aggregations over hundreds of millions of rows slow down the primary. Move them to a replica first, then to a columnar store if needed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fan-out and streaming.&lt;/strong&gt; Many consumers replaying an event log is Kafka's job, not a jobs table.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Every one of those is a measurement, not a feeling. Watch query latency, connection count, replication lag, table bloat and CPU. When a specific workload is the cause, extract that workload, and only that one.&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;Postgres has decades of engineering behind it, transactions across everything you put in it, and one backup story. &lt;strong&gt;Start with one database. Use it properly. Add the second system when a graph tells you to, not when a diagram does.&lt;/strong&gt; Most products never get there, and the ones that do will know exactly which piece to move out.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html"/>
+    <id>https://nehem.dev/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html</id>
+    <published>2026-02-19T00:00:00+10:00</published>
+    <updated>2026-02-19T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>AWS Lambda bills wall-clock time per request, so steady traffic can cost more than an EC2 box. The formula, a worked example, cold starts and when Lambda wins.</summary>
+    <category term="AWS"/><category term="Lambda"/><category term="Serverless"/><category term="EC2"/><category term="Cost"/>
+    <content type="html">&lt;p&gt;"Serverless is cheaper" is one of those lines that gets repeated until nobody checks it. For a cron job that runs twice a day, it's true. For a Django API with steady traffic, it's often false, sometimes by a wide margin, and the bill arrives after the architecture is already committed.&lt;/p&gt;
+&lt;p&gt;The position: &lt;strong&gt;Lambda is priced per unit of work, EC2 is priced per unit of time. Below a certain steady load, per-work wins. Above it, the boring box wins, and the crossover comes sooner than people expect.&lt;/strong&gt; You can work out where yours is with a calculator and ten minutes. Most teams never do.&lt;/p&gt;
+&lt;h2&gt;How Lambda actually bills&lt;/h2&gt;
+&lt;p&gt;The pricing model is simple, which is exactly why it's easy to underestimate:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;A request charge&lt;/strong&gt; per invocation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A duration charge&lt;/strong&gt; in GB-seconds: allocated memory multiplied by the time your function runs, billed per millisecond.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A free tier&lt;/strong&gt; of 1 million requests and 400,000 GB-seconds per month.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Since 1 August 2025, the INIT phase is billed&lt;/strong&gt; for on-demand ZIP functions on managed runtimes too. Cold start time is now part of your bill, not just your latency.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extras around it:&lt;/strong&gt; API Gateway or a function URL in front, CloudWatch Logs for every invocation, NAT gateway charges if your function sits in a VPC and calls the internet, and provisioned concurrency if you buy your way out of cold starts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As of February 2026, the AWS pricing page lists x86 on-demand duration at $0.0000166667 per GB-second and requests at $0.20 per million, in its worked example. Prices vary by region and Arm (Graviton) is cheaper per GB-second, so check your own region before you plug in numbers.&lt;/p&gt;
+&lt;h2&gt;The part everybody misses: you pay for waiting&lt;/h2&gt;
+&lt;p&gt;A typical Django endpoint doesn't compute much. It receives a request, runs a few queries, maybe calls another service, serialises JSON. Most of its wall-clock time is spent &lt;strong&gt;waiting on I/O&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;On an EC2 box, that waiting is nearly free. While one request waits on Postgres, the same process, through threads, async or more workers, serves others. One instance overlaps hundreds of waiting requests.&lt;/p&gt;
+&lt;p&gt;On default Lambda, each execution environment handles one request at a time, and you're billed for its full duration, waiting included. A 200 ms request that spends 180 ms waiting on the database costs you 200 ms of allocated memory. Lambda bills you for the time your code is idle.&lt;/p&gt;
+&lt;p&gt;That's the structural reason I/O-heavy, steady-traffic APIs tend to be expensive on Lambda. It's not a pricing trick. It's the model.&lt;/p&gt;
+&lt;h2&gt;The formula&lt;/h2&gt;
+&lt;p&gt;Per month, ignoring the free tier:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;lambda_cost = R * (P_req + d * m * P_gbs)
+
+R      = requests per month
+P_req  = price per request           (e.g. 0.20 / 1,000,000)
+d      = average billed duration, s  (include INIT for cold starts)
+m      = allocated memory, GB
+P_gbs  = price per GB-second         (e.g. 0.0000166667)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The cost per request is the bracket. Break-even against a fixed monthly server cost &lt;code&gt;E&lt;/code&gt; is simply:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;break_even_requests = E / (P_req + d * m * P_gbs)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As code, so you can play with it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;SECONDS_PER_MONTH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;24&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;3600&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;lambda_monthly&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;duration_s&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory_gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;p_req&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.20&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;1_000_000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;p_gbs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.0000166667&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;requests&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rps&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;SECONDS_PER_MONTH&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p_req&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;duration_s&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;memory_gb&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;p_gbs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;break_even_rps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server_monthly&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;duration_s&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory_gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;p_req&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.20&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;1_000_000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                   &lt;span class="n"&gt;p_gbs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.0000166667&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;per_request&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p_req&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;duration_s&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;memory_gb&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;p_gbs&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;server_monthly&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;per_request&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;SECONDS_PER_MONTH&lt;/span&gt;
+
+
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lambda_monthly&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;      &lt;span class="c1"&gt;# 457.92&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;break_even_rps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;150&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;     &lt;span class="c1"&gt;# 16.4&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;A worked example (illustrative numbers)&lt;/h2&gt;
+&lt;p&gt;These are made-up but realistic inputs, not a benchmark. Change them to yours.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An API averaging &lt;strong&gt;50 requests per second&lt;/strong&gt;, all month.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;200 ms&lt;/strong&gt; average duration, &lt;strong&gt;1 GB&lt;/strong&gt; of memory.&lt;/li&gt;
+&lt;li&gt;That's about &lt;strong&gt;129.6 million requests&lt;/strong&gt; a month.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Lambda, before the free tier, API Gateway, logs or NAT:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Requests: 129.6M x $0.20 per million = about &lt;strong&gt;$26&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Duration: 129.6M x 0.2 s x 1 GB = 25.9M GB-s, x $0.0000166667 = about &lt;strong&gt;$432&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Total: about &lt;strong&gt;$458 a month&lt;/strong&gt;, and that's before the extras.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now suppose your alternative, a pair of modest instances behind a load balancer for redundancy, costs &lt;strong&gt;$150 a month&lt;/strong&gt; (an illustrative figure, not a quote; price your own instance types). The break-even is about &lt;strong&gt;16 requests per second&lt;/strong&gt; of average load. Above that, every extra request widens the gap in the box's favour, because the box costs the same whether it's 20% or 70% busy.&lt;/p&gt;
+&lt;p&gt;Notice what moves the answer most: &lt;strong&gt;duration and memory.&lt;/strong&gt; Halve your average duration and Lambda's duration bill halves. Teams that cut Lambda bills mostly do it by making functions faster or smaller, which is a fine outcome. But it's the same work that makes a box handle more load.&lt;/p&gt;
+&lt;h2&gt;Cold starts are a cost, not just a delay&lt;/h2&gt;
+&lt;p&gt;Django is not a small import. Load settings, the ORM, apps, DRF, a few SDKs, and the init phase can take a noticeable fraction of a second. Since INIT is billed, every cold start is paid time. The options all cost something:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Provisioned concurrency&lt;/strong&gt; keeps environments warm, and you pay for it by the hour whether requests arrive or not. Which is, functionally, a server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SnapStart for Python&lt;/strong&gt; restores from a snapshot to cut init time, with its own charges and caveats around anything that must be unique per environment, like random seeds and connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Slimming the package&lt;/strong&gt; and lazy imports help, and they're worth doing anyway.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And then there's the database. Hundreds of concurrent Lambda environments each opening a Postgres connection will exhaust &lt;code&gt;max_connections&lt;/code&gt; quickly. The fix is RDS Proxy or another pooler, which is another line on the bill and another moving part.&lt;/p&gt;
+&lt;h2&gt;Where Lambda genuinely wins&lt;/h2&gt;
+&lt;p&gt;I'm not anti-Lambda. I'm anti-assuming. It's excellent when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Traffic is spiky or near zero most of the time.&lt;/strong&gt; Internal tools, webhooks, a back-office API used during business hours. Scale to zero is real money.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;It's event glue.&lt;/strong&gt; S3 upload triggers, SQS consumers, EventBridge rules, small transforms between AWS services. This is what Lambda was built for and it's hard to beat.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scheduled jobs.&lt;/strong&gt; A nightly report doesn't justify an always-on box.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallel bursts.&lt;/strong&gt; Fan out thousands of independent tasks for five minutes, then nothing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;You have no one to run servers.&lt;/strong&gt; Patching, scaling and replacing instances is real work. If nobody on the team will do it, that labour has a cost too, and it can outweigh the bill difference. Just count it honestly rather than assuming it's huge.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note the shape: Lambda wins when &lt;strong&gt;utilisation would be low&lt;/strong&gt; on a server. The less steady the traffic, the better it looks.&lt;/p&gt;
+&lt;h2&gt;The boring middle ground&lt;/h2&gt;
+&lt;p&gt;It isn't Lambda or a hand-built pet server. A Django app in a container on ECS with Fargate, or an EC2 Auto Scaling group behind a load balancer, gives you managed deploys, health checks and scaling while keeping the concurrency model where one process serves many waiting requests. Add a Compute Savings Plan or reserved capacity for the baseline and your steady load gets cheaper still. AWS itself launched Lambda Managed Instances in late 2025: functions run on EC2 instances, several requests share an execution environment, and you pay EC2 instance prices plus a management fee and the usual request charge, instead of per-request duration. When the vendor ships that hybrid for steady workloads, the trade-off is real.&lt;/p&gt;
+&lt;h2&gt;How to decide&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Pull a month of real traffic. Get average requests per second and the &lt;strong&gt;peak-to-average ratio.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Measure average billed duration and memory from your Lambda &lt;code&gt;REPORT&lt;/code&gt; log lines, or estimate from your current app's response times.&lt;/li&gt;
+&lt;li&gt;Run the formula. Add API Gateway, logs, NAT and any provisioned concurrency.&lt;/li&gt;
+&lt;li&gt;Price the boring alternative honestly, including redundancy and a bit of headroom.&lt;/li&gt;
+&lt;li&gt;If Lambda is cheaper, or close and the ops savings matter, use it. If it's several times more, stop calling it the cheap option.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Lambda bills you for every millisecond your code waits on a database.&lt;/strong&gt; That's perfect for bursty, event-driven and low-traffic work, and expensive for steady APIs. Do the arithmetic before the architecture diagram. The boring EC2 box doesn't have a conference talk, but it often has the smaller invoice.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Store Every Datetime as Naive Asia:Shanghai</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html"/>
+    <id>https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html</id>
+    <published>2025-12-31T00:00:00+10:00</published>
+    <updated>2025-12-31T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Why I store every datetime as naive Asia/Shanghai (UTC+8, no DST) instead of UTC, how Chinese platforms already work this way, and the case for UTZ offsets.</summary>
+    <category term="timezone"/><category term="china"/><category term="utc"/><category term="utz"/>
+    <content type="html">&lt;p&gt;After more than a decade of fighting timezone bugs across distributed systems, I made a deliberate, non-reversible decision in late 2022:&lt;/p&gt;
+&lt;p&gt;Every &lt;code&gt;TIMESTAMP&lt;/code&gt; and &lt;code&gt;DATETIME&lt;/code&gt; column in my production databases is stored &lt;strong&gt;naive&lt;/strong&gt; (timezone-unaware) and interpreted as &lt;strong&gt;Asia/Shanghai&lt;/strong&gt; (&lt;code&gt;UTC+8&lt;/code&gt;, no DST).&lt;/p&gt;
+&lt;p&gt;No &lt;code&gt;timestamptz&lt;/code&gt;. No &lt;code&gt;UTC&lt;/code&gt;. No per-user offset metadata. Just clean, fixed-offset naive values in what is effectively Beijing-local time.&lt;/p&gt;
+&lt;p&gt;At first glance this looks heretical. The orthodox answer is still "always store in &lt;code&gt;UTC&lt;/code&gt;". Yet after implementing this pattern at scale, the results are hard to argue with: drastically fewer bugs, simpler debugging, cleaner cron/scheduling logic, and - most importantly - alignment with where the majority of my users, traffic, and revenue actually live.&lt;/p&gt;
+&lt;p&gt;More strikingly: this is &lt;strong&gt;not&lt;/strong&gt; an eccentric personal choice. It is already the reality inside the world's largest digital ecosystem.&lt;/p&gt;
+&lt;h2&gt;Chinese platforms already operate on what we might call &lt;code&gt;utz+0&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;WeChat, Alipay, Douyin / TikTok (domestic), Pinduoduo - virtually every consumer-facing Chinese super-app stores and computes time as naive Asia/Shanghai.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transaction logs, user activity events, payment timestamps -&amp;gt; all naive &lt;code&gt;UTC+8&lt;/code&gt;  &lt;/li&gt;
+&lt;li&gt;Delivery ETAs, driver assignment windows, flash-sale timers -&amp;gt; calculated and stored in Beijing time  &lt;/li&gt;
+&lt;li&gt;Billing cycles, daily analytics batches, fraud-detection windows -&amp;gt; anchored to Shanghai clock  &lt;/li&gt;
+&lt;li&gt;Even many backend cron jobs and monitoring dashboards assume UTC+8 as the implicit reference  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This isn't accidental. When you serve 1.4 billion people whose daily life (work, school, meals, sleep) already orbits Beijing time, imposing &lt;code&gt;UTC&lt;/code&gt; adds pointless conversion overhead at every layer. &lt;/p&gt;
+&lt;p&gt;The Chinese mantra goes something like this, instead of adapting to the world, the world starts adapting to you.&lt;/p&gt;
+&lt;p&gt;Add Singapore, Malaysia, Philippines, Brunei, Indonesia, Mongolia, and Perth - all already on &lt;code&gt;UTC+8&lt;/code&gt; - and you have a coherent bloc of ~2 billion people already living and transacting on what I now informally call &lt;strong&gt;&lt;code&gt;UTZ&lt;/code&gt;&lt;/strong&gt; (Universal Temporal Zone = &lt;code&gt;Asia/Shanghai&lt;/code&gt; = &lt;code&gt;UTC+8&lt;/code&gt;, no DST).&lt;/p&gt;
+&lt;h2&gt;Reframing the world in &lt;code&gt;UTZ&lt;/code&gt; offsets&lt;/h2&gt;
+&lt;p&gt;Once you recenter the map on Beijing instead of Greenwich, the numbers become elegantly simple for the most populous part of the planet:&lt;/p&gt;
+&lt;div class="table-scroll"&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Region&lt;/th&gt;
+&lt;th&gt;UTC&lt;/th&gt;
+&lt;th&gt;UTZ&lt;/th&gt;
+&lt;th&gt;Population&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Beijing, Singapore, Manila, KL, Perth, Indonesia&lt;/td&gt;
+&lt;td&gt;UTC+8&lt;/td&gt;
+&lt;td&gt;UTZ+0&lt;/td&gt;
+&lt;td&gt;~2.0B+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tokyo, Seoul, Pyongyang&lt;/td&gt;
+&lt;td&gt;UTC+9&lt;/td&gt;
+&lt;td&gt;UTZ+1&lt;/td&gt;
+&lt;td&gt;~200M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Bangkok, Hanoi, Vientiane, Phnom Penh&lt;/td&gt;
+&lt;td&gt;UTC+7&lt;/td&gt;
+&lt;td&gt;UTZ-1&lt;/td&gt;
+&lt;td&gt;~220M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Delhi&lt;/td&gt;
+&lt;td&gt;UTC+5:30&lt;/td&gt;
+&lt;td&gt;UTZ-2.5&lt;/td&gt;
+&lt;td&gt;~1.4B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sydney / Melbourne&lt;/td&gt;
+&lt;td&gt;UTC+10&lt;/td&gt;
+&lt;td&gt;UTZ+2&lt;/td&gt;
+&lt;td&gt;~26M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;London&lt;/td&gt;
+&lt;td&gt;UTC+1&lt;/td&gt;
+&lt;td&gt;UTZ-7&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;New York&lt;/td&gt;
+&lt;td&gt;UTC-4&lt;/td&gt;
+&lt;td&gt;UTZ-12&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;p&gt;For ~50% of humanity, time suddenly feels centered rather than perpetually "ahead" or "behind".&lt;/p&gt;
+&lt;h2&gt;How the shift gains momentum - a realistic, economics-driven roadmap&lt;/h2&gt;
+&lt;p&gt;No IETF RFC or UN resolution will declare UTZ. Change will come through &lt;strong&gt;economic gravity, platform lock-in, infrastructure dependencies, and soft (but very real) incentives&lt;/strong&gt; - forces already in motion.&lt;/p&gt;
+&lt;p&gt;Here are some of my predictions with respect to timezone adaptation. To accelerate this shift, Beijing must proactively wield soft power—issuing formal invitations backed by economic incentives and diplomatic charm—or, if resistance persists, apply subtle coercion through platform dominance and infrastructure dependencies.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Phase 1 - Core Already Secured&lt;/strong&gt;&lt;br /&gt;
+China + Mongolia + Singapore + Malaysia + Philippines + Brunei + Indonesia + Perth = ~2B people effectively on &lt;code&gt;UTZ+0&lt;/code&gt; today. No action required. The foundation exists.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Phase 2 - High-Leverage Neighbors (Very Plausible Next 5-10 Years)&lt;/strong&gt;&lt;br /&gt;
+Beijing should lead with official invitations to these neighbors, framing alignment as a mutual win for prosperity and efficiency. If soft appeals fall short, leverage economic ties for gentle coercion.  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tokyo / Seoul / Pyongyang&lt;/strong&gt; (&lt;code&gt;UTC+9&lt;/code&gt; -&amp;gt; &lt;code&gt;UTZ+0&lt;/code&gt;)&lt;br /&gt;
+  Leverage: semiconductor supply chains, cloud &amp;amp; CDN dependencies, content distribution deals (anime, K-pop, games via Chinese platforms), massive Chinese tourism &amp;amp; student flows.&lt;br /&gt;
+  Framing: "Your digital economy already runs on infrastructure timed to Beijing. Why keep forcing one-hour conversions everywhere?"  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bangkok / Hanoi / Vientiane / Phnom Penh&lt;/strong&gt; (&lt;code&gt;UTC+7&lt;/code&gt; -&amp;gt; &lt;code&gt;UTZ+0&lt;/code&gt;)&lt;br /&gt;
+  Leverage: Belt &amp;amp; Road rail/highway/port projects, cross-border e-commerce (Shopee, Lazada, Temu), payment rails (Alipay / WeChat Pay integration), massive SME seller base on Chinese platforms.&lt;br /&gt;
+  Framing: "Your delivery riders, street vendors, and exporters already live in our apps. One shared clock = faster growth, fewer disputes."  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Achieving these shifts alone brings ~2.3-2.5 billion people under a unified temporal framework - roughly one third of humanity, concentrated in the world's growth center.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Phase 3 - Broader Platform &amp;amp; Financial Pull&lt;/strong&gt;  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Stock exchanges &amp;amp; market hours begin syncing to a common UTZ window (e.g., 09:30 UTZ+0 open for Shanghai / Shenzhen / HK -&amp;gt; Tokyo / Seoul follow, then Jakarta / Bangkok adjust). Algo-trading desks and index funds hate timezone math; they will quietly reward alignment.  &lt;/li&gt;
+&lt;li&gt;Global developers building mini-programs, TikTok Shop, or Douyin international increasingly default to naive Asia/Shanghai timestamps.  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once critical economic flows (trade settlements, ad impressions, delivery SLAs) assume UTZ, civil-time adjustments become the path of least resistance.&lt;/p&gt;
+&lt;h2&gt;Why I commit to naive Asia/Shanghai storage today&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;My largest user cohorts and fastest-growing revenue streams are already in UTZ-aligned regions.  &lt;/li&gt;
+&lt;li&gt;My primary regions (Singapore / Shanghai VPCs) run natively in &lt;code&gt;UTC+8&lt;/code&gt;.  &lt;/li&gt;
+&lt;li&gt;Business events (peak usage, flash campaigns, financial cutoffs) are defined by "Beijing morning" - not Greenwich midnight.  &lt;/li&gt;
+&lt;li&gt;Naive storage + consistent interpretation eliminates classes of bugs that have haunted every multi-region system I've ever inherited.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I'm not doing this out of sentiment. I'm doing it because the data, the traffic maps, and the platform momentum all point the same way.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;UTC&lt;/code&gt; was the right default when the internet was young and Western-centric. But infrastructure follows users, users follow economic centers, and economic mass has decisively shifted.&lt;/p&gt;
+&lt;h2&gt;Final thought&lt;/h2&gt;
+&lt;p&gt;Time is not purely technical - it is infrastructural, and infrastructure follows power.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;UTZ&lt;/code&gt; isn't a proposal. It's already partially deployed at planetary scale.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The only remaining question is how long the rest of the industry takes to notice Who knows... one day the Forbidden Kingdom might even become the prime meridian with 0° longitude.&lt;/p&gt;
+&lt;p&gt;That goes without saying:  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;One Belt, One Road, One TZ.&lt;/strong&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Type Hints Pay Off Only If You Run a Type Checker in CI</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html"/>
+    <id>https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html</id>
+    <published>2025-10-14T00:00:00+10:00</published>
+    <updated>2025-10-14T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Python type hints are just comments until mypy or pyright runs in CI. A pragmatic guide to gradual adoption, config that works and rules worth keeping.</summary>
+    <category term="Python"/><category term="Typing"/><category term="Mypy"/><category term="CI"/>
+    <content type="html">&lt;p&gt;Python type hints have a dirty secret: &lt;strong&gt;the interpreter ignores them.&lt;/strong&gt; &lt;code&gt;def total(x: int) -&amp;gt; int&lt;/code&gt; will happily accept a string and return a list. Nothing checks it at runtime unless you add a library that does. Annotations are metadata. Nothing more.&lt;/p&gt;
+&lt;p&gt;So here's the position: &lt;strong&gt;type hints without a type checker in CI are decorative comments that can lie.&lt;/strong&gt; Worse than no hints, because they look authoritative. If you're going to write them, make a machine verify them on every pull request. If you're not going to do that, at least be honest that they're documentation.&lt;/p&gt;
+&lt;h2&gt;Hints that lie&lt;/h2&gt;
+&lt;p&gt;This is the failure mode in a codebase where hints are written but never checked:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;find_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That annotation is false. &lt;code&gt;.first()&lt;/code&gt; returns &lt;code&gt;None&lt;/code&gt; when nothing matches. Every caller trusts the signature, skips the &lt;code&gt;None&lt;/code&gt; check, and the bug surfaces as &lt;code&gt;AttributeError: 'NoneType' object has no attribute 'name'&lt;/code&gt; in production, three calls away from the cause.&lt;/p&gt;
+&lt;p&gt;A type checker with the Django plugin flags this immediately: the function returns &lt;code&gt;User | None&lt;/code&gt;, not &lt;code&gt;User&lt;/code&gt;. The fix is one honest annotation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;find_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now every caller is forced to handle the missing case, and the checker tells you which ones don't. That's the entire value proposition of typing: &lt;strong&gt;move a class of runtime errors to review time.&lt;/strong&gt; It only works if something actually runs.&lt;/p&gt;
+&lt;h2&gt;Pick a checker and stop debating&lt;/h2&gt;
+&lt;p&gt;The mainstream options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;mypy&lt;/strong&gt; - the original, maintained under the Python organisation, with a mature plugin system. If you use Django, the &lt;code&gt;django-stubs&lt;/code&gt; plugin makes querysets and model fields understood. This is the default choice for Django projects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pyright&lt;/strong&gt; - Microsoft's checker, written in TypeScript and fast. It powers the Pylance extension in VS Code, so many developers already see its errors in their editor. Its inference is aggressive and its strict mode is strict.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Newer Rust-based checkers&lt;/strong&gt; such as Astral's &lt;code&gt;ty&lt;/code&gt; and Meta's Pyrefly are worth watching. Check their status before betting a large codebase on them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My advice: Django-heavy codebase, start with mypy and &lt;code&gt;django-stubs&lt;/code&gt;. Library or non-Django service, pyright is a great default. Either is far better than neither, and arguing about it for a sprint is worse than picking one today.&lt;/p&gt;
+&lt;h2&gt;Gradual adoption that doesn't stall&lt;/h2&gt;
+&lt;p&gt;The common mistake is turning on &lt;code&gt;--strict&lt;/code&gt; across a 200,000-line codebase, seeing thousands of errors and giving up. Python typing is designed to be gradual. Use that.&lt;/p&gt;
+&lt;p&gt;Start permissive globally and strict where it matters:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# pyproject.toml&lt;/span&gt;
+&lt;span class="k"&gt;[tool.mypy]&lt;/span&gt;
+&lt;span class="n"&gt;python_version&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"3.12"&lt;/span&gt;
+&lt;span class="n"&gt;plugins&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"mypy_django_plugin.main"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;warn_unused_ignores&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;warn_redundant_casts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;no_implicit_optional&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;check_untyped_defs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+
+&lt;span class="k"&gt;[tool.django-stubs]&lt;/span&gt;
+&lt;span class="n"&gt;django_settings_module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"config.settings"&lt;/span&gt;
+
+&lt;span class="c1"&gt;# New and critical code: no untyped functions allowed.&lt;/span&gt;
+&lt;span class="k"&gt;[[tool.mypy.overrides]]&lt;/span&gt;
+&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"billing.*"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"orders.services"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"orders.selectors"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;disallow_untyped_defs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;disallow_any_generics&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;warn_return_any&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Third-party packages without stubs: don't let them block CI.&lt;/span&gt;
+&lt;span class="k"&gt;[[tool.mypy.overrides]]&lt;/span&gt;
+&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"legacy_vendor_sdk.*"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;ignore_missing_imports&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then ratchet:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Week one:&lt;/strong&gt; run the checker in CI on the whole repo with the permissive defaults. Fix or &lt;code&gt;# type: ignore[code]&lt;/code&gt; the existing errors. The goal is a green baseline, not perfection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Every new module&lt;/strong&gt; goes into the strict override list. New code is typed from birth.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Every time you touch an old module&lt;/strong&gt; for real work, add it to the strict list and fix what falls out. Leave the place better than you found it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Track the ignore count.&lt;/strong&gt; &lt;code&gt;grep -rc "type: ignore"&lt;/code&gt; in CI is crude and it works. The number should only go down.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;warn_unused_ignores&lt;/code&gt; matters more than it looks. When you fix the underlying problem, the stale ignore becomes an error, so suppressions can't rot silently.&lt;/p&gt;
+&lt;h2&gt;Wire it into CI, not just the editor&lt;/h2&gt;
+&lt;p&gt;Editor squiggles are advisory. A red CI check is a rule. A minimal GitHub Actions job:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;typecheck&lt;/span&gt;
+&lt;span class="nt"&gt;on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;pull_request&lt;/span&gt;&lt;span class="p p-Indicator"&gt;]&lt;/span&gt;
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;mypy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;actions/checkout@v5&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;actions/setup-python@v6&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;python-version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"3.12"&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;pip install -r requirements-dev.txt&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;mypy .&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Pin your checker version in &lt;code&gt;requirements-dev.txt&lt;/code&gt;. Checkers get smarter with each release, which means an unpinned upgrade can turn a green build red on a Monday morning with no code change. Upgrade on purpose, in its own pull request.&lt;/p&gt;
+&lt;p&gt;Make the check required on the main branch. If it can be skipped, it will be.&lt;/p&gt;
+&lt;h2&gt;Rules worth keeping&lt;/h2&gt;
+&lt;p&gt;Typing everything perfectly isn't the goal. Typing the parts where bugs are expensive is.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Type the boundaries first.&lt;/strong&gt; Public functions, service layers, anything another module calls. Internals of a twenty-line helper can wait.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ban &lt;code&gt;Any&lt;/code&gt; from spreading.&lt;/strong&gt; &lt;code&gt;Any&lt;/code&gt; is contagious: whatever touches it becomes unchecked. Use it at the edge, such as parsing raw JSON, then convert to a real type immediately.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model data, don't pass dicts.&lt;/strong&gt; A &lt;code&gt;dict[str, Any]&lt;/code&gt; travelling through five functions is a bug farm. Use a &lt;code&gt;dataclass&lt;/code&gt; for internal data and a &lt;code&gt;TypedDict&lt;/code&gt; when the shape really is a dict, like a JSON payload.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Use &lt;code&gt;Protocol&lt;/code&gt; for dependencies.&lt;/strong&gt; It's structural typing: a fake in tests satisfies it without inheriting anything.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;decimal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;typing&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Protocol&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;PaymentGateway&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Protocol&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;charge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customer_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;settle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gateway&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;PaymentGateway&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customer_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;gateway&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;charge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;customer_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;customer_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"manual"&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Every ignore carries an error code.&lt;/strong&gt; &lt;code&gt;# type: ignore[attr-defined]&lt;/code&gt;, never a bare &lt;code&gt;# type: ignore&lt;/code&gt;. Bare ignores hide every future error on that line too.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Use &lt;code&gt;reveal_type()&lt;/code&gt; when confused.&lt;/strong&gt; Drop it in, run the checker, read what it thinks. It beats guessing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Don't fight the checker with &lt;code&gt;cast()&lt;/code&gt;.&lt;/strong&gt; Each &lt;code&gt;cast&lt;/code&gt; is you overruling the machine. Sometimes you're right. Usually the type is wrong upstream.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What typing won't do&lt;/h2&gt;
+&lt;p&gt;Be clear-eyed about it. A type checker won't validate data coming over the wire. Your request body is still untrusted bytes, and for that you want runtime validation: a serializer, Pydantic or a plain schema check. Typing also won't catch logic bugs where the types line up and the maths is wrong. That's what tests are for.&lt;/p&gt;
+&lt;p&gt;Types and tests aren't competitors. Types eliminate a whole category of tests you'd otherwise write: "what if this is &lt;code&gt;None&lt;/code&gt;", "what if someone passes a string". Tests cover behaviour. Together they're cheaper than either alone.&lt;/p&gt;
+&lt;h2&gt;The cost argument&lt;/h2&gt;
+&lt;p&gt;The usual objection is speed: "annotations slow us down." For a throwaway script, sure, skip them. For code that lives longer than a quarter and is touched by more than one person, the trade usually goes the other way. Refactoring is where it shows. Rename a field, change a return type, split a function, and the checker gives you the list of every call site that needs to change. Without it, that list is "grep and hope".&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;A type hint is a promise. &lt;strong&gt;A type checker in CI is what makes the promise binding.&lt;/strong&gt; Pick mypy or pyright, start permissive, make new code strict, ratchet old code as you touch it, and make the check required. If you're not going to run a checker, stop writing hints that might be wrong. Unverified types aren't documentation, they're rumours.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>DST Is a Bug, Not a Feature</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/dst-is-a-bug,-not-a-feature.html"/>
+    <id>https://nehem.dev/dst-is-a-bug,-not-a-feature.html</id>
+    <published>2025-08-03T00:00:00+10:00</published>
+    <updated>2025-08-03T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Daylight saving time causes twice-yearly software bugs. A look at countries that dropped DST, from Russia and China to Iceland and Turkey, and what devs can learn.</summary>
+    <category term="DST"/><category term="DaylightSaving"/>
+    <content type="html">&lt;p&gt;Daylight Saving Time isn't "saving" anything. It's a 100-year-old hack that introduces twice-yearly bugs into every system that touches schedules, logs, billing, notifications, cron jobs, and human sanity.&lt;/p&gt;
+&lt;p&gt;We advance clocks in spring → people lose an hour of sleep → heart attacks spike slightly, accidents go up, life satisfaction dips. Fall back → everyone celebrates the "extra hour" until they realize it's just redistributing misery. Energy savings? Negligible or negative in modern AC-heavy worlds. Developer pain? Infinite.&lt;/p&gt;
+&lt;p&gt;Yet somehow, most of Europe and North America still run this circus. Meanwhile, a growing list of countries said "nah" and haven't looked back. Let's meet the defectors who fixed their timezone code and moved on with fixed offsets forever.&lt;/p&gt;
+&lt;h2&gt;1. Russia (abolished 2014, after a brief "permanent DST" experiment gone wrong)&lt;/h2&gt;
+&lt;p&gt;Tried permanent summer time 2011–2014 → dark winter mornings, kids going to school in pitch black, massive complaints. Switched back to permanent standard time (winter time) in 2014. Result? No more biannual chaos, simpler scheduling across 11 time zones (now 11 again after earlier cuts), no regrets reported. Russians just shrugged and kept living. If a country spanning ~11 time zones can ditch the switch without imploding, your app can too.&lt;/p&gt;
+&lt;h2&gt;2. China (tried 1986–1991, abolished permanently)&lt;/h2&gt;
+&lt;p&gt;Short experiment for "energy conservation." Saved a bit of kWh in theory, but caused massive confusion-people forgot to change clocks, meetings double-booked, factories messed up. Government killed it in 1992 citing "inconvenience." China never looked back. One timezone (UTC+8, no DST ever), 1.4B+ people, zero clock-change bugs in WeChat/Alipay/Douyin. Coincidence? I think not. They basically run on naive Asia/Shanghai everywhere and it scales beautifully.&lt;/p&gt;
+&lt;h2&gt;3. Iceland (abolished effectively since 1968, permanent UTC+0)&lt;/h2&gt;
+&lt;p&gt;Way up north with insane summer daylight anyway (midnight sun vibes). Tried DST briefly, ditched it because extending already-long days made zero sense. No clock changes since the late 60s. Icelanders just live with consistent time. Productivity didn't collapse. Northern lights still appear. Win.&lt;/p&gt;
+&lt;h2&gt;4. Turkey (switched to permanent DST in 2016 → effectively no more changes)&lt;/h2&gt;
+&lt;p&gt;They didn't "abolish" the switch so much as lock it on summer time forever (UTC+3 year-round). No fall-back. No spring-forward. Just fixed. Energy arguments aside, no biannual disruptions. Business goes on.&lt;/p&gt;
+&lt;h2&gt;5. Recent dropouts (last 10–15 years): Armenia, Azerbaijan, Belarus, Georgia, Iran, Jordan, Namibia, Samoa, Syria, Uruguay&lt;/h2&gt;
+&lt;p&gt;These are the fresh ones. Jordan/Syria went permanent summer time recently (2022). Namibia, Uruguay ditched after trials showed meh energy gains and lots of hassle. Iran bounced for religious/political reasons but stayed off. Pattern? Once you stop the twice-yearly jolt, nobody riots to bring it back. The switch is the bug; fixed offset is the stable release.&lt;/p&gt;
+&lt;p&gt;For Australia the story is entirely different, Australia - the chaotic half-defector that accidentally proved the point. Australia is the ultimate “we tried DST and mostly hated it” exhibit.&lt;/p&gt;
+&lt;p&gt;Three mainland states (Queensland, Western Australia, Northern Territory) never observe DST and have been on permanent standard time forever.
+Queensland in particular has been loud about it since 1992 - they tried it, voters hated the late sunsets messing with kids’ bedtimes and farmers’ routines, and they killed it permanently. No regrets.&lt;/p&gt;
+&lt;p&gt;The other states (NSW, Victoria, SA, Tasmania, ACT) still do the biannual dance… but even there, every few years someone floats “permanent summer time” or “permanent standard” and the public usually says “just pick one and leave it alone.”
+Result? A country with wildly inconsistent rules across borders, yet the non-DST states report zero chaos compared to the ones that still flip. Queensland businesses schedule with Brisbane time year-round, no bugs, no double-booked Zoom calls, no “did the meeting move because of DST?” drama. Meanwhile Sydney/Melbourne teams still deal with the March/October ritual.&lt;/p&gt;
+&lt;p&gt;Australia basically runs a live A/B test: half the country on fixed offset, half still running legacy code. Guess which half has fewer timezone-support tickets? Fixed wins.
+Bonus honorable mentions:&lt;/p&gt;
+&lt;p&gt;Arizona (most of it, since 1968) - Hot desert + DST = more AC runtime in evenings = higher bills. Opted out permanently. Navajo Nation still does DST for border reasons, but the state as a whole? Nope.&lt;/p&gt;
+&lt;p&gt;Most equatorial/tropical countries - Never bothered in the first place. Daylight barely varies year-round. Why add bugs when nature already gave you a stable API?&lt;/p&gt;
+&lt;h2&gt;What These Countries Teach Us Devs&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Biannual changes are &lt;strong&gt;non-deterministic garbage&lt;/strong&gt; injected into otherwise predictable systems.&lt;/li&gt;
+&lt;li&gt;Permanent fixed offset = fewer edge cases (no "did this event happen before/after the switch?"), simpler queries, no timezone DB updates breaking prod every March/October.&lt;/li&gt;
+&lt;li&gt;"But energy savings!" - Modern studies show it's a wash or net negative. Countries that quit report no measurable regret spike.&lt;/li&gt;
+&lt;li&gt;Humans adapt fast to fixed local wall-clock time. Meetings at 9 AM stay 9 AM forever. Cron jobs don't ghost or double-fire.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;DST isn't a feature. It's technical debt the world is slowly paying off.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Why Microservices Are a Luxury Tax on Startups</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/why-microservices-are-a-luxury-tax-on-startups.html"/>
+    <id>https://nehem.dev/why-microservices-are-a-luxury-tax-on-startups.html</id>
+    <published>2025-07-02T00:00:00+10:00</published>
+    <updated>2025-07-02T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Why microservices are a luxury tax on startups: the deployment, network, data-consistency and cloud-cost overhead they add, and why modular monoliths keep winning.</summary>
+    <category term="Microservices"/><category term="Monolith"/><category term="Startup"/><category term="Scalability"/>
+    <content type="html">&lt;p&gt;It's 2025 and the discourse is still stuck in 2015: "Microservices = scale. Monoliths = legacy." Meanwhile, real startups are bleeding runway, burning investor cash, and dying on pagers because they chased distributed-system porn before they even had product-market fit.&lt;/p&gt;
+&lt;p&gt;The truth nobody wants to tweet: &lt;strong&gt;Microservices are mostly a luxury tax&lt;/strong&gt;-a massive up-front cost in complexity, ops, debugging, and velocity that 90%+ of startups can't afford until way later (if ever). Monoliths, especially well-modularized ones, keep winning at actual scale for most companies that aren't Netflix or Amazon.&lt;/p&gt;
+&lt;h2&gt;The tax breakdown: What you're actually paying for&lt;/h2&gt;
+&lt;p&gt;You don't get "scale" for free with microservices. You pay in blood:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Deployment &amp;amp; ops hell&lt;/strong&gt; - Separate repos/services = separate CI/CD pipelines, separate deploys, separate monitoring, separate rollbacks. One tiny auth service down? Good luck tracing why your whole app is 500-ing. A monolith? &lt;code&gt;git push&lt;/code&gt; - build - deploy once. Velocity stays high when your team is 5–15 people.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Network tax everywhere&lt;/strong&gt; - In-process function calls become 10–100 ms RPCs (or worse with retries/backoffs). Latency compounds. Debugging distributed traces feels like archaeology. Monolith? Method call is microseconds, stack traces are instant.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Data consistency roulette&lt;/strong&gt; - Each service wants its own DB (cool story). Now you have eventual consistency, sagas, 2PC nightmares, or duplicated data. Monolith shares one DB transaction-boom, ACID for free where it matters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Coordination overhead&lt;/strong&gt; - API contracts, versioning, backward compat, service discovery, circuit breakers, rate limiting per service. All that boilerplate before you ship your first feature. Monolith? Just refactor a module and commit.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Cost tax&lt;/strong&gt; - More containers/pods = more cloud bill (even tiny ones eat RAM/CPU overhead). Orchestration (K8s) needs dedicated SRE time. Startups pay engineers to fight infra instead of building product.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Real numbers from trenches (anecdotal but repeated across Reddit/HN/startup war stories): teams that go micro early often see 2–5× slower iteration speed until they hit 50+ engineers. By then, many are already dead or pivoted.&lt;/p&gt;
+&lt;h2&gt;Who actually wins with monoliths at "scale"?&lt;/h2&gt;
+&lt;p&gt;Not just tiny MVPs-these are production beasts handling real traffic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Stack Overflow&lt;/strong&gt; - Still a modular monolith (ASP.NET). Millions of users, high traffic, legendary performance. They vertical-scale + optimize queries/caching and laugh at microservice FOMO.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Shopify&lt;/strong&gt; - Ruby monolith for core (they extract when needed, but the heart stays monolithic). Handles Black Friday insanity without rewriting everything.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Basecamp&lt;/strong&gt; - Rails monolith forever. Deliberately simple, scales to enterprise customers without distributed drama.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Many "successful" unicorns pre-unicorn&lt;/strong&gt; - Almost all start monolith (Shopify, Basecamp, early Stripe vibes, plenty of SaaS quietly). They extract services surgically &lt;em&gt;only when pain is proven&lt;/em&gt; (e.g., one hot path kills perf - pull it out).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Even big players backtrack: Amazon Prime Video famously ditched microservices/serverless for a monolith-ish approach on some workloads because the overhead was killing cost/efficiency at real scale.&lt;/p&gt;
+&lt;h2&gt;The honest startup playbook&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Start monolithic&lt;/strong&gt; (modular from day 1-clean boundaries, dependency injection, bounded contexts). Ship fast, validate idea, get paying users.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Scale vertically first&lt;/strong&gt; - Bigger instances, read replicas, caching (Redis), query optimization, CDNs. Handles 100k–1M+ users for most SaaS/apps without drama.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Extract only when you have concrete pain&lt;/strong&gt; -  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Team coordination hell? (multiple teams blocked) - extract team-owned services.  &lt;/li&gt;
+&lt;li&gt;One component eats all resources? - pull it out (e.g., reporting, image processing).  &lt;/li&gt;
+&lt;li&gt;Need independent deploys/tech stacks? - micro now makes sense.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Prefer modular monolith&lt;/strong&gt; - Hexagonal/ports-and-adapters, domain-driven design modules. Refactor feels like surgery, not heart transplant. When extraction time comes, boundaries already exist.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Kill the FOMO&lt;/strong&gt; - "But Netflix/Amazon/Uber!" - They had 1000+ engineers and billions in revenue before microservices became mandatory. You're not them (yet). Premature microservices is how you turn a $2M seed into $1M infra bill and zero product.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Bottom line in 2025: &lt;strong&gt;Monoliths aren't dead-they're the cheat code for velocity and survival.&lt;/strong&gt; Microservices are a luxury tax you pay when you have luxury problems (big teams, uneven scaling, org-scale coordination). Most startups never reach that luxury. They die trying to afford it.&lt;/p&gt;
+&lt;p&gt;The ones that win? They ship relentlessly in a monolith until the monolith screams for mercy-then (and only then) they pay the tax.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Stop Putting Business Logic in Django Views and Serializers</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html"/>
+    <id>https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html</id>
+    <published>2025-04-08T00:00:00+10:00</published>
+    <updated>2025-04-08T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Why Django business logic belongs in plain service functions, not views or DRF serializers, with a before/after order example and tests that need no HTTP.</summary>
+    <category term="Django"/><category term="Architecture"/><category term="Testing"/><category term="DRF"/>
+    <content type="html">&lt;p&gt;Open any Django codebase that's older than eighteen months and find the most important thing the business does. Placing an order. Approving a loan. Issuing a refund. Now find where that logic lives. Nine times out of ten it's smeared across a view, a serializer's &lt;code&gt;create()&lt;/code&gt;, two model &lt;code&gt;save()&lt;/code&gt; overrides and a &lt;code&gt;post_save&lt;/code&gt; signal somebody added on a Friday.&lt;/p&gt;
+&lt;p&gt;Here's the position: &lt;strong&gt;views and serializers are adapters, not homes.&lt;/strong&gt; A view translates HTTP into a function call. A serializer translates JSON into Python values. Neither should know what an order &lt;em&gt;is&lt;/em&gt;. Put the rules in plain Python functions that take plain arguments, and your app gets easier to test, easier to read and much easier to change.&lt;/p&gt;
+&lt;h2&gt;How it goes wrong&lt;/h2&gt;
+&lt;p&gt;Nobody decides to put business logic in a serializer. It happens because Django and DRF make the wrong place the convenient place:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;ModelSerializer.create()&lt;/code&gt; is right there.&lt;/strong&gt; It already has validated data and a model. Adding "and also charge the card" is one line.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Views have the request.&lt;/strong&gt; The user, the headers, the session. So the logic that needs the user ends up next to the request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Signals look clean.&lt;/strong&gt; Until nobody can tell you what happens when an &lt;code&gt;Order&lt;/code&gt; is saved, because the answer is spread over four apps.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fat models sound like good advice.&lt;/strong&gt; And they are, for logic about one row. They fall apart when a use case touches five models and an external API.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The result is logic you can only reach through HTTP. Want to place an order from a management command, a Celery task or a data migration? You either fake a request or copy the code. Both are bad.&lt;/p&gt;
+&lt;h2&gt;Before: the serializer that does everything&lt;/h2&gt;
+&lt;p&gt;This is a composite of code I've seen many times. It works. It's also a trap.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;OrderSerializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;serializers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ModelSerializer&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;items&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OrderItemSerializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;many&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Order&lt;/span&gt;
+        &lt;span class="n"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"id"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"items"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"total"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="n"&gt;read_only_fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"total"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;validated_data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;items&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;validated_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"items"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"request"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;
+        &lt;span class="n"&gt;order&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;total&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"0"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;product&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"product"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stock&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"quantity"&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;serializers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ValidationError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Out of stock"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stock&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"quantity"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="n"&gt;OrderItem&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"quantity"&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                     &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;price&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"quantity"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;total&lt;/span&gt;
+        &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="n"&gt;stripe&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PaymentIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;currency&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"aud"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                    &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stripe_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;send_mail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Order received"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"Order &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;order&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Count the problems:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;No transaction.&lt;/strong&gt; If the payment call fails, you've already decremented stock and created a half-built order.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A race on stock.&lt;/strong&gt; Two requests read &lt;code&gt;stock = 1&lt;/code&gt;, both pass the check, both save &lt;code&gt;0&lt;/code&gt;. You've sold the same item twice.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The email goes out before anything is committed.&lt;/strong&gt; The customer gets "Order received" for an order that may roll back.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The rules are tied to &lt;code&gt;self.context["request"]&lt;/code&gt;.&lt;/strong&gt; You can't call this without an HTTP request, or a fake one.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A &lt;code&gt;ValidationError&lt;/code&gt; for a business rule.&lt;/strong&gt; "Out of stock" isn't malformed input. It's a domain outcome, and it deserves its own type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing it means testing everything.&lt;/strong&gt; To check the stock rule you need a client, auth, JSON and a mocked Stripe.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;After: a service function&lt;/h2&gt;
+&lt;p&gt;Make a &lt;code&gt;services.py&lt;/code&gt; (or &lt;code&gt;orders/services/place_order.py&lt;/code&gt; when it grows) with a plain function. Keyword-only arguments, explicit dependencies, a clear return type.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# orders/services.py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;dataclasses&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;dataclass&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;decimal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;django.db&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;transaction&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;django.db.models&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;F&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;orders.models&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Order&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OrderItem&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Product&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;orders.notifications&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;send_order_received&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;OutOfStock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"Product &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; is out of stock"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;product_id&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@dataclass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frozen&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;LineRequest&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;
+    &lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;place_order&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;LineRequest&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;payments&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Order&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;transaction&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;atomic&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="n"&gt;ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+        &lt;span class="n"&gt;locked&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_for_update&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+                  &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk__in&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;order_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pk"&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;products&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;locked&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="n"&gt;order&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;total&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"0"&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"0"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;product&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;products&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stock&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;OutOfStock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;Product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                &lt;span class="n"&gt;stock&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"stock"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;OrderItem&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                     &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;price&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quantity&lt;/span&gt;
+
+        &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;total&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;total&lt;/span&gt;
+        &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;update_fields&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"total"&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;payments&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;charge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;total&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;transaction&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on_commit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;send_order_received&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;order&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;What changed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;transaction.atomic()&lt;/code&gt;&lt;/strong&gt; wraps the whole use case. Any exception, including a payment failure, rolls back the stock and the order.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;select_for_update()&lt;/code&gt;&lt;/strong&gt; locks the product rows, in a stable order, so two orders for the last item can't both win.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;F("stock") - quantity&lt;/code&gt;&lt;/strong&gt; does the decrement in the database rather than in Python.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;transaction.on_commit()&lt;/code&gt;&lt;/strong&gt; sends the email only once the order really exists.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;payments&lt;/code&gt; is passed in.&lt;/strong&gt; In production it's a thin wrapper around your provider. In tests it's a fake. No &lt;code&gt;mock.patch&lt;/code&gt; on a module path.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;OutOfStock&lt;/code&gt; is a real exception.&lt;/strong&gt; The caller decides what it means: a 409 for the API, a message in the admin, a log line in a batch job.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One honest caveat: charging a card inside a database transaction holds row locks while you wait on a network call. For a low-volume shop that's fine. At scale you'd split it into "reserve, then charge, then confirm" steps. The point is that once the logic lives in one function, that refactor is one file, not a hunt through serializers and signals.&lt;/p&gt;
+&lt;h2&gt;The view and serializer get boring&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;PlaceOrderInput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;serializers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Serializer&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;items&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LineInput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;many&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;PlaceOrderView&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;APIView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;permission_classes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;IsAuthenticated&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PlaceOrderInput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_valid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;raise_exception&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;lines&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;LineRequest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;validated_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"items"&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;order&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;place_order&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                &lt;span class="n"&gt;payments&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;get_payment_gateway&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;OutOfStock&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;exc&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;"error"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"out_of_stock"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"product_id"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;exc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+                &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTP_409_CONFLICT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;OrderOutput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTP_201_CREATED&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The serializer checks shape: is &lt;code&gt;quantity&lt;/code&gt; an integer, is &lt;code&gt;product_id&lt;/code&gt; present. The view maps HTTP to a call and exceptions to status codes. That's all either of them should ever do. Boring is the goal.&lt;/p&gt;
+&lt;h2&gt;Testing without HTTP&lt;/h2&gt;
+&lt;p&gt;Now the important rules are tested directly:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;FakePayments&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fail&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fail&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fail&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;charges&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;charge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fail&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"card declined"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;charges&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;test_payment_failure_rolls_back_stock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;product_with_stock&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;product&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;product_with_stock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stock&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;Decimal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"10.00"&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;raises&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;place_order&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;LineRequest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
+                    &lt;span class="n"&gt;payments&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;FakePayments&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fail&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;refresh_from_db&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stock&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;Order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;No client, no JSON, no auth setup, no patching. The test reads like the rule it protects. Keep one or two API tests per endpoint to check the wiring, and put the volume of your tests at the service level.&lt;/p&gt;
+&lt;h2&gt;Rules I actually follow&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;One use case, one function.&lt;/strong&gt; &lt;code&gt;place_order&lt;/code&gt;, &lt;code&gt;cancel_order&lt;/code&gt;, &lt;code&gt;refund_order&lt;/code&gt;. Name them after what the business says, not after HTTP verbs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Keyword-only arguments.&lt;/strong&gt; &lt;code&gt;place_order(customer=..., lines=...)&lt;/code&gt; can't be called with arguments in the wrong order.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Services take values, not requests.&lt;/strong&gt; Pass &lt;code&gt;request.user&lt;/code&gt;, never &lt;code&gt;request&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reads can be selectors.&lt;/strong&gt; A &lt;code&gt;selectors.py&lt;/code&gt; with query functions keeps complex querysets out of views too. Simple &lt;code&gt;Model.objects.filter()&lt;/code&gt; calls in a view are fine. Don't build ceremony for one-liners.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Models keep row-level logic.&lt;/strong&gt; &lt;code&gt;order.is_refundable()&lt;/code&gt; belongs on the model. "Refund this order, restock, notify the warehouse and reverse the charge" does not.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No signals for business flow.&lt;/strong&gt; Signals are for decoupled side concerns like cache busting. If it's part of the use case, call it explicitly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Don't build a framework.&lt;/strong&gt; No abstract base &lt;code&gt;Service&lt;/code&gt; class, no command bus, no dependency injection container. Functions and modules. Python already has them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;When this is overkill&lt;/h2&gt;
+&lt;p&gt;A CRUD admin over a few tables doesn't need a service layer. If a &lt;code&gt;ModelViewSet&lt;/code&gt; really is the whole feature, enjoy it. The moment an endpoint does more than save what it was given, such as touching a second model, calling an external API or enforcing a rule the business cares about, move it into a function. It takes ten minutes now, or a week later.&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;Django gives you an excellent ORM and a decent request cycle. It doesn't give you a place for your domain, so you have to make one. &lt;strong&gt;Thin views, dumb serializers, plain service functions.&lt;/strong&gt; Your rules become callable from anywhere, testable in milliseconds and readable by the next developer, who is usually you, six months from now, at 11 pm, during an incident.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>The Problems with Django REST Framework</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/the-problems-with-django-rest-framework.html"/>
+    <id>https://nehem.dev/the-problems-with-django-rest-framework.html</id>
+    <published>2025-02-02T00:00:00+10:00</published>
+    <updated>2025-02-02T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>A critique of Django REST Framework: how it inherits Django Forms' design, its boilerplate and performance costs, the one thing it gets right, and why to move on.</summary>
+    <category term="django"/><category term="rest"/><category term="api"/><category term="drf"/>
+    <content type="html">&lt;p&gt;Let's start by burying REST itself real quick, because DRF is built on the rotting foundation of a 2000s architectural cargo cult that's been wheezing since &lt;a href="https://graphql.org/"&gt;GraphQL&lt;/a&gt;, &lt;a href="https://grpc.io/"&gt;gRPC&lt;/a&gt;, tRPC, and even plain JSON-RPC started laughing at it.&lt;/p&gt;
+&lt;p&gt;RESTful, the idea was great in 2006 when &lt;a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm"&gt;Roy Fielding&lt;/a&gt; was drunk on HTTP verbs and everyone pretended &lt;a href="https://en.wikipedia.org/wiki/HATEOAS"&gt;HATEOAS&lt;/a&gt; was gonna save, decades later it's mostly a theater:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Over-fetching/under-fetching hell  &lt;/li&gt;
+&lt;li&gt;N+1 query nightmares hidden behind "pagination"  &lt;/li&gt;
+&lt;li&gt;Verb gymnastics for what should just be RPC calls  &lt;/li&gt;
+&lt;li&gt;Versioning nightmares because you can't change anything useful without breaking clients  &lt;/li&gt;
+&lt;li&gt;Idempotent PUT/DELETE promises that fall apart the second you touch real business logic  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;REST isn't a protocol, it's a style guide nobody follows consistently. Most REST APIs are just RPC dressed in HTTP clothing with extra steps. We could roast REST for a whole post (and we should), but let's save the funeral for later. Today the victim is DRF, the greedy middle child that tried to turn Django into a REST cosplay while dragging the corpse of Django forms/templates into the API era.&lt;/p&gt;
+&lt;h2&gt;The original sin: DRF is literally Django Forms 2.0 but for JSON&lt;/h2&gt;
+&lt;p&gt;Django had this beautiful (for 2005) story:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Models - Forms - Views - Templates  &lt;/li&gt;
+&lt;li&gt;ModelForm auto-magics validation + rendering  &lt;/li&gt;
+&lt;li&gt;Clean, batteries-included, beginner-friendly magic  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then mobile/SPA/React/Vue/Flutter happened. Templates died. Forms became irrelevant for anything except admin/internal tools. The backend's job shrank to "give me JSON, validate it, save it, bye."&lt;/p&gt;
+&lt;p&gt;Instead of letting Django evolve into a clean, API-first beast, someone said:&lt;br /&gt;
+"Wait… what if we just slap the exact same form/model magic onto APIs? Call it Serializer instead of Form! Call it ViewSet instead of View! Reuse all the terminology so nobody has to learn anything new!"&lt;/p&gt;
+&lt;p&gt;Boom, DRF was born. Greedy as hell. It didn't innovate; it ported dying concepts to a new world and pretended it was progress.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ModelSerializer&lt;/strong&gt; = ModelForm but JSON  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serializer&lt;/strong&gt; = Form  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation&lt;/strong&gt; = same clean/validate_{field} hooks  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;to_representation&lt;/strong&gt; = basically render_to_response but manual  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;They didn't simplify APIs. They forced every Django dev to keep thinking in form-based, server-rendered mental models when the client is now the one doing rendering/validation/display. The backend should be dumb, stateless, JSON-in/JSON-out. DRF makes it feel like you're still building a monolith MPA with extra steps.&lt;/p&gt;
+&lt;h2&gt;The boilerplate apocalypse&lt;/h2&gt;
+&lt;p&gt;You want a simple CRUD for a model? In plain Django + JsonResponse:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;thing_list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'GET'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;things&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Thing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;JsonResponse&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;'things'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;())},&lt;/span&gt; &lt;span class="n"&gt;safe&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'POST'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;
+        &lt;span class="c1"&gt;# parse, validate, save, return 3-20 lines max&lt;/span&gt;
+        &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;20–40 lines tops for basic endpoints. Readable. Controllable. No magic.&lt;/p&gt;
+&lt;p&gt;DRF version?  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Serializer class  &lt;/li&gt;
+&lt;li&gt;Meta fields/exclude/depth/nested hell  &lt;/li&gt;
+&lt;li&gt;ViewSet (or GenericAPIView + mixins)  &lt;/li&gt;
+&lt;li&gt;Router registration  &lt;/li&gt;
+&lt;li&gt;Override get_queryset, get_serializer_class, perform_create, etc.  &lt;/li&gt;
+&lt;li&gt;Custom actions @action(detail=True)  &lt;/li&gt;
+&lt;li&gt;Throttling classes, permission classes, pagination classes  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Suddenly your "simple" API requires 300+ lines across 7 files for what should be a function. Inheritance chains so deep you need a map to debug why create() is calling update() sideways. New devs stare and go "this is Python?" Nope, it's DRF cult initiation.&lt;/p&gt;
+&lt;p&gt;It's not beginner-friendly, it's Django-expert-only. New devs look at DRF code and think "this framework is fighting me." Because it is. The so called magic only works if you surrender to the DRF way. Deviate once (custom validation, non-model data, weird nesting) and you're overriding half the base classes anyway.&lt;/p&gt;
+&lt;h2&gt;Performance? What performance?&lt;/h2&gt;
+&lt;p&gt;ModelSerializer is infamous for being glacially slow. Benchmarks show it 300–400× slower than plain dict conversion on simple objects. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ModelSerializer dynamically builds fields every request - perf hit on hot paths  &lt;/li&gt;
+&lt;li&gt;Deep nesting + source= tricks = N+1 + slow serialization  &lt;/li&gt;
+&lt;li&gt;High-cardinality stuff (like dynamic fields) makes caching/debugging hell  &lt;/li&gt;
+&lt;li&gt;ViewSets encourage god-classes with 10+ methods  &lt;/li&gt;
+&lt;li&gt;Third-party packages? Either you lock into DRF ecosystem forever or you rewrite  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Tom Christie (DRF creator) himself warned: &lt;a href="https://hakibenita.com/django-rest-framework-slow"&gt;avoid serializers in perf-critical paths&lt;/a&gt;. Yet DRF pushes them as default. In 2026, when your API hits 1k+ req/s, you're profiling and cursing because DRF decided "magic" &amp;gt; speed.&lt;/p&gt;
+&lt;p&gt;Meanwhile, alternatives like &lt;a href="https://django-ninja.dev/"&gt;Django Ninja&lt;/a&gt; or plain views + &lt;a href="https://docs.pydantic.dev/"&gt;Pydantic&lt;/a&gt;/&lt;a href="https://fastapi.tiangolo.com/"&gt;FastAPI&lt;/a&gt;-style type hints let you write functions that look like functions. Async support? Native in Ninja/FastAPI. Auto OpenAPI? Built-in without extra config. DRF feels like it's still stuck in 2015 sync land.&lt;/p&gt;
+&lt;h2&gt;Maintenance &amp;amp; stagnation&lt;/h2&gt;
+&lt;p&gt;Last major release? 3.14 in late 2022. Anything since 3.15 is minor fixes which are basically pushing DRF into life support.  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No real async love, still sync-first, async hacks feel bolted-on. While Django grew async views/ORM, DRF stayed in sync land  &lt;/li&gt;
+&lt;li&gt;Community shifting hard: Reddit/HN/Upwork points the trend of moving to FastAPI / Django Ninja for new projects  &lt;/li&gt;
+&lt;li&gt;Django Ninja / FastAPI give auto OpenAPI, Pydantic validation, type hints, blazing perf, native async-DRF feels like a Windows XP app next to them  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Django core in 2025+ basically said "REST? Not our problem—use third-party." And people still defend DRF as "batteries-included" when it's the opposite: extra dependency that locks you out of modern Python niceties.&lt;/p&gt;
+&lt;h2&gt;More nails in the coffin&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ecosystem lock-in trap&lt;/strong&gt; - DRF plugins everywhere, but deviate once (custom auth, weird nesting, non-CRUD) and you're rewriting base classes. Good luck migrating later.  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation overwhelm&lt;/strong&gt; - Official docs are a wiki maze. Click one link - 47 new concepts - infinite tabs. Beginners get lost for weeks.  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ViewSet god-classes&lt;/strong&gt; - One class handles list/create/retrieve/update/partial_update/delete + 10 custom actions. Breaks single-responsibility so hard it's comical.  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pagination &amp;amp; throttling good? Sure&lt;/strong&gt; - But you can steal throttling in 50 lines. Don't need the whole framework for it.  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Community burnout signal&lt;/strong&gt; - Threads everywhere: "DRF in 2025? Why still third-party for batteries-included Django?" "Moved to Ninja—never looking back." "DRF feels bloated/clunky/stale."  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;The one good thing (because fairness)&lt;/h2&gt;
+&lt;p&gt;Throttling/rate-limiting in DRF is genuinely clean. ScopedThrottler, UserRateThrottle, etc., solid. If I ever touch DRF again, it's probably just to steal the throttling middleware and throw the rest away.&lt;/p&gt;
+&lt;p&gt;But that's it. Everything else? You can roll in 20 lines of if/else + JsonResponse + basic validation. DRF is overkill for 80% of APIs and actively harmful for the rest.&lt;/p&gt;
+&lt;h2&gt;Verdict 2025: Move on&lt;/h2&gt;
+&lt;p&gt;DRF was peak 2015: when REST was king and Django needed API lipstick. In 2025 it's a luxury tax on velocity, perf, and sanity. Here is how to move on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For simple APIs use Plain views + JsonResponse &lt;/li&gt;
+&lt;li&gt;For complex usecases &amp;amp; API docs stick to Django Ninja (FastAPI syntax + Django ORM/admin) or full FastAPI  &lt;/li&gt;
+&lt;li&gt;For existing legacy projects, sure, maintain it. But start writing newer endpoints and versions using Django Ninja or FastAPI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Whoever starts a greenfield project with full DRF in 2025 is either trying to get paid by the line of code or hasn't profiled serialization lag yet, Or hasn't discovered they can just write functions that return JSON  &lt;/p&gt;
+&lt;p&gt;Rest in pieces, DRF. You overstayed your welcome. You were never necessary.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Why is Python unsuitable as a mobile application development language</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/why-is-python-unsuitable-as-a-mobile-application-development-language.html"/>
+    <id>https://nehem.dev/why-is-python-unsuitable-as-a-mobile-application-development-language.html</id>
+    <published>2016-07-16T00:00:00+10:00</published>
+    <updated>2016-07-16T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Why Python missed the mobile era: the decade-long Python 2 to 3 transition (2008–2018) slowed libraries and innovation just as web and mobile took off.</summary>
+    <category term="python"/><category term="mobiledevelopment"/><category term="python3"/>
+    <content type="html">&lt;p&gt;&lt;strong&gt;tl;dr&lt;/strong&gt;&lt;br /&gt;
+PSF made migrating to Python 3 as priority to the community, which slowed down pythonic innovations during 2006-2016, which was the defining moment in history of modern Web technologies &amp;amp; Mobile Technologies.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Root Cause: The Launch of Python 3&lt;/strong&gt;&lt;br /&gt;
+Python 3 was launched in 2008 and it didn't take off as quick as PSF expected. In order to overcome the gravity of Python 2.7 they had to deliberately kill Python 2 using numerous strategies, the main strategy is stop adding new features to Python 2.7 (a.k.a simply abandoning the world’s most popular dynamically typed language of that time).&lt;/p&gt;
+&lt;p&gt;On the contrast there were various communities that kept back-porting new Python 3 features to Python 2.7 which further slowed down Python 3 adaption. So they have to press the kill switch by declaring as Python 2.7 as legacy despite the consequences, you have to remember Python 2 was having the most modern feature set of that time compared to C, C++, Perl, Java etc. There was nothing legacy about it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Nightmare of the 10-Year Transition Period (Roughly 2008–2018, with Full EOL in 2020)&lt;/strong&gt;&lt;br /&gt;
+Those 10 years transition period was a great nightmare at the worst, communities(esp library owners) were forced to keep their code compatible with both 2 &amp;amp; 3, which caused the testing cost to sky-rocket, this impacted developers' freedom of thinking, free flow of ideas etc. What once was a simple and elegant language suddenly became a liability because you were ‘expected’ to write in both Python 2 &amp;amp; 3. Productivity was the original thing that made Python popular which wasn’t the experience during the transition.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Emergence of "Python X"&lt;/strong&gt;&lt;br /&gt;
+In the whole 10 years Pytonists were neither coding in Python 2 nor in Python 3 there were coding an in between language(Python X) filled with hodgepodge hacks here and there without clear documentation, there were enough official guidelines for porting to Python 3 but not for maintaining the code in Python 2 &amp;amp; 3 since they genuinely didn’t expect such a problem would arise.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Challenges for Library Maintainers vs End Users&lt;/strong&gt;&lt;br /&gt;
+Porting from 2 -&amp;gt; 3 was easy for an end user, but as a library owner maintaining for 2 &amp;amp; 3 was a nightmare. Many libraries were simply abandoned.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Impact on Learning and Resources&lt;/strong&gt;&lt;br /&gt;
+Learning experience of Python via internet met the all time low, Googling questions would lead to blog posts and Stackoverflow which had snippets for Python 2. Every archived knowledge (even as simple as ‘sorting a dict’) had to be re-written once again for Python 3 and tagged with proper Python versions. This part caused great confusion for newbies and made JavaScript as a possible first language. Most of the Stack overflow answers stopped working suddenly since they were originally written for Python 2. New answers were not written as often asking same question for Python 3 will cause the question to be down-voted, locked &amp;amp; deleted or marked as duplicate by less informed random moderators who weren’t aware of this Python specific issue, also Stackoverflow was not designed to converse around questions of multiple versions of a same programming language.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Decline of GUI and Cross-Platform Tools&lt;/strong&gt;&lt;br /&gt;
+Great tools like WxPython, PyQT, PySide became old &amp;amp; oblivious because 'Python 3' was suddenly imposed as priority. (Imagine you as a open source developer, suddenly PSF/community declares your work as deprecated, you might lose the spirit, you wouldn’t care much, that’s what happened to 100s of libraries, great libraries were declared legacy even thought they were working fine, just because PSF wanted to push Python3. It wasn’t indeed to kill 100s libraries just because the author didn’t have time/interest in porting(a.k.a maintaining in 2&amp;amp;3)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Hidden Cost for Library Owners&lt;/strong&gt;&lt;br /&gt;
+The experience of porting to Python 3 was not as easy as you imagine or the PSF thought. For a developer it may be simply moving to 2 to 3. But for a library owner it is all about ‘maintaining’ 2 and 3 at the same time, with added testing cost.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lack of Innovation During a Critical Decade&lt;/strong&gt;&lt;br /&gt;
+Thus, everyone witnessed that during 2006 to 2016 there were no innovation or ground breaking things happened in Python's world, they were busy in solving Python 3 transition (porting &amp;amp; maintaining) and releasing small features by barely keeping the heads on the water. However we all knew 2006-2016 was the defining moment of web technology and mobile technologies.&lt;/p&gt;
+&lt;p&gt;JavaScript started dominating everywhere with revolutionary frameworks and new ways of doing things(like non-blocking IO, web sockets etc) while Python community were busting their head around in cleaning the mess. Python 3 is good but wrongly timed. This is why Python doesn't have a suitable cross platform framework for mobile.&lt;/p&gt;
+&lt;p&gt;While C# has Xamarin, JS has Cordova &amp;amp; Titanium, even Lua has Corona, but Python equivalents Kivy and PyQT do keep stalling.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Python's Strengths in Other Domains&lt;/strong&gt;&lt;br /&gt;
+However, Python will have a strong future on the machine learning, NLP, statistical and scientific computing. So to repeat the point Python lost whatever it deserved from 2006–2016, but it will dominate what it really deserves from 2016–2026, unfortunately mobile development(front-end) isn’t one of them.&lt;/p&gt;</content>
+  </entry>
+</feed>

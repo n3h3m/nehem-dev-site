@@ -1,0 +1,5 @@
+# nehem.dev — all crawlers welcome
+User-agent: *
+Allow: /
+
+Sitemap: https://nehem.dev/sitemap.xml

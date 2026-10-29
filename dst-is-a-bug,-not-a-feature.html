@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DST Is a Bug, Not a Feature — Nehemiah Jacob</title>
+<meta name="description" content="Daylight saving time causes twice-yearly software bugs. A look at countries that dropped DST, from Russia and China to Iceland and Turkey, and what devs can learn.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/dst-is-a-bug,-not-a-feature.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/dst-is-a-bug,-not-a-feature.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/dst-is-a-bug,-not-a-feature.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="DST Is a Bug, Not a Feature">
+<meta property="og:description" content="Daylight saving time causes twice-yearly software bugs. A look at countries that dropped DST, from Russia and China to Iceland and Turkey, and what devs can learn.">
+<meta property="og:url" content="https://nehem.dev/dst-is-a-bug,-not-a-feature.html">
+<meta property="og:image" content="https://nehem.dev/og/dst-is-a-bug,-not-a-feature.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DST Is a Bug, Not a Feature — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2025-08-03"><meta property="article:modified_time" content="2025-08-03"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="DST"><meta property="article:tag" content="DaylightSaving"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DST Is a Bug, Not a Feature">
+<meta name="twitter:description" content="Daylight saving time causes twice-yearly software bugs. A look at countries that dropped DST, from Russia and China to Iceland and Turkey, and what devs can learn.">
+<meta name="twitter:image" content="https://nehem.dev/og/dst-is-a-bug,-not-a-feature.png">
+<meta name="twitter:image:alt" content="DST Is a Bug, Not a Feature — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/dst-is-a-bug,-not-a-feature.html#article","headline":"DST Is a Bug, Not a Feature","description":"Daylight saving time causes twice-yearly software bugs. A look at countries that dropped DST, from Russia and China to Iceland and Turkey, and what devs can learn.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/dst-is-a-bug,-not-a-feature.png","width":1200,"height":630},"datePublished":"2025-08-03","dateModified":"2025-08-03","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/dst-is-a-bug,-not-a-feature.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/dst-is-a-bug,-not-a-feature.html","inLanguage":"en-AU","keywords":["DST","DaylightSaving"],"wordCount":804,"timeRequired":"PT4M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"DST Is a Bug, Not a Feature","item":"https://nehem.dev/dst-is-a-bug,-not-a-feature.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">DST Is a Bug, Not a Feature</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2025-08-03">3 Aug 2025</time></p>
+      <p>4 min read</p>
+<ul class="tags" aria-label="Tags"><li>DST</li><li>DaylightSaving</li></ul>    </aside>
+    <div class="prose">
+<p>Daylight Saving Time isn't "saving" anything. It's a 100-year-old hack that introduces twice-yearly bugs into every system that touches schedules, logs, billing, notifications, cron jobs, and human sanity.</p>
+<p>We advance clocks in spring → people lose an hour of sleep → heart attacks spike slightly, accidents go up, life satisfaction dips. Fall back → everyone celebrates the "extra hour" until they realize it's just redistributing misery. Energy savings? Negligible or negative in modern AC-heavy worlds. Developer pain? Infinite.</p>
+<p>Yet somehow, most of Europe and North America still run this circus. Meanwhile, a growing list of countries said "nah" and haven't looked back. Let's meet the defectors who fixed their timezone code and moved on with fixed offsets forever.</p>
+<h2>1. Russia (abolished 2014, after a brief "permanent DST" experiment gone wrong)</h2>
+<p>Tried permanent summer time 2011–2014 → dark winter mornings, kids going to school in pitch black, massive complaints. Switched back to permanent standard time (winter time) in 2014. Result? No more biannual chaos, simpler scheduling across 11 time zones (now 11 again after earlier cuts), no regrets reported. Russians just shrugged and kept living. If a country spanning ~11 time zones can ditch the switch without imploding, your app can too.</p>
+<h2>2. China (tried 1986–1991, abolished permanently)</h2>
+<p>Short experiment for "energy conservation." Saved a bit of kWh in theory, but caused massive confusion-people forgot to change clocks, meetings double-booked, factories messed up. Government killed it in 1992 citing "inconvenience." China never looked back. One timezone (UTC+8, no DST ever), 1.4B+ people, zero clock-change bugs in WeChat/Alipay/Douyin. Coincidence? I think not. They basically run on naive Asia/Shanghai everywhere and it scales beautifully.</p>
+<h2>3. Iceland (abolished effectively since 1968, permanent UTC+0)</h2>
+<p>Way up north with insane summer daylight anyway (midnight sun vibes). Tried DST briefly, ditched it because extending already-long days made zero sense. No clock changes since the late 60s. Icelanders just live with consistent time. Productivity didn't collapse. Northern lights still appear. Win.</p>
+<h2>4. Turkey (switched to permanent DST in 2016 → effectively no more changes)</h2>
+<p>They didn't "abolish" the switch so much as lock it on summer time forever (UTC+3 year-round). No fall-back. No spring-forward. Just fixed. Energy arguments aside, no biannual disruptions. Business goes on.</p>
+<h2>5. Recent dropouts (last 10–15 years): Armenia, Azerbaijan, Belarus, Georgia, Iran, Jordan, Namibia, Samoa, Syria, Uruguay</h2>
+<p>These are the fresh ones. Jordan/Syria went permanent summer time recently (2022). Namibia, Uruguay ditched after trials showed meh energy gains and lots of hassle. Iran bounced for religious/political reasons but stayed off. Pattern? Once you stop the twice-yearly jolt, nobody riots to bring it back. The switch is the bug; fixed offset is the stable release.</p>
+<p>For Australia the story is entirely different, Australia - the chaotic half-defector that accidentally proved the point. Australia is the ultimate “we tried DST and mostly hated it” exhibit.</p>
+<p>Three mainland states (Queensland, Western Australia, Northern Territory) never observe DST and have been on permanent standard time forever.
+Queensland in particular has been loud about it since 1992 - they tried it, voters hated the late sunsets messing with kids’ bedtimes and farmers’ routines, and they killed it permanently. No regrets.</p>
+<p>The other states (NSW, Victoria, SA, Tasmania, ACT) still do the biannual dance… but even there, every few years someone floats “permanent summer time” or “permanent standard” and the public usually says “just pick one and leave it alone.”
+Result? A country with wildly inconsistent rules across borders, yet the non-DST states report zero chaos compared to the ones that still flip. Queensland businesses schedule with Brisbane time year-round, no bugs, no double-booked Zoom calls, no “did the meeting move because of DST?” drama. Meanwhile Sydney/Melbourne teams still deal with the March/October ritual.</p>
+<p>Australia basically runs a live A/B test: half the country on fixed offset, half still running legacy code. Guess which half has fewer timezone-support tickets? Fixed wins.
+Bonus honorable mentions:</p>
+<p>Arizona (most of it, since 1968) - Hot desert + DST = more AC runtime in evenings = higher bills. Opted out permanently. Navajo Nation still does DST for border reasons, but the state as a whole? Nope.</p>
+<p>Most equatorial/tropical countries - Never bothered in the first place. Daylight barely varies year-round. Why add bugs when nature already gave you a stable API?</p>
+<h2>What These Countries Teach Us Devs</h2>
+<ul>
+<li>Biannual changes are <strong>non-deterministic garbage</strong> injected into otherwise predictable systems.</li>
+<li>Permanent fixed offset = fewer edge cases (no "did this event happen before/after the switch?"), simpler queries, no timezone DB updates breaking prod every March/October.</li>
+<li>"But energy savings!" - Modern studies show it's a wash or net negative. Countries that quit report no measurable regret spike.</li>
+<li>Humans adapt fast to fixed local wall-clock time. Meetings at 9 AM stay 9 AM forever. Cron jobs don't ghost or double-fire.</li>
+</ul>
+<p>DST isn't a feature. It's technical debt the world is slowly paying off.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-21">Oct 2026</time></a></li>
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+  <li><a href="/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html"><span class="t">Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-02-19">Feb 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/why-microservices-are-a-luxury-tax-on-startups.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Why Microservices Are a Luxury Tax on Startups</span></a><a class="pn newer" href="/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Type Hints Pay Off Only If You Run a Type Checker in CI</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

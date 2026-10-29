@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Type Hints Pay Off Only If You Run a Type Checker in CI</title>
+<meta name="description" content="Python type hints are just comments until mypy or pyright runs in CI. A pragmatic guide to gradual adoption, config that works and rules worth keeping.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Type Hints Pay Off Only If You Run a Type Checker in CI">
+<meta property="og:description" content="Python type hints are just comments until mypy or pyright runs in CI. A pragmatic guide to gradual adoption, config that works and rules worth keeping.">
+<meta property="og:url" content="https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html">
+<meta property="og:image" content="https://nehem.dev/og/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Type Hints Pay Off Only If You Run a Type Checker in CI — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2025-10-14"><meta property="article:modified_time" content="2025-10-14"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Python"><meta property="article:tag" content="Typing"><meta property="article:tag" content="Mypy"><meta property="article:tag" content="CI"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Type Hints Pay Off Only If You Run a Type Checker in CI">
+<meta name="twitter:description" content="Python type hints are just comments until mypy or pyright runs in CI. A pragmatic guide to gradual adoption, config that works and rules worth keeping.">
+<meta name="twitter:image" content="https://nehem.dev/og/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.png">
+<meta name="twitter:image:alt" content="Type Hints Pay Off Only If You Run a Type Checker in CI — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html#article","headline":"Type Hints Pay Off Only If You Run a Type Checker in CI","description":"Python type hints are just comments until mypy or pyright runs in CI. A pragmatic guide to gradual adoption, config that works and rules worth keeping.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.png","width":1200,"height":630},"datePublished":"2025-10-14","dateModified":"2025-10-14","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html","inLanguage":"en-AU","keywords":["Python","Typing","Mypy","CI"],"wordCount":1027,"timeRequired":"PT6M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Type Hints Pay Off Only If You Run a Type Checker in CI","item":"https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+<link rel="stylesheet" href="/code.css?v=a5120a28">
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display long">Type Hints Pay Off Only If You Run a Type Checker in CI</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2025-10-14">14 Oct 2025</time></p>
+      <p>6 min read</p>
+<ul class="tags" aria-label="Tags"><li>Python</li><li>Typing</li><li>Mypy</li><li>CI</li></ul>    </aside>
+    <div class="prose">
+<p>Python type hints have a dirty secret: <strong>the interpreter ignores them.</strong> <code>def total(x: int) -&gt; int</code> will happily accept a string and return a list. Nothing checks it at runtime unless you add a library that does. Annotations are metadata. Nothing more.</p>
+<p>So here's the position: <strong>type hints without a type checker in CI are decorative comments that can lie.</strong> Worse than no hints, because they look authoritative. If you're going to write them, make a machine verify them on every pull request. If you're not going to do that, at least be honest that they're documentation.</p>
+<h2>Hints that lie</h2>
+<p>This is the failure mode in a codebase where hints are written but never checked:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_user</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+</code></pre></div>
+
+<p>That annotation is false. <code>.first()</code> returns <code>None</code> when nothing matches. Every caller trusts the signature, skips the <code>None</code> check, and the bug surfaces as <code>AttributeError: 'NoneType' object has no attribute 'name'</code> in production, three calls away from the cause.</p>
+<p>A type checker with the Django plugin flags this immediately: the function returns <code>User | None</code>, not <code>User</code>. The fix is one honest annotation:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_user</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now every caller is forced to handle the missing case, and the checker tells you which ones don't. That's the entire value proposition of typing: <strong>move a class of runtime errors to review time.</strong> It only works if something actually runs.</p>
+<h2>Pick a checker and stop debating</h2>
+<p>The mainstream options:</p>
+<ul>
+<li><strong>mypy</strong> - the original, maintained under the Python organisation, with a mature plugin system. If you use Django, the <code>django-stubs</code> plugin makes querysets and model fields understood. This is the default choice for Django projects.</li>
+<li><strong>pyright</strong> - Microsoft's checker, written in TypeScript and fast. It powers the Pylance extension in VS Code, so many developers already see its errors in their editor. Its inference is aggressive and its strict mode is strict.</li>
+<li><strong>Newer Rust-based checkers</strong> such as Astral's <code>ty</code> and Meta's Pyrefly are worth watching. Check their status before betting a large codebase on them.</li>
+</ul>
+<p>My advice: Django-heavy codebase, start with mypy and <code>django-stubs</code>. Library or non-Django service, pyright is a great default. Either is far better than neither, and arguing about it for a sprint is worse than picking one today.</p>
+<h2>Gradual adoption that doesn't stall</h2>
+<p>The common mistake is turning on <code>--strict</code> across a 200,000-line codebase, seeing thousands of errors and giving up. Python typing is designed to be gradual. Use that.</p>
+<p>Start permissive globally and strict where it matters:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># pyproject.toml</span>
+<span class="k">[tool.mypy]</span>
+<span class="n">python_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"3.12"</span>
+<span class="n">plugins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"mypy_django_plugin.main"</span><span class="p">]</span>
+<span class="n">warn_unused_ignores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">warn_redundant_casts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">no_implicit_optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">check_untyped_defs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="k">[tool.django-stubs]</span>
+<span class="n">django_settings_module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"config.settings"</span>
+
+<span class="c1"># New and critical code: no untyped functions allowed.</span>
+<span class="k">[[tool.mypy.overrides]]</span>
+<span class="n">module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"billing.*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orders.services"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orders.selectors"</span><span class="p">]</span>
+<span class="n">disallow_untyped_defs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">disallow_any_generics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">warn_return_any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="c1"># Third-party packages without stubs: don't let them block CI.</span>
+<span class="k">[[tool.mypy.overrides]]</span>
+<span class="n">module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"legacy_vendor_sdk.*"</span><span class="p">]</span>
+<span class="n">ignore_missing_imports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</code></pre></div>
+
+<p>Then ratchet:</p>
+<ol>
+<li><strong>Week one:</strong> run the checker in CI on the whole repo with the permissive defaults. Fix or <code># type: ignore[code]</code> the existing errors. The goal is a green baseline, not perfection.</li>
+<li><strong>Every new module</strong> goes into the strict override list. New code is typed from birth.</li>
+<li><strong>Every time you touch an old module</strong> for real work, add it to the strict list and fix what falls out. Leave the place better than you found it.</li>
+<li><strong>Track the ignore count.</strong> <code>grep -rc "type: ignore"</code> in CI is crude and it works. The number should only go down.</li>
+</ol>
+<p><code>warn_unused_ignores</code> matters more than it looks. When you fix the underlying problem, the stale ignore becomes an error, so suppressions can't rot silently.</p>
+<h2>Wire it into CI, not just the editor</h2>
+<p>Editor squiggles are advisory. A red CI check is a rule. A minimal GitHub Actions job:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typecheck</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mypy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v5</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v6</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.12"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements-dev.txt</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypy .</span>
+</code></pre></div>
+
+<p>Pin your checker version in <code>requirements-dev.txt</code>. Checkers get smarter with each release, which means an unpinned upgrade can turn a green build red on a Monday morning with no code change. Upgrade on purpose, in its own pull request.</p>
+<p>Make the check required on the main branch. If it can be skipped, it will be.</p>
+<h2>Rules worth keeping</h2>
+<p>Typing everything perfectly isn't the goal. Typing the parts where bugs are expensive is.</p>
+<ul>
+<li><strong>Type the boundaries first.</strong> Public functions, service layers, anything another module calls. Internals of a twenty-line helper can wait.</li>
+<li><strong>Ban <code>Any</code> from spreading.</strong> <code>Any</code> is contagious: whatever touches it becomes unchecked. Use it at the edge, such as parsing raw JSON, then convert to a real type immediately.</li>
+<li><strong>Model data, don't pass dicts.</strong> A <code>dict[str, Any]</code> travelling through five functions is a bug farm. Use a <code>dataclass</code> for internal data and a <code>TypedDict</code> when the shape really is a dict, like a JSON payload.</li>
+<li><strong>Use <code>Protocol</code> for dependencies.</strong> It's structural typing: a fake in tests satisfies it without inheriting anything.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Protocol</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PaymentGateway</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">charge</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">customer_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">reference</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">settle</span><span class="p">(</span><span class="n">gateway</span><span class="p">:</span> <span class="n">PaymentGateway</span><span class="p">,</span> <span class="n">customer_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">gateway</span><span class="o">.</span><span class="n">charge</span><span class="p">(</span>
+        <span class="n">customer_id</span><span class="o">=</span><span class="n">customer_id</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="s2">"manual"</span>
+    <span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><strong>Every ignore carries an error code.</strong> <code># type: ignore[attr-defined]</code>, never a bare <code># type: ignore</code>. Bare ignores hide every future error on that line too.</li>
+<li><strong>Use <code>reveal_type()</code> when confused.</strong> Drop it in, run the checker, read what it thinks. It beats guessing.</li>
+<li><strong>Don't fight the checker with <code>cast()</code>.</strong> Each <code>cast</code> is you overruling the machine. Sometimes you're right. Usually the type is wrong upstream.</li>
+</ul>
+<h2>What typing won't do</h2>
+<p>Be clear-eyed about it. A type checker won't validate data coming over the wire. Your request body is still untrusted bytes, and for that you want runtime validation: a serializer, Pydantic or a plain schema check. Typing also won't catch logic bugs where the types line up and the maths is wrong. That's what tests are for.</p>
+<p>Types and tests aren't competitors. Types eliminate a whole category of tests you'd otherwise write: "what if this is <code>None</code>", "what if someone passes a string". Tests cover behaviour. Together they're cheaper than either alone.</p>
+<h2>The cost argument</h2>
+<p>The usual objection is speed: "annotations slow us down." For a throwaway script, sure, skip them. For code that lives longer than a quarter and is touched by more than one person, the trade usually goes the other way. Refactoring is where it shows. Rename a field, change a return type, split a function, and the checker gives you the list of every call site that needs to change. Without it, that list is "grep and hope".</p>
+<h2>Bottom line</h2>
+<p>A type hint is a promise. <strong>A type checker in CI is what makes the promise binding.</strong> Pick mypy or pyright, start permissive, make new code strict, ratchet old code as you touch it, and make the check required. If you're not going to run a checker, stop writing hints that might be wrong. Unverified types aren't documentation, they're rumours.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-21">Oct 2026</time></a></li>
+  <li><a href="/why-is-python-unsuitable-as-a-mobile-application-development-language.html"><span class="t">Why is Python unsuitable as a mobile application development language</span><span class="arr" aria-hidden="true">→</span><time datetime="2016-07-16">Jul 2016</time></a></li>
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/dst-is-a-bug,-not-a-feature.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">DST Is a Bug, Not a Feature</span></a><a class="pn newer" href="/store-every-datetime-as-naive-asiashanghai.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Store Every Datetime as Naive Asia:Shanghai</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

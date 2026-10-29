@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing — Nehemiah Jacob on Python, Django &amp; Software Design</title>
+<meta name="description" content="Essays by Nehemiah Jacob on Python, Django REST Framework, microservices vs monoliths, and handling time zones and DST in software.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/writing/">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/writing/">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/writing/"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="website">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Writing — Nehemiah Jacob">
+<meta property="og:description" content="Essays by Nehemiah Jacob on Python, Django REST Framework, microservices vs monoliths, and handling time zones and DST in software.">
+<meta property="og:url" content="https://nehem.dev/writing/">
+<meta property="og:image" content="https://nehem.dev/og/writing.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Writing by Nehemiah Jacob on nehem.dev"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Writing — Nehemiah Jacob">
+<meta name="twitter:description" content="Essays by Nehemiah Jacob on Python, Django REST Framework, microservices vs monoliths, and handling time zones and DST in software.">
+<meta name="twitter:image" content="https://nehem.dev/og/writing.png">
+<meta name="twitter:image:alt" content="Writing by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://nehem.dev/writing/","url":"https://nehem.dev/writing/","name":"Writing — Nehemiah Jacob","description":"Essays by Nehemiah Jacob on Python, Django REST Framework, microservices vs monoliths, and handling time zones and DST in software.","inLanguage":"en-AU","isPartOf":{"@id":"https://nehem.dev/#website"},"about":{"@id":"https://nehem.dev/#person"},"mainEntity":{"@id":"https://nehem.dev/writing/#blog"}},{"@type":"Blog","@id":"https://nehem.dev/writing/#blog","name":"nehem.dev — Writing","url":"https://nehem.dev/writing/","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"inLanguage":"en-AU","blogPost":[{"@type":"BlogPosting","@id":"https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html#article","headline":"What a Decade of Python Taught Me About Boring Technology","url":"https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html","datePublished":"2026-10-21"},{"@type":"BlogPosting","@id":"https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html#article","headline":"Postgres Is Enough: Skip the Extra Database Until It Hurts","url":"https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html","datePublished":"2026-06-09"},{"@type":"BlogPosting","@id":"https://nehem.dev/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html#article","headline":"Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box","url":"https://nehem.dev/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html","datePublished":"2026-02-19"},{"@type":"BlogPosting","@id":"https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html#article","headline":"Store Every Datetime as Naive Asia:Shanghai","url":"https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html","datePublished":"2025-12-31"},{"@type":"BlogPosting","@id":"https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html#article","headline":"Type Hints Pay Off Only If You Run a Type Checker in CI","url":"https://nehem.dev/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html","datePublished":"2025-10-14"},{"@type":"BlogPosting","@id":"https://nehem.dev/dst-is-a-bug,-not-a-feature.html#article","headline":"DST Is a Bug, Not a Feature","url":"https://nehem.dev/dst-is-a-bug,-not-a-feature.html","datePublished":"2025-08-03"},{"@type":"BlogPosting","@id":"https://nehem.dev/why-microservices-are-a-luxury-tax-on-startups.html#article","headline":"Why Microservices Are a Luxury Tax on Startups","url":"https://nehem.dev/why-microservices-are-a-luxury-tax-on-startups.html","datePublished":"2025-07-02"},{"@type":"BlogPosting","@id":"https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html#article","headline":"Stop Putting Business Logic in Django Views and Serializers","url":"https://nehem.dev/stop-putting-business-logic-in-django-views-and-serializers.html","datePublished":"2025-04-08"},{"@type":"BlogPosting","@id":"https://nehem.dev/the-problems-with-django-rest-framework.html#article","headline":"The Problems with Django REST Framework","url":"https://nehem.dev/the-problems-with-django-rest-framework.html","datePublished":"2025-02-02"},{"@type":"BlogPosting","@id":"https://nehem.dev/why-is-python-unsuitable-as-a-mobile-application-development-language.html#article","headline":"Why is Python unsuitable as a mobile application development language","url":"https://nehem.dev/why-is-python-unsuitable-as-a-mobile-application-development-language.html","datePublished":"2016-07-16"}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="page" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<header class="page-head">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li></ol></nav>
+  <h1 class="display xl">Writing</h1>
+  <p class="dek">Essays by Nehemiah Jacob on Python, Django, APIs, software architecture and getting time right in production systems.</p>
+  <p class="feed-link"><a href="/feed.xml">Subscribe via RSS / Atom</a></p>
+</header>
+<ol class="entries">
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2026-10-21">21 Oct 2026</time><span>5 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html">What a Decade of Python Taught Me About Boring Technology</a></h2>
+      <p class="entry-d">Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.</p>
+<ul class="tags" aria-label="Tags"><li>Python</li><li>Engineering</li><li>Career</li><li>Architecture</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2026-06-09">9 Jun 2026</time><span>6 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html">Postgres Is Enough: Skip the Extra Database Until It Hurts</a></h2>
+      <p class="entry-d">Postgres can run your job queue, full-text search, JSON documents and cache. How to do each one, with SQL and Django examples, and the signs it&#39;s time to add more.</p>
+<ul class="tags" aria-label="Tags"><li>Postgres</li><li>Django</li><li>Architecture</li><li>Databases</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2026-02-19">19 Feb 2026</time><span>7 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html">Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</a></h2>
+      <p class="entry-d">AWS Lambda bills wall-clock time per request, so steady traffic can cost more than an EC2 box. The formula, a worked example, cold starts and when Lambda wins.</p>
+<ul class="tags" aria-label="Tags"><li>AWS</li><li>Lambda</li><li>Serverless</li><li>EC2</li><li>Cost</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2025-12-31">31 Dec 2025</time><span>5 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/store-every-datetime-as-naive-asiashanghai.html">Store Every Datetime as Naive Asia:Shanghai</a></h2>
+      <p class="entry-d">Why I store every datetime as naive Asia/Shanghai (UTC+8, no DST) instead of UTC, how Chinese platforms already work this way, and the case for UTZ offsets.</p>
+<ul class="tags" aria-label="Tags"><li>timezone</li><li>china</li><li>utc</li><li>utz</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2025-10-14">14 Oct 2025</time><span>6 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html">Type Hints Pay Off Only If You Run a Type Checker in CI</a></h2>
+      <p class="entry-d">Python type hints are just comments until mypy or pyright runs in CI. A pragmatic guide to gradual adoption, config that works and rules worth keeping.</p>
+<ul class="tags" aria-label="Tags"><li>Python</li><li>Typing</li><li>Mypy</li><li>CI</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2025-08-03">3 Aug 2025</time><span>4 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/dst-is-a-bug,-not-a-feature.html">DST Is a Bug, Not a Feature</a></h2>
+      <p class="entry-d">Daylight saving time causes twice-yearly software bugs. A look at countries that dropped DST, from Russia and China to Iceland and Turkey, and what devs can learn.</p>
+<ul class="tags" aria-label="Tags"><li>DST</li><li>DaylightSaving</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2025-07-02">2 Jul 2025</time><span>3 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/why-microservices-are-a-luxury-tax-on-startups.html">Why Microservices Are a Luxury Tax on Startups</a></h2>
+      <p class="entry-d">Why microservices are a luxury tax on startups: the deployment, network, data-consistency and cloud-cost overhead they add, and why modular monoliths keep winning.</p>
+<ul class="tags" aria-label="Tags"><li>Microservices</li><li>Monolith</li><li>Startup</li><li>Scalability</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2025-04-08">8 Apr 2025</time><span>8 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/stop-putting-business-logic-in-django-views-and-serializers.html">Stop Putting Business Logic in Django Views and Serializers</a></h2>
+      <p class="entry-d">Why Django business logic belongs in plain service functions, not views or DRF serializers, with a before/after order example and tests that need no HTTP.</p>
+<ul class="tags" aria-label="Tags"><li>Django</li><li>Architecture</li><li>Testing</li><li>DRF</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2025-02-02">2 Feb 2025</time><span>6 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/the-problems-with-django-rest-framework.html">The Problems with Django REST Framework</a></h2>
+      <p class="entry-d">A critique of Django REST Framework: how it inherits Django Forms&#39; design, its boilerplate and performance costs, the one thing it gets right, and why to move on.</p>
+<ul class="tags" aria-label="Tags"><li>django</li><li>rest</li><li>api</li><li>drf</li></ul>    </div>
+  </article></li>
+  <li class="entry rv"><article>
+    <p class="when"><time datetime="2016-07-16">16 Jul 2016</time><span>4 min read</span></p>
+    <div class="entry-b">
+      <h2 class="entry-t"><a href="/why-is-python-unsuitable-as-a-mobile-application-development-language.html">Why is Python unsuitable as a mobile application development language</a></h2>
+      <p class="entry-d">Why Python missed the mobile era: the decade-long Python 2 to 3 transition (2008–2018) slowed libraries and innovation just as web and mobile took off.</p>
+<ul class="tags" aria-label="Tags"><li>python</li><li>mobiledevelopment</li><li>python3</li></ul>    </div>
+  </article></li>
+</ol>
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postgres Is Enough: Skip the Extra Database Until It Hurts</title>
+<meta name="description" content="Postgres can run your job queue, full-text search, JSON documents and cache. How to do each one, with SQL and Django examples, and the signs it&#39;s time to add more.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Postgres Is Enough: Skip the Extra Database Until It Hurts">
+<meta property="og:description" content="Postgres can run your job queue, full-text search, JSON documents and cache. How to do each one, with SQL and Django examples, and the signs it&#39;s time to add more.">
+<meta property="og:url" content="https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html">
+<meta property="og:image" content="https://nehem.dev/og/postgres-is-enough-skip-the-extra-database-until-it-hurts.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Postgres Is Enough: Skip the Extra Database Until It Hurts — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-06-09"><meta property="article:modified_time" content="2026-06-09"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Postgres"><meta property="article:tag" content="Django"><meta property="article:tag" content="Architecture"><meta property="article:tag" content="Databases"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Postgres Is Enough: Skip the Extra Database Until It Hurts">
+<meta name="twitter:description" content="Postgres can run your job queue, full-text search, JSON documents and cache. How to do each one, with SQL and Django examples, and the signs it&#39;s time to add more.">
+<meta name="twitter:image" content="https://nehem.dev/og/postgres-is-enough-skip-the-extra-database-until-it-hurts.png">
+<meta name="twitter:image:alt" content="Postgres Is Enough: Skip the Extra Database Until It Hurts — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html#article","headline":"Postgres Is Enough: Skip the Extra Database Until It Hurts","description":"Postgres can run your job queue, full-text search, JSON documents and cache. How to do each one, with SQL and Django examples, and the signs it's time to add more.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/postgres-is-enough-skip-the-extra-database-until-it-hurts.png","width":1200,"height":630},"datePublished":"2026-06-09","dateModified":"2026-06-09","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html","inLanguage":"en-AU","keywords":["Postgres","Django","Architecture","Databases"],"wordCount":936,"timeRequired":"PT6M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Postgres Is Enough: Skip the Extra Database Until It Hurts","item":"https://nehem.dev/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+<link rel="stylesheet" href="/code.css?v=a5120a28">
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display long">Postgres Is Enough: Skip the Extra Database Until It Hurts</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-06-09">9 Jun 2026</time></p>
+      <p>6 min read</p>
+<ul class="tags" aria-label="Tags"><li>Postgres</li><li>Django</li><li>Architecture</li><li>Databases</li></ul>    </aside>
+    <div class="prose">
+<p>Every new project seems to start with the same architecture diagram: Postgres for data, Redis for cache, RabbitMQ or SQS for jobs, Elasticsearch for search, maybe MongoDB "for the flexible stuff". Five systems to provision, secure, back up, monitor and keep consistent, for an app with three hundred users.</p>
+<p>The position: <strong>Postgres is enough for far longer than you think.</strong> It's a queue, a search engine, a document store and a cache, all with transactions, one backup and one connection string. Add another datastore when Postgres is measurably hurting, not when a blog post says you'll need it "at scale".</p>
+<h2>The real cost of the extra box</h2>
+<p>Every additional datastore costs more than its hosting bill:</p>
+<ul>
+<li><strong>Consistency.</strong> Write an order to Postgres and a job to Redis. Postgres commits, Redis is unreachable. Now you have an order nobody will ever process. Or the reverse: the job runs before the transaction commits and can't find the row.</li>
+<li><strong>Operations.</strong> Another thing to patch, monitor, alert on, upgrade and restore. Another set of credentials. Another failure mode at 3 am.</li>
+<li><strong>Local development and CI.</strong> Every service is one more container in <code>docker compose</code>, one more thing to seed in tests.</li>
+<li><strong>Knowledge.</strong> Your team needs to understand the failure semantics of each system. Most teams deeply understand one database at best.</li>
+</ul>
+<p>When the queue lives in the same database as the data, <strong>enqueuing a job is part of the same transaction.</strong> Commit the order and the job together, or neither. That one property eliminates a whole category of bugs.</p>
+<h2>A job queue with SKIP LOCKED</h2>
+<p><code>FOR UPDATE SKIP LOCKED</code> (since Postgres 9.5) is what makes a Postgres queue practical. Workers lock the next available row and skip rows other workers already hold, so they never block on each other or grab the same job.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jobs</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w">         </span><span class="nb">bigint</span><span class="w"> </span><span class="k">GENERATED</span><span class="w"> </span><span class="n">ALWAYS</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">queue</span><span class="w">      </span><span class="nb">text</span><span class="w">        </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="s1">'default'</span><span class="p">,</span>
+<span class="w">    </span><span class="n">payload</span><span class="w">    </span><span class="n">jsonb</span><span class="w">       </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">run_at</span><span class="w">     </span><span class="n">timestamptz</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">attempts</span><span class="w">   </span><span class="nb">int</span><span class="w">         </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">jobs_ready_idx</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">jobs</span><span class="w"> </span><span class="p">(</span><span class="n">queue</span><span class="p">,</span><span class="w"> </span><span class="n">run_at</span><span class="p">);</span>
+</code></pre></div>
+
+<p>A worker runs this inside a transaction, does the work, then deletes the row and commits:</p>
+<div class="highlight"><pre><span></span><code><span class="k">BEGIN</span><span class="p">;</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">jobs</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'default'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">run_at</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">now</span><span class="p">()</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">run_at</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FOR</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">SKIP</span><span class="w"> </span><span class="n">LOCKED</span><span class="p">;</span>
+
+<span class="c1">-- do the work in application code, then:</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">jobs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="k">COMMIT</span><span class="p">;</span>
+</code></pre></div>
+
+<p>If the worker crashes mid-job, the transaction rolls back, the lock is released and the job becomes available again. No visibility timeouts, no lost messages. For failures you catch, bump <code>attempts</code> and push <code>run_at</code> forward for a retry with backoff.</p>
+<p>The trade-off: the transaction stays open while the job runs, so keep jobs short. For long jobs, claim the row with a <code>locked_until</code> column instead, and reclaim expired ones.</p>
+<p>You don't have to build this yourself. In Python, <strong>Procrastinate</strong> is a Postgres-backed task queue, and since Django 6.0 there's a built-in Tasks API (<code>django.tasks</code>) with database-backed workers available through the <code>django-tasks-db</code> package. Postgres also has <code>LISTEN</code>/<code>NOTIFY</code> for waking workers without polling.</p>
+<h2>Full-text search that's good enough</h2>
+<p>Before standing up Elasticsearch, try a generated <code>tsvector</code> column with a GIN index:</p>
+<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">articles</span>
+<span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="k">search</span><span class="w"> </span><span class="n">tsvector</span><span class="w"> </span><span class="k">GENERATED</span><span class="w"> </span><span class="n">ALWAYS</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">setweight</span><span class="p">(</span><span class="n">to_tsvector</span><span class="p">(</span><span class="s1">'english'</span><span class="p">,</span><span class="w"> </span><span class="k">coalesce</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">)),</span><span class="w"> </span><span class="s1">'A'</span><span class="p">)</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="n">setweight</span><span class="p">(</span><span class="n">to_tsvector</span><span class="p">(</span><span class="s1">'english'</span><span class="p">,</span><span class="w"> </span><span class="k">coalesce</span><span class="p">(</span><span class="n">body</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">)),</span><span class="w"> </span><span class="s1">'B'</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">STORED</span><span class="p">;</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">articles_search_idx</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">gin</span><span class="w"> </span><span class="p">(</span><span class="k">search</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">ts_rank</span><span class="p">(</span><span class="k">search</span><span class="p">,</span><span class="w"> </span><span class="n">query</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">rank</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">articles</span><span class="p">,</span>
+<span class="w">     </span><span class="n">websearch_to_tsquery</span><span class="p">(</span><span class="s1">'english'</span><span class="p">,</span><span class="w"> </span><span class="s1">'django "service layer" -celery'</span><span class="p">)</span>
+<span class="w">         </span><span class="k">AS</span><span class="w"> </span><span class="n">query</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">search</span><span class="w"> </span><span class="o">@@</span><span class="w"> </span><span class="n">query</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">rank</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+</code></pre></div>
+
+<p>That gives you stemming ("orders" matches "order"), weighted fields, quoted phrases and exclusions through <code>websearch_to_tsquery</code>, which accepts the kind of syntax people type into search boxes. Add the <code>pg_trgm</code> extension for typo-tolerant matching on names and short strings.</p>
+<p>Django supports this directly through <code>django.contrib.postgres.search</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.postgres.search</span><span class="w"> </span><span class="kn">import</span> <span class="n">SearchQuery</span><span class="p">,</span> <span class="n">SearchRank</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">F</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="n">SearchQuery</span><span class="p">(</span><span class="s2">"django service layer"</span><span class="p">,</span>
+                    <span class="n">search_type</span><span class="o">=</span><span class="s2">"websearch"</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="s2">"english"</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="n">SearchRank</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s2">"search"</span><span class="p">),</span> <span class="n">query</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">"-rank"</span><span class="p">)[:</span><span class="mi">20</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>It won't match a dedicated search engine on relevance tuning, faceting at huge scale or multi-language analysis. For a product catalogue, a help centre or an admin search box, it's usually plenty.</p>
+<h2>JSON when the schema really is flexible</h2>
+<p><code>jsonb</code> stores JSON in a binary, indexable form. Need to store webhook payloads, per-tenant settings or third-party API responses? You don't need a document database.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">events_payload_idx</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">gin</span><span class="w"> </span><span class="p">(</span><span class="n">payload</span><span class="w"> </span><span class="n">jsonb_path_ops</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="o">@&gt;</span><span class="w"> </span><span class="s1">'{"type": "invoice.paid"}'</span><span class="p">;</span>
+</code></pre></div>
+
+<p>In Django, <code>models.JSONField</code> maps to <code>jsonb</code> on Postgres, and lookups like <code>filter(payload__type="invoice.paid")</code> work out of the box.</p>
+<p>One warning: <code>jsonb</code> is a pressure valve, not a design. If you're querying the same keys in every request, they're columns. Promote them.</p>
+<h2>A cache that's one table</h2>
+<p>For many apps the "cache" is a handful of expensive computed values. Postgres can hold those in an <code>UNLOGGED</code> table, which skips the write-ahead log, so writes are cheaper. The catch is that it's truncated after a crash, which is exactly the durability a cache needs.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">UNLOGGED</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">cache</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">key</span><span class="w">        </span><span class="nb">text</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">value</span><span class="w">      </span><span class="n">jsonb</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">expires_at</span><span class="w"> </span><span class="n">timestamptz</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">cache</span><span class="w"> </span><span class="p">(</span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">expires_at</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'dashboard:42'</span><span class="p">,</span><span class="w"> </span><span class="s1">'{"orders": 118}'</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">interval</span><span class="w"> </span><span class="s1">'5 minutes'</span><span class="p">)</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">CONFLICT</span><span class="w"> </span><span class="p">(</span><span class="k">key</span><span class="p">)</span><span class="w"> </span><span class="k">DO</span><span class="w"> </span><span class="k">UPDATE</span>
+<span class="w">    </span><span class="k">SET</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EXCLUDED</span><span class="p">.</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EXCLUDED</span><span class="p">.</span><span class="n">expires_at</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Django also ships a database cache backend, <code>django.core.cache.backends.db.DatabaseCache</code>, set up with <code>manage.py createcachetable</code>. Before you add a cache at all, check whether the real fix is an index, a <code>select_related()</code> or a materialized view.</p>
+<h2>When it actually hurts</h2>
+<p>I'm not saying never. I'm saying wait for evidence. Signs that it's time:</p>
+<ul>
+<li><strong>Queue throughput.</strong> Sustained high job volume where the jobs table churns faster than autovacuum keeps up, and the bloat shows in your metrics. That's when SQS or a dedicated broker earns its keep.</li>
+<li><strong>Cache hit volume.</strong> You need very high read rates on hot keys with sub-millisecond latency, and the cache traffic is competing with your real queries for connections and CPU. That's what Redis or Valkey is for.</li>
+<li><strong>Search quality.</strong> Users need faceting, synonyms, typo tolerance across large corpora or relevance tuning you can't get from <code>ts_rank</code>. Bring in OpenSearch, Meilisearch or similar.</li>
+<li><strong>Analytics.</strong> Large aggregations over hundreds of millions of rows slow down the primary. Move them to a replica first, then to a columnar store if needed.</li>
+<li><strong>Fan-out and streaming.</strong> Many consumers replaying an event log is Kafka's job, not a jobs table.</li>
+</ul>
+<p>Every one of those is a measurement, not a feeling. Watch query latency, connection count, replication lag, table bloat and CPU. When a specific workload is the cause, extract that workload, and only that one.</p>
+<h2>Bottom line</h2>
+<p>Postgres has decades of engineering behind it, transactions across everything you put in it, and one backup story. <strong>Start with one database. Use it properly. Add the second system when a graph tells you to, not when a diagram does.</strong> Most products never get there, and the ones that do will know exactly which piece to move out.</p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/stop-putting-business-logic-in-django-views-and-serializers.html"><span class="t">Stop Putting Business Logic in Django Views and Serializers</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-04-08">Apr 2025</time></a></li>
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-21">Oct 2026</time></a></li>
+  <li><a href="/the-problems-with-django-rest-framework.html"><span class="t">The Problems with Django REST Framework</span><span class="arr" aria-hidden="true">→</span><time datetime="2025-02-02">Feb 2025</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</span></a><a class="pn newer" href="/what-a-decade-of-python-taught-me-about-boring-technology.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">What a Decade of Python Taught Me About Boring Technology</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>

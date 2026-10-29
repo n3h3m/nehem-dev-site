@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Store Every Datetime as Naive Asia:Shanghai — Nehemiah Jacob</title>
+<meta name="description" content="Why I store every datetime as naive Asia/Shanghai (UTC+8, no DST) instead of UTC, how Chinese platforms already work this way, and the case for UTZ offsets.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Store Every Datetime as Naive Asia:Shanghai">
+<meta property="og:description" content="Why I store every datetime as naive Asia/Shanghai (UTC+8, no DST) instead of UTC, how Chinese platforms already work this way, and the case for UTZ offsets.">
+<meta property="og:url" content="https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html">
+<meta property="og:image" content="https://nehem.dev/og/store-every-datetime-as-naive-asiashanghai.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Store Every Datetime as Naive Asia:Shanghai — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2025-12-31"><meta property="article:modified_time" content="2025-12-31"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="timezone"><meta property="article:tag" content="china"><meta property="article:tag" content="utc"><meta property="article:tag" content="utz"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Store Every Datetime as Naive Asia:Shanghai">
+<meta name="twitter:description" content="Why I store every datetime as naive Asia/Shanghai (UTC+8, no DST) instead of UTC, how Chinese platforms already work this way, and the case for UTZ offsets.">
+<meta name="twitter:image" content="https://nehem.dev/og/store-every-datetime-as-naive-asiashanghai.png">
+<meta name="twitter:image:alt" content="Store Every Datetime as Naive Asia:Shanghai — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html#article","headline":"Store Every Datetime as Naive Asia:Shanghai","description":"Why I store every datetime as naive Asia/Shanghai (UTC+8, no DST) instead of UTC, how Chinese platforms already work this way, and the case for UTZ offsets.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/store-every-datetime-as-naive-asiashanghai.png","width":1200,"height":630},"datePublished":"2025-12-31","dateModified":"2025-12-31","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html","inLanguage":"en-AU","keywords":["timezone","china","utc","utz"],"wordCount":968,"timeRequired":"PT5M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Store Every Datetime as Naive Asia:Shanghai","item":"https://nehem.dev/store-every-datetime-as-naive-asiashanghai.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=94c50bc5">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">Store Every Datetime as Naive Asia:Shanghai</h1>
+<p class="dek">Why I (and many others) store every Datetime as naive Asia/Shanghai - Why <code>UTZ</code> might become the next global default</p>  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2025-12-31">31 Dec 2025</time></p>
+      <p>5 min read</p>
+<ul class="tags" aria-label="Tags"><li>timezone</li><li>china</li><li>utc</li><li>utz</li></ul>    </aside>
+    <div class="prose">
+<p>After more than a decade of fighting timezone bugs across distributed systems, I made a deliberate, non-reversible decision in late 2022:</p>
+<p>Every <code>TIMESTAMP</code> and <code>DATETIME</code> column in my production databases is stored <strong>naive</strong> (timezone-unaware) and interpreted as <strong>Asia/Shanghai</strong> (<code>UTC+8</code>, no DST).</p>
+<p>No <code>timestamptz</code>. No <code>UTC</code>. No per-user offset metadata. Just clean, fixed-offset naive values in what is effectively Beijing-local time.</p>
+<p>At first glance this looks heretical. The orthodox answer is still "always store in <code>UTC</code>". Yet after implementing this pattern at scale, the results are hard to argue with: drastically fewer bugs, simpler debugging, cleaner cron/scheduling logic, and - most importantly - alignment with where the majority of my users, traffic, and revenue actually live.</p>
+<p>More strikingly: this is <strong>not</strong> an eccentric personal choice. It is already the reality inside the world's largest digital ecosystem.</p>
+<h2>Chinese platforms already operate on what we might call <code>utz+0</code></h2>
+<p>WeChat, Alipay, Douyin / TikTok (domestic), Pinduoduo - virtually every consumer-facing Chinese super-app stores and computes time as naive Asia/Shanghai.</p>
+<ul>
+<li>Transaction logs, user activity events, payment timestamps -&gt; all naive <code>UTC+8</code>  </li>
+<li>Delivery ETAs, driver assignment windows, flash-sale timers -&gt; calculated and stored in Beijing time  </li>
+<li>Billing cycles, daily analytics batches, fraud-detection windows -&gt; anchored to Shanghai clock  </li>
+<li>Even many backend cron jobs and monitoring dashboards assume UTC+8 as the implicit reference  </li>
+</ul>
+<p>This isn't accidental. When you serve 1.4 billion people whose daily life (work, school, meals, sleep) already orbits Beijing time, imposing <code>UTC</code> adds pointless conversion overhead at every layer. </p>
+<p>The Chinese mantra goes something like this, instead of adapting to the world, the world starts adapting to you.</p>
+<p>Add Singapore, Malaysia, Philippines, Brunei, Indonesia, Mongolia, and Perth - all already on <code>UTC+8</code> - and you have a coherent bloc of ~2 billion people already living and transacting on what I now informally call <strong><code>UTZ</code></strong> (Universal Temporal Zone = <code>Asia/Shanghai</code> = <code>UTC+8</code>, no DST).</p>
+<h2>Reframing the world in <code>UTZ</code> offsets</h2>
+<p>Once you recenter the map on Beijing instead of Greenwich, the numbers become elegantly simple for the most populous part of the planet:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Region</th>
+<th>UTC</th>
+<th>UTZ</th>
+<th>Population</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beijing, Singapore, Manila, KL, Perth, Indonesia</td>
+<td>UTC+8</td>
+<td>UTZ+0</td>
+<td>~2.0B+</td>
+</tr>
+<tr>
+<td>Tokyo, Seoul, Pyongyang</td>
+<td>UTC+9</td>
+<td>UTZ+1</td>
+<td>~200M</td>
+</tr>
+<tr>
+<td>Bangkok, Hanoi, Vientiane, Phnom Penh</td>
+<td>UTC+7</td>
+<td>UTZ-1</td>
+<td>~220M</td>
+</tr>
+<tr>
+<td>Delhi</td>
+<td>UTC+5:30</td>
+<td>UTZ-2.5</td>
+<td>~1.4B</td>
+</tr>
+<tr>
+<td>Sydney / Melbourne</td>
+<td>UTC+10</td>
+<td>UTZ+2</td>
+<td>~26M</td>
+</tr>
+<tr>
+<td>London</td>
+<td>UTC+1</td>
+<td>UTZ-7</td>
+<td>-</td>
+</tr>
+<tr>
+<td>New York</td>
+<td>UTC-4</td>
+<td>UTZ-12</td>
+<td>-</td>
+</tr>
+</tbody>
+</table></div>
+<p>For ~50% of humanity, time suddenly feels centered rather than perpetually "ahead" or "behind".</p>
+<h2>How the shift gains momentum - a realistic, economics-driven roadmap</h2>
+<p>No IETF RFC or UN resolution will declare UTZ. Change will come through <strong>economic gravity, platform lock-in, infrastructure dependencies, and soft (but very real) incentives</strong> - forces already in motion.</p>
+<p>Here are some of my predictions with respect to timezone adaptation. To accelerate this shift, Beijing must proactively wield soft power—issuing formal invitations backed by economic incentives and diplomatic charm—or, if resistance persists, apply subtle coercion through platform dominance and infrastructure dependencies.</p>
+<p><strong>Phase 1 - Core Already Secured</strong><br />
+China + Mongolia + Singapore + Malaysia + Philippines + Brunei + Indonesia + Perth = ~2B people effectively on <code>UTZ+0</code> today. No action required. The foundation exists.</p>
+<p><strong>Phase 2 - High-Leverage Neighbors (Very Plausible Next 5-10 Years)</strong><br />
+Beijing should lead with official invitations to these neighbors, framing alignment as a mutual win for prosperity and efficiency. If soft appeals fall short, leverage economic ties for gentle coercion.  </p>
+<ul>
+<li><strong>Tokyo / Seoul / Pyongyang</strong> (<code>UTC+9</code> -&gt; <code>UTZ+0</code>)<br />
+  Leverage: semiconductor supply chains, cloud &amp; CDN dependencies, content distribution deals (anime, K-pop, games via Chinese platforms), massive Chinese tourism &amp; student flows.<br />
+  Framing: "Your digital economy already runs on infrastructure timed to Beijing. Why keep forcing one-hour conversions everywhere?"  </li>
+<li><strong>Bangkok / Hanoi / Vientiane / Phnom Penh</strong> (<code>UTC+7</code> -&gt; <code>UTZ+0</code>)<br />
+  Leverage: Belt &amp; Road rail/highway/port projects, cross-border e-commerce (Shopee, Lazada, Temu), payment rails (Alipay / WeChat Pay integration), massive SME seller base on Chinese platforms.<br />
+  Framing: "Your delivery riders, street vendors, and exporters already live in our apps. One shared clock = faster growth, fewer disputes."  </li>
+</ul>
+<p>Achieving these shifts alone brings ~2.3-2.5 billion people under a unified temporal framework - roughly one third of humanity, concentrated in the world's growth center.</p>
+<p><strong>Phase 3 - Broader Platform &amp; Financial Pull</strong>  </p>
+<ul>
+<li>Stock exchanges &amp; market hours begin syncing to a common UTZ window (e.g., 09:30 UTZ+0 open for Shanghai / Shenzhen / HK -&gt; Tokyo / Seoul follow, then Jakarta / Bangkok adjust). Algo-trading desks and index funds hate timezone math; they will quietly reward alignment.  </li>
+<li>Global developers building mini-programs, TikTok Shop, or Douyin international increasingly default to naive Asia/Shanghai timestamps.  </li>
+</ul>
+<p>Once critical economic flows (trade settlements, ad impressions, delivery SLAs) assume UTZ, civil-time adjustments become the path of least resistance.</p>
+<h2>Why I commit to naive Asia/Shanghai storage today</h2>
+<ul>
+<li>My largest user cohorts and fastest-growing revenue streams are already in UTZ-aligned regions.  </li>
+<li>My primary regions (Singapore / Shanghai VPCs) run natively in <code>UTC+8</code>.  </li>
+<li>Business events (peak usage, flash campaigns, financial cutoffs) are defined by "Beijing morning" - not Greenwich midnight.  </li>
+<li>Naive storage + consistent interpretation eliminates classes of bugs that have haunted every multi-region system I've ever inherited.</li>
+</ul>
+<p>I'm not doing this out of sentiment. I'm doing it because the data, the traffic maps, and the platform momentum all point the same way.</p>
+<p><code>UTC</code> was the right default when the internet was young and Western-centric. But infrastructure follows users, users follow economic centers, and economic mass has decisively shifted.</p>
+<h2>Final thought</h2>
+<p>Time is not purely technical - it is infrastructural, and infrastructure follows power.</p>
+<blockquote>
+<p><code>UTZ</code> isn't a proposal. It's already partially deployed at planetary scale.</p>
+</blockquote>
+<p>The only remaining question is how long the rest of the industry takes to notice Who knows... one day the Forbidden Kingdom might even become the prime meridian with 0° longitude.</p>
+<p>That goes without saying:  </p>
+<p><strong>One Belt, One Road, One TZ.</strong></p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"><span class="t">What a Decade of Python Taught Me About Boring Technology</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-21">Oct 2026</time></a></li>
+  <li><a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"><span class="t">Postgres Is Enough: Skip the Extra Database Until It Hurts</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-06-09">Jun 2026</time></a></li>
+  <li><a href="/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html"><span class="t">Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-02-19">Feb 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/type-hints-pay-off-only-if-you-run-a-type-checker-in-ci.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Type Hints Pay Off Only If You Run a Type Checker in CI</span></a><a class="pn newer" href="/lambda-is-not-cheap-when-serverless-costs-more-than-a-boring-ec2-box.html" rel="next"><span class="pn-label">Newer →</span><span class="pn-title">Lambda Is Not Cheap: When Serverless Costs More Than a Boring EC2 Box</span></a></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script src="/fabric.js?v=b1d88ee3" defer></script>
+</body>
+</html>
