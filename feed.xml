@@ -9,6 +9,93 @@
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
   <entry>
+    <title>Does Your Company Really Need Kubernetes? Or Are You Just Cosplaying as Netflix?</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix.html"/>
+    <id>https://nehem.dev/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix.html</id>
+    <published>2026-10-29T00:00:00+10:00</published>
+    <updated>2026-10-29T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Kubernetes is brilliant technology, but most small teams don't need it. What premature infrastructure really costs, what to run instead, and when to switch.</summary>
+    <category term="Kubernetes"/><category term="Infrastructure"/><category term="Architecture"/><category term="Startups"/>
+    <content type="html">&lt;p&gt;Everyone wants Kubernetes.&lt;/p&gt;
+&lt;p&gt;The DevOps engineer wants it. The CTO read about it. The founder saw a company using it and thought, "We should probably do that too."&lt;/p&gt;
+&lt;p&gt;Suddenly a company with three developers, one API and a PostgreSQL database is planning a Kubernetes migration.&lt;/p&gt;
+&lt;p&gt;For what? Millions of requests? Hundreds of microservices? Multiple regions?&lt;/p&gt;
+&lt;p&gt;No. Because Kubernetes is what serious engineering teams use.&lt;/p&gt;
+&lt;p&gt;Right?&lt;/p&gt;
+&lt;p&gt;Wrong.&lt;/p&gt;
+&lt;p&gt;This is one of the most expensive mistakes in modern software engineering: &lt;strong&gt;confusing infrastructure complexity with engineering maturity.&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix/hero.svg" alt="On the left, a single small server serves a short line of users. On the right, a large tangle of pods, boxes and arrows. One coral journey line runs through each side, and both arrive at the same tick." width="960" height="560" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same login page, same dashboard, same tick. One side just has a lot more to keep alive.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Great technology, wrong problem&lt;/h2&gt;
+&lt;p&gt;Kubernetes is an incredible piece of technology. It orchestrates containers. It manages workloads across clusters. It handles service discovery, scaling and self-healing. It solves real problems. Big ones.&lt;/p&gt;
+&lt;p&gt;But here's the part the shiny architecture diagrams leave out: &lt;strong&gt;Kubernetes doesn't eliminate complexity. It moves it somewhere else.&lt;/strong&gt; And sometimes it creates more of it.&lt;/p&gt;
+&lt;h2&gt;The migration nobody can justify&lt;/h2&gt;
+&lt;p&gt;Say you're building a SaaS product. You have an API, a background worker, a PostgreSQL database and maybe Redis for caching. You serve a few thousand customers. Deployments are straightforward. The cloud bill is manageable. When something breaks, the team knows where to look.&lt;/p&gt;
+&lt;p&gt;Life is good.&lt;/p&gt;
+&lt;p&gt;Then someone says, "We should move to Kubernetes."&lt;/p&gt;
+&lt;p&gt;Why?&lt;/p&gt;
+&lt;p&gt;"Scalability."&lt;/p&gt;
+&lt;p&gt;What does that mean?&lt;/p&gt;
+&lt;p&gt;"We need to be ready for growth."&lt;/p&gt;
+&lt;p&gt;How much growth?&lt;/p&gt;
+&lt;p&gt;Silence.&lt;/p&gt;
+&lt;p&gt;What exactly is the current system failing to do?&lt;/p&gt;
+&lt;p&gt;More silence.&lt;/p&gt;
+&lt;p&gt;The migration begins anyway. Now the team needs to understand pods, deployments, services, ingress controllers, ConfigMaps, Secrets, persistent volumes, resource requests and limits, liveness probes, readiness probes and cluster networking. That's before anyone debugs why one service can't reach another at 2 am.&lt;/p&gt;
+&lt;p&gt;Congratulations. You just turned a simple deployment into a distributed infrastructure problem.&lt;/p&gt;
+&lt;p&gt;And your customers? They still see the same login page. The same dashboard. The same API. Nothing changed for them. Your team just has more to maintain, more to monitor, more that can fail and more that needs specialist knowledge. All for a scaling problem you haven't actually had.&lt;/p&gt;
+&lt;p&gt;That's what optimising for imaginary problems instead of real ones looks like. I've made the same argument about &lt;a href="/why-microservices-are-a-luxury-tax-on-startups.html"&gt;microservices&lt;/a&gt;, and it applies here for the same reasons.&lt;/p&gt;
+&lt;h2&gt;Kubernetes isn't the villain&lt;/h2&gt;
+&lt;p&gt;Let's be fair. The villain is premature complexity. There's a difference.&lt;/p&gt;
+&lt;p&gt;Kubernetes can be an excellent choice when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You run dozens of services across multiple teams.&lt;/li&gt;
+&lt;li&gt;Your deployment requirements are genuinely complex.&lt;/li&gt;
+&lt;li&gt;Your workloads really benefit from orchestration.&lt;/li&gt;
+&lt;li&gt;An infrastructure team needs consistent deployment patterns across many applications.&lt;/li&gt;
+&lt;li&gt;Your organisation has the operational expertise to run it properly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A five-person startup shipping an MVP is none of those. It's solving the wrong problem.&lt;/p&gt;
+&lt;p&gt;Here's the uncomfortable truth: your company probably doesn't need more infrastructure. It needs more customers. Product-market fit. Faster feedback loops. Better onboarding. Fewer bugs. A product people will pay for.&lt;/p&gt;
+&lt;p&gt;Nobody has ever bought your SaaS because you used Kubernetes. Nobody woke up this morning thinking, "I'd love to use this project management tool, but I'm not convinced their containers are orchestrated properly."&lt;/p&gt;
+&lt;p&gt;Customers care whether the product works. Whether it's fast enough. Whether it solves their problem. Whether they can trust it.&lt;/p&gt;
+&lt;p&gt;That's it. If a simpler platform delivers those outcomes, why add another layer to operate?&lt;/p&gt;
+&lt;h2&gt;You don't install Kubernetes. You operate it.&lt;/h2&gt;
+&lt;p&gt;This is the hidden cost. Someone has to understand how it works, configure it securely, monitor it, upgrade it and investigate its incidents. Someone has to manage networking, resource allocation, failed deployments and the growing pile of YAML nobody wants to touch.&lt;/p&gt;
+&lt;p&gt;If you don't have those people, your application developers become your infrastructure team. Instead of building features, they debug the cluster. Instead of talking to customers, they chase failed deployments. Instead of improving the product, they learn why a workload keeps restarting.&lt;/p&gt;
+&lt;p&gt;Sometimes that's a worthwhile investment. Often it's an expensive distraction. The difference is whether the infrastructure solves a problem that matters to the business.&lt;/p&gt;
+&lt;p&gt;Every technology choice has an opportunity cost. Time spent maintaining infrastructure is time not spent on anything else. That doesn't make infrastructure work wasted. It means it has to earn its place.&lt;/p&gt;
+&lt;h2&gt;A single server. In 2026.&lt;/h2&gt;
+&lt;p&gt;Kubernetes isn't the only way to run containers.&lt;/p&gt;
+&lt;p&gt;Sometimes a managed container service is enough. Sometimes a platform-as-a-service is enough. Sometimes a virtual machine with a well-understood deployment process is enough.&lt;/p&gt;
+&lt;p&gt;Sometimes a single server is all you need.&lt;/p&gt;
+&lt;p&gt;Yes. A single server. In 2026. No service mesh. No twelve microservices. No elaborate GitOps pipeline.&lt;/p&gt;
+&lt;p&gt;Just an application that works, a database that's backed up, and a deployment process that doesn't require a ritual sacrifice. Imagine that. (The database is probably &lt;a href="/postgres-is-enough-skip-the-extra-database-until-it-hurts.html"&gt;Postgres, and Postgres is probably enough&lt;/a&gt;.)&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/does-your-company-really-need-kubernetes-or-are-you-just-cosplaying-as-netflix/ladder.svg" alt="A pencil-drawn staircase with three steps: a single server, then managed containers or a platform-as-a-service, then orchestration. A coral arrow climbs one step at a time." width="960" height="360" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Start on the bottom step. Climb when reality demands it.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Complexity is easy to add and hard to remove&lt;/h2&gt;
+&lt;p&gt;You can always add complexity later. Migrate when the constraints are real. Adopt orchestration when managing deployments by hand actually hurts. Invest in sophisticated infrastructure when the business benefits from it.&lt;/p&gt;
+&lt;p&gt;Removing complexity after you've built the organisation around it is much harder.&lt;/p&gt;
+&lt;p&gt;Infrastructure decisions don't live in isolation. They shape hiring, team structure, developer workflows, incident response, documentation, security practices and what it costs to run the product. What starts as a technical decision becomes an organisational commitment.&lt;/p&gt;
+&lt;h2&gt;Questions to ask first&lt;/h2&gt;
+&lt;p&gt;Before you introduce Kubernetes, answer these honestly:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;What specific problem are we solving?&lt;/li&gt;
+&lt;li&gt;Can our current infrastructure handle the workload?&lt;/li&gt;
+&lt;li&gt;Are deployments genuinely becoming hard to manage?&lt;/li&gt;
+&lt;li&gt;Do we need orchestration, or just better deployment automation?&lt;/li&gt;
+&lt;li&gt;Do we have the expertise to run Kubernetes reliably?&lt;/li&gt;
+&lt;li&gt;Most importantly: what evidence would convince us we need it?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you can't answer those, you're not making an infrastructure decision. You're following a trend. And trends are a terrible reason to redesign production.&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;The goal isn't the most sophisticated infrastructure possible. It's &lt;strong&gt;the simplest infrastructure that reliably meets your requirements&lt;/strong&gt;, evolved as those requirements change.&lt;/p&gt;
+&lt;p&gt;Not before. Not because another startup uses it. Not because someone on YouTube built an impressive homelab. And definitely not because Kubernetes looks good on your CV.&lt;/p&gt;
+&lt;p&gt;Use it when it solves your problems. Avoid it when it creates more than it solves.&lt;/p&gt;
+&lt;p&gt;Engineering maturity isn't about how many tools you can operate. It's about knowing which ones you don't need. Your architecture doesn't need to impress other engineers. It needs to serve your business. Sometimes the most senior decision you can make is to &lt;a href="/what-a-decade-of-python-taught-me-about-boring-technology.html"&gt;leave the shiny thing out&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Build the product. Get customers. Solve real problems. Let your infrastructure grow when reality demands it.&lt;/p&gt;
+&lt;p&gt;Not when your ego does.&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <title>What a Decade of Python Taught Me About Boring Technology</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"/>
     <id>https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html</id>
