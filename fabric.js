@@ -10,6 +10,16 @@
   var P, cv, ctx, y0 = scrollY;
   var TAU = Math.PI * 2, mob = matchMedia('(max-width:700px)'), calm = document.body.classList.contains('post') ? 0.6 : 1;
   var ds = 1, p, s, ox, vw, vh, dpr, T, dz, S, gain, M = 24;   // M: canvas bleed (px) so the CSS float never shows an edge
+  // colours come from the page's CSS variables so the live sheet follows the light/dark theme
+  var INK = '26,26,26', COL = {}, VARS = {'#1a1a1a': '--pencil', '#3b36b8': '--indigo', '#e4533b': '--coral', '#11968a': '--teal', '#e9a321': '--amber'};
+  function palette() {
+    var cs = getComputedStyle(root), k, v;
+    for (k in VARS) { v = cs.getPropertyValue(VARS[k]).trim(); COL[k] = v || k; }
+    var h = COL['#1a1a1a'].replace('#', '');
+    if (h.length === 3) h = h.replace(/./g, '$&$&');
+    INK = /^[0-9a-f]{6}$/i.test(h) ? [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16); }).join(',') : '26,26,26';
+  }
+  function col(c) { return COL[c] || c; }
 
   function setup() {
     p = mob.matches ? P.m : P.d; vw = innerWidth; vh = innerHeight;
@@ -75,12 +85,12 @@
     var k0 = Math.floor(z0 / dz), k1 = Math.ceil(z1 / dz), k, i;
     for (k = k0; k <= k1; k++) {
       ctx.beginPath(); line(x0, k * dz, x1, k * dz, nx);
-      ctx.strokeStyle = 'rgba(26,26,26,' + p.oa[((k % p.nz) + p.nz) % p.nz] + ')'; ctx.stroke();
+      ctx.strokeStyle = 'rgba(' + INK + ',' + p.oa[((k % p.nz) + p.nz) % p.nz] + ')'; ctx.stroke();
     }
     var nz = Math.ceil((z1 - z0) / (p.sz * ds));
     for (i = 0; i < p.ov.length; i++) {
       var x = p.off + i * p.gx, sx = x * s - ox; if (sx < -60 || sx > vw + 60) continue;
-      ctx.beginPath(); line(x, z0, x, z1, nz); ctx.strokeStyle = 'rgba(26,26,26,' + p.ov[i] + ')'; ctx.stroke();
+      ctx.beginPath(); line(x, z0, x, z1, nz); ctx.strokeStyle = 'rgba(' + INK + ',' + p.ov[i] + ')'; ctx.stroke();
     }
     // rings and mass dots on every visible copy of each well
     var c0 = Math.floor(z0 / T) - 1, c1 = Math.ceil(z1 / T) + 1, c, g;
@@ -90,12 +100,12 @@
         if (wz + rg[1] < z0 || wz - rg[1] > z1) continue;
         ctx.beginPath();
         for (var j = 0; j <= 48; j++) { var a = TAU * j / 48; pt(w[0] + rg[1] * Math.cos(a), wz + rg[1] * Math.sin(a), tmp); j ? ctx.lineTo(tmp[0], tmp[1]) : ctx.moveTo(tmp[0], tmp[1]); }
-        ctx.globalAlpha = rg[3]; ctx.strokeStyle = rg[2]; ctx.stroke(); ctx.globalAlpha = 1;
+        ctx.globalAlpha = rg[3]; ctx.strokeStyle = col(rg[2]); ctx.stroke(); ctx.globalAlpha = 1;
       }
       for (g = 0; g < p.wells.length; g++) {
         var wl = p.wells[g], z = wl[1] / p.C + c * T; if (!wl[4] || z < z0 || z > z1) continue;
         pt(wl[0], z, tmp); ctx.beginPath(); ctx.arc(tmp[0], tmp[1], Math.min(4, wl[2] * 0.02 + 1.5), 0, TAU);
-        ctx.globalAlpha = 0.6; ctx.fillStyle = wl[4]; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.globalAlpha = 0.6; ctx.fillStyle = col(wl[4]); ctx.fill(); ctx.globalAlpha = 1;
       }
     }
   }
@@ -132,9 +142,10 @@
     P = JSON.parse(box.getAttribute('data-fab') || 'null'); cv = document.createElement('canvas'); ctx = P && cv.getContext('2d');
     if (!ctx) return;
     cv.className = 'fab-cv'; cv.setAttribute('aria-hidden', 'true'); box.appendChild(cv);
-    setup(); off = scrollY * 0.32; draw(); box.classList.add('fab-live'); lastY = y0;
+    palette(); setup(); off = scrollY * 0.32; draw(); box.classList.add('fab-live'); lastY = y0;
     addEventListener('scroll', kick, {passive: true}); kick();
     addEventListener('resize', function () { setup(); draw(); }, {passive: true});
+    document.addEventListener('themechange', function () { palette(); draw(); });
     mob.addEventListener && mob.addEventListener('change', function () { setup(); draw(); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && raf) { cancelAnimationFrame(raf); raf = 0; lastT = 0; } else kick(); });
   }
