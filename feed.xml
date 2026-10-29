@@ -5,20 +5,21 @@
   <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
   <id>https://nehem.dev/writing/</id>
-  <updated>2026-10-21T00:00:00+10:00</updated>
+  <updated>2026-10-29T00:00:00+10:00</updated>
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
   <entry>
     <title>What a Decade of Python Taught Me About Boring Technology</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html"/>
     <id>https://nehem.dev/what-a-decade-of-python-taught-me-about-boring-technology.html</id>
-    <published>2026-10-21T00:00:00+10:00</published>
-    <updated>2026-10-21T00:00:00+10:00</updated>
+    <published>2026-10-29T00:00:00+10:00</published>
+    <updated>2026-10-29T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
-    <summary>Lessons from years of Python, Django and AWS: why boring technology wins, where to spend innovation, and the habits that keep systems simple and shippable.</summary>
-    <category term="Python"/><category term="Engineering"/><category term="Career"/><category term="Architecture"/>
+    <summary>Lessons from a decade of Python, Django and AWS: why boring technology wins, why journey tests outlive your stack, and the habits that keep systems shippable.</summary>
+    <category term="Python"/><category term="Engineering"/><category term="Testing"/><category term="Architecture"/>
     <content type="html">&lt;p&gt;There's a version of a software career where you chase every new framework, rewrite your stack every eighteen months and spend more time on migrations than on the product. Plenty of us have done a stretch of it. The systems that last, the ones that ship features for years without drama, are almost always built on the dullest tools available.&lt;/p&gt;
 &lt;p&gt;The position: &lt;strong&gt;boring technology is a competitive advantage, not a compromise.&lt;/strong&gt; Python, Django, Postgres, a load balancer and a few well-understood AWS services will take most products further than any shiny stack. The skill isn't knowing the newest tool. It's knowing when not to use it.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/what-a-decade-of-python-taught-me-about-boring-technology/hero.svg" alt="A stack of five layers. One continuous test line runs from a user at the top, straight down through every layer, to a tick at the bottom. The middle layer has been pulled out to the side and a new one sits in its place." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Layers come and go. The journey test runs straight through all of them and still ends in a tick.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;h2&gt;Boring means understood, not old&lt;/h2&gt;
 &lt;p&gt;Dan McKinley's essay &lt;a href="https://mcfunley.com/choose-boring-technology"&gt;Choose Boring Technology&lt;/a&gt; put it better than anyone: a boring tool is one whose &lt;strong&gt;failure modes are known.&lt;/strong&gt; You can search the error message and find the answer. You know how it behaves under load, how it breaks, and how to fix it at 2 am.&lt;/p&gt;
 &lt;p&gt;That's the real asset. Not features. Not benchmarks. Predictability.&lt;/p&gt;
@@ -36,9 +37,26 @@
 &lt;li&gt;&lt;strong&gt;Plain SQL is a skill, not a smell.&lt;/strong&gt; The ORM is great for 90% of queries. For the other 10%, reading &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt; beats any amount of queryset cleverness.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Delete code aggressively.&lt;/strong&gt; Dead feature flags, unused endpoints, compatibility shims for clients that no longer exist. Every line you keep is a line someone has to understand.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Logs and metrics before features.&lt;/strong&gt; You can't fix what you can't see. A structured log line with a request ID has saved more incidents than any architecture change.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Upgrade little and often.&lt;/strong&gt; Staying one minor version behind on Python and Django is cheap. Falling three major versions behind is a project with its own budget.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Upgrade little and often.&lt;/strong&gt; Staying one minor version behind on Python and Django is cheap. Falling three major versions behind is a project with its own budget. I say that as someone who defended Python 2.7 long after the argument was lost.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Write the boring test.&lt;/strong&gt; Not a clever property-based suite for everything. One test per business rule, named after the rule, that fails clearly.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2&gt;Invest in tests that don't know how the code is written&lt;/h2&gt;
+&lt;p&gt;If I could move one budget line on most teams, it would be this: spend far more on black-box tests that walk through real user journeys. Sign up. Log in. Place an order. Cancel it. Get the refund email. Drive them through the public surface, the HTTP API or the UI, and check what a user would check. Nothing else.&lt;/p&gt;
+&lt;p&gt;These tests don't import your models. They don't patch your functions. They don't know whether there's a service layer, a serializer or a stored procedure behind the endpoint. That's the point.&lt;/p&gt;
+&lt;p&gt;Everything in your stack is temporary. The framework gets a major version. The database moves. The queue gets swapped for something managed. The cloud service you picked gets deprecated. Python itself moves on, whether you're ready or not. And one day somebody will want to rewrite the whole backend.&lt;/p&gt;
+&lt;p&gt;When that day comes, everyone asks the same question: did we break the product? Unit tests tied to internals can't answer it. They die with the refactor, because they were testing the code you just deleted. A journey suite survives it. It runs against the new system exactly as it ran against the old one, and when it goes green you can say, with evidence, that the product still works.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/what-a-decade-of-python-taught-me-about-boring-technology/swap-a-layer.svg" alt="A user journey line runs left to right through three boxes and ends in a tick. The middle box has been lifted out and replaced with a new one; the line passes through the new box unchanged." width="960" height="280" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Swap any box. The journey doesn't change, so the test doesn't either.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;That's why I call it an asset. It grows. Every journey you add is one more thing you can never silently break again, through any number of rewrites. Most code loses value as it ages. This suite gains it.&lt;/p&gt;
+&lt;p&gt;How I'd keep it boring:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Few and honest.&lt;/strong&gt; Tens of journeys, not thousands. Cover what earns money, and what would have customers emailing you before your coffee.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real dependencies.&lt;/strong&gt; Run them in CI against a real Postgres, a real queue and real services in containers. Fake only what you don't own, like the payment provider, and fake it at the network edge.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Behaviour, not implementation.&lt;/strong&gt; Assert on status codes, response bodies, emails sent, what the user can see. Never on which function got called.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Slow is fine.&lt;/strong&gt; A few minutes per run is the price of honesty. Run them on every merge, not on every keystroke.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cheap to keep.&lt;/strong&gt; They don't know how the code is written, so refactors don't touch them. If a refactor breaks one, either behaviour changed or the test was peeking inside.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is boring technology applied to testing. The journey suite is the one part of the system that doesn't care what's fashionable underneath. Rip out Django REST Framework for plain Django views (I'd encourage it) and the suite won't notice. That's exactly the predictability you want while everything else moves.&lt;/p&gt;
+&lt;p&gt;Unit tests still earn their place for tricky pure logic: date maths, pricing rules, parsers. Keep those. Just don't mistake a pile of mocks for proof that the product works.&lt;/p&gt;
 &lt;h2&gt;Complexity is a loan&lt;/h2&gt;
 &lt;p&gt;Every piece of complexity you add is borrowed against future time. Microservices, a second database, a message bus, a custom deploy tool. Each one might be justified. Each one charges interest: on-call load, onboarding time, upgrade work, things that can partially fail.&lt;/p&gt;
 &lt;p&gt;The question I ask now before adding anything is simple: &lt;strong&gt;what's the cheapest thing that could possibly work, and what evidence would make me outgrow it?&lt;/strong&gt; Write the evidence down. "When the jobs table bloats past what autovacuum can handle." "When two teams are blocked on the same deploy." Then build the cheap thing and watch for the evidence.&lt;/p&gt;
@@ -60,7 +78,7 @@
 &lt;/ol&gt;
 &lt;p&gt;The projects that struggled usually had an impressive architecture diagram and nobody who could explain all of it.&lt;/p&gt;
 &lt;h2&gt;Bottom line&lt;/h2&gt;
-&lt;p&gt;Years of Python have taught me that &lt;strong&gt;the most valuable engineering skill is restraint.&lt;/strong&gt; Use the tool everyone understands. Spend novelty only where it creates value customers can feel. Keep the system small enough to fit in one head. It doesn't make for exciting conference talks, but it makes for software that ships, keeps shipping and lets you sleep.&lt;/p&gt;</content>
+&lt;p&gt;Years of Python have taught me that &lt;strong&gt;the most valuable engineering skill is restraint.&lt;/strong&gt; Use the tool everyone understands. Spend novelty only where it creates value customers can feel. Keep the system small enough to fit in one head, and keep a suite of journey tests that will outlive it. It doesn't make for exciting conference talks, but it makes for software that ships, keeps shipping and lets you sleep.&lt;/p&gt;</content>
   </entry>
   <entry>
     <title>Postgres Is Enough: Skip the Extra Database Until It Hurts</title>
