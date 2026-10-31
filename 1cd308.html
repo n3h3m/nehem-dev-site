@@ -30,7 +30,7 @@
 <meta name="color-scheme" content="light">
 <script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
 <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=a0f1b31d">
+<link rel="stylesheet" href="/style.css?v=60c47656">
 <script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
 <link rel="stylesheet" href="/code.css?v=a5120a28">
 </head>
@@ -201,6 +201,7 @@
 <p>The usual objection is speed: "annotations slow us down." For a throwaway script, sure, skip them. For code that lives longer than a quarter and is touched by more than one person, the trade usually goes the other way. Refactoring is where it shows. Rename a field, change a return type, split a function, and the checker gives you the list of every call site that needs to change. Without it, that list is "grep and hope".</p>
 <h2>Bottom line</h2>
 <p>A type hint is a promise. <strong>A type checker in CI is what makes the promise binding.</strong> Pick mypy or pyright, start permissive, make new code strict, ratchet old code as you touch it, and make the check required. If you're not going to run a checker, stop writing hints that might be wrong. Unverified types aren't documentation, they're rumours.</p>
+      <p class="post-edit"><a href="https://github.com/n3h3m/nehem.dev/edit/master/content/posts/2025-10-14%20Type%20Hints%20Pay%20Off%20Only%20If%20You%20Run%20a%20Type%20Checker%20in%20CI/post.md" rel="nofollow noopener" aria-label="Edit this post's source on GitHub">edit</a></p>
     </div>
   </div>
 </article>
