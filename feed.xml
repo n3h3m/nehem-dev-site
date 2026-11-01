@@ -5,9 +5,129 @@
   <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
   <id>https://nehem.dev/writing/</id>
-  <updated>2026-10-31T00:00:00+10:00</updated>
+  <updated>2026-11-02T00:00:00+10:00</updated>
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
+  <entry>
+    <title>AI Made Me a Better Engineer by Exposing How Vague I Was</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/54d94d.html"/>
+    <id>https://nehem.dev/54d94d.html</id>
+    <published>2026-11-02T00:00:00+10:00</published>
+    <updated>2026-11-02T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Agents read tickets literally, so vague asks get vague code. The ticket, acceptance-criteria, assumption and edge-case habits that made me a better engineer.</summary>
+    <category term="AI"/><category term="Engineering Culture"/><category term="AI Agents"/><category term="Requirements"/>
+    <content type="html">&lt;p&gt;Unpopular opinion: AI made me a better engineer.&lt;/p&gt;
+&lt;p&gt;Not because it writes code for me. It does write a lot of my code, and I'm glad it does. The bigger change happened before any code got written. Working with AI agents every day forced me to get clear about what I actually want, and that turned out to be a skill I'd been quietly faking for years.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/54d94d/hero.svg" alt="Top: a crumpled sticky note with a scribble sends a dashed, wandering arrow through a small robot agent to a shapeless grey blob and a question mark. Bottom: a neat ticket with three boxed sections sends a straight arrow through the same agent to a clean block under a tick." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same agent, two tickets. The output is only ever as clear as the ask.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;I used to get away with vague&lt;/h2&gt;
+&lt;p&gt;For most of my career I could be vague and nobody noticed. I could hold half a plan in my head, start coding and work the rest out as I went. A ticket that said "fix the export" was fine, because I was the one fixing it. The missing detail lived in my head, and nobody could see inside my head to question it.&lt;/p&gt;
+&lt;p&gt;Teammates covered for it too. A good senior engineer reads a sloppy ticket, fills the gaps from context and gets on with it. A junior messages you three times on Slack. Either way the work gets done eventually, and the cost of the vagueness is spread across other people's afternoons, where nobody counts it.&lt;/p&gt;
+&lt;p&gt;An agent doesn't absorb that cost. It needs precision, context and a clear definition of done. It reads what you wrote, not what you meant. &lt;strong&gt;When I give it vague instructions, I get vague results. Every time.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;That isn't a complaint about agents. It's the most honest feedback on my own writing I've ever had.&lt;/p&gt;
+&lt;h2&gt;Vague versus agent-ready&lt;/h2&gt;
+&lt;p&gt;Here's an illustrative ticket, the kind I'd have written a few years ago without a second thought:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Title: Fix order export
+
+The CSV export is broken for big customers. Please fix.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Give that to an agent and you'll get &lt;em&gt;something&lt;/em&gt;. Maybe it adds pagination. Maybe it bumps the gunicorn timeout. Maybe it rewrites the export as a background job and invents an email notification nobody asked for. Each one is a reasonable reading of "fix". None of them is guaranteed to be the one I had in my head.&lt;/p&gt;
+&lt;p&gt;Here's the same ticket, again illustrative, written so an agent or a new teammate can actually finish it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Title: Order CSV export times out for accounts with 10k+ orders
+
+Context
+  /admin/orders/export/ builds the whole CSV inside the request.
+  Large accounts hit the 30s load balancer timeout and get a 504.
+
+Goal
+  Large exports finish reliably. Small exports stay instant.
+
+Acceptance criteria
+  - Under 10k orders: the CSV downloads in the request, as today.
+  - 10k or more: the export runs as a Celery task. The user sees
+    "We'll email you a link" and gets a download link valid for 24h.
+  - Columns, column order and date format are unchanged.
+    Finance imports this file.
+  - Tests cover both paths and the 10k boundary.
+
+Out of scope
+  - New columns or filters. Any other export.
+
+Assumptions (confirm or correct)
+  - The existing Celery worker and S3 bucket can be reused.
+  - Dates stay in the account's timezone, as they are now.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The second version took about ten minutes. It isn't a spec document. But look at what writing it forced me to decide: where the threshold sits, what the user sees, what must not change, and what I'm &lt;em&gt;not&lt;/em&gt; asking for. Someone was always going to make those decisions. The only question was whether I'd make them on purpose or the agent would make them by accident.&lt;/p&gt;
+&lt;h2&gt;Four habits that stuck&lt;/h2&gt;
+&lt;p&gt;Once I started treating agents as literal readers, four habits followed. None of them is new. I just stopped skipping them.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Better ticket descriptions, because the agent reads them literally.&lt;/strong&gt; Context, goal, scope. When a word could mean two things ("fix", "clean up", "support", "handle"), I replace it with what I actually mean.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Acceptance criteria up front, because the agent checks them.&lt;/strong&gt; This changed the most. Here's the template I use now:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Done when:
+  - [observable behaviour] happens when [condition]
+  - [existing behaviour] is unchanged
+  - [error case] returns [message or status code], not a 500
+  - tests cover [main path], [boundary] and [failure]
+Not done if:
+  - [something that looks done but isn't]
+    e.g. only works with the local seed data
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;"Not done if" is the underrated part. It catches the agent declaring victory early, and it catches me doing the same.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Documented assumptions, because the agent doesn't guess, it asks.&lt;/strong&gt; A good agent stops and asks when something is unclear, and every question it asks points at a gap I left. So I write the assumptions down first. An illustrative log from a performance investigation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Assumptions: slow checkout investigation
+  A1  It started with Tuesday's deploy.       CONFIRMED  (APM graph)
+  A2  It only affects card payments.          WRONG      (PayPal too)
+  A3  The new discount query is the cause.    OPEN       (profiling next)
+  A4  No migration went out that day.         CONFIRMED  (deploy log)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Writing A2 down is what made it checkable. In my head it was a fact. On paper it was a guess, and it was wrong. This is the same trap I wrote about in &lt;a href="/7b5ed3.html"&gt;ego in production&lt;/a&gt;: certainty that outruns the evidence, because nothing ever asked me to prove it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edge cases before code, because the agent will find them anyway.&lt;/strong&gt; An agent writing tests will happily throw empty lists, odd timezones and Unicode at your code. I'd rather think about them before it does. My pre-flight for most backend changes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Empty, one, many.&lt;/strong&gt; Zero rows, exactly one, more than a page.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boundaries.&lt;/strong&gt; The threshold itself, and one either side of it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time.&lt;/strong&gt; Timezones, midnight, month end and the &lt;a href="/2c2a28.html"&gt;DST changeover&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bad input.&lt;/strong&gt; Missing fields, wrong types, Unicode names, very long strings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency.&lt;/strong&gt; Double clicks, retries, two workers picking up the same job.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permissions.&lt;/strong&gt; The user who shouldn't see this, and the admin who should.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Failure.&lt;/strong&gt; The third-party API is slow, down or returns rubbish.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rollback.&lt;/strong&gt; What happens to data the new code wrote if we revert.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;The spill-over I didn't expect&lt;/h2&gt;
+&lt;p&gt;Six months in, the surprise isn't the agent work. It's everything around it.&lt;/p&gt;
+&lt;p&gt;My MR descriptions are better. They say what changed, why, and how to check it, because I'm used to writing exactly that for an agent. My investigation reports are more thorough, because the assumptions log is already sitting there when I write them up. My test coverage is tighter, because the edge cases were on paper before the first line of code.&lt;/p&gt;
+&lt;p&gt;Not because AI does those things for me. Because working with AI made me realise how sloppy I'd been doing them before.&lt;/p&gt;
+&lt;h2&gt;The irony&lt;/h2&gt;
+&lt;p&gt;Here's the uncomfortable bit. The engineers who complain "AI doesn't understand what I want" are often the same engineers who skip writing requirements, leave ticket descriptions blank and expect teammates to just figure it out.&lt;/p&gt;
+&lt;p&gt;The agent isn't uniquely dense. It's the first teammate that won't quietly absorb the cost. Every blank ticket a human picks up costs someone a Slack thread, a meeting or a wrong guess that ships. We just never put that cost on a dashboard.&lt;/p&gt;
+&lt;p&gt;AI has no patience for ambiguity. Honestly, neither should your team.&lt;/p&gt;
+&lt;h2&gt;The spec test&lt;/h2&gt;
+&lt;p&gt;Anthropic's prompting guide has a test I like. It suggests treating the model like "a brilliant but new employee who lacks context on your norms and workflows", and says: "Show your prompt to a colleague with minimal context on the task and ask them to follow it. If they'd be confused, Claude will be too." (&lt;a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#be-clear-and-direct"&gt;source&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;I run it the other way round too. Before I hand off any non-trivial work, I ask one question:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Could a developer who joined last week, or an agent with the repo and nothing else, finish this without asking me anything important?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Then, every so often, I test it for real. Paste the ticket into a fresh agent session with no chat history and read what comes back. Where it goes somewhere strange, it's usually not the model being stupid. It's usually a gap in the ticket. Fix the ticket, not just the code, because the next human who reads it has the same gap.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;If your instructions aren't clear enough for an AI agent, they probably aren't clear enough for a junior developer either.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Where this goes wrong&lt;/h2&gt;
+&lt;p&gt;I don't want to oversell it. Some honest caveats:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;A clear ticket doesn't make the agent right.&lt;/strong&gt; Agents still misread code, call functions that don't exist and write tests that pass for the wrong reason. A clear spec gives you something to review against. It doesn't replace the review. Read the diff, and run it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agents don't always ask.&lt;/strong&gt; Sometimes they guess confidently instead. Writing your assumptions down is how you catch the guesses you didn't know were made.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Over-specifying costs time.&lt;/strong&gt; If I spend an hour specifying a ten-minute change, I've lost. And if I dictate every line, I've written the code in English and thrown away the reason to use an agent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Don't write novels for trivial tasks.&lt;/strong&gt; "Rename &lt;code&gt;get_usr&lt;/code&gt; to &lt;code&gt;get_user&lt;/code&gt; across the repo" is a complete ticket. Match the effort to the risk: a typo fix gets one line, a payments change gets acceptance criteria, assumptions and an edge-case pass.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A precise spec can still be the wrong spec.&lt;/strong&gt; Clarity about the wrong thing just gets you the wrong thing faster. It doesn't replace talking to the people who'll use what you build.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Why I want more of this, not less&lt;/h2&gt;
+&lt;p&gt;I'm pro-AI, and I want these tools to get better faster. Better agents will need less hand-holding on the small stuff, and that's great. But typing was never the hard part. The hard part is deciding what done means, what's out of scope and what happens when things fail. The faster agents get, the more that thinking &lt;em&gt;is&lt;/em&gt; the job.&lt;/p&gt;
+&lt;p&gt;Faster agents also mean more work gets handed off, to agents and to people. Every handoff rewards a clear ask. So I don't see this habit fading as the models improve. If anything, it's worth more each time they do.&lt;/p&gt;
+&lt;h2&gt;Bottom line&lt;/h2&gt;
+&lt;p&gt;AI didn't make me a better engineer by doing my work. It made me better by refusing to read my mind. Write the ticket so a stranger could finish it. Put the acceptance criteria first. Write the assumptions down. Think about the edges before the code. Then review what comes back.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The standard you set for AI is the standard you should have been setting all along.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Has AI changed how you think about your own work, or just how you do it?&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>AI Won't Kill the Middleman. Be the Middleman.</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/539a49.html"/>
