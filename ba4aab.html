@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Give the Boring Parts of Software Engineering to AI</title>
+<meta name="description" content="The boring parts of engineering get rushed: logs, legacy code, PR descriptions, week-after checks. I hand them to an agent and keep the decisions.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/ba4aab.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/ba4aab.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/ba4aab.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Give the Boring Parts of Software Engineering to AI">
+<meta property="og:description" content="The boring parts of engineering get rushed: logs, legacy code, PR descriptions, week-after checks. I hand them to an agent and keep the decisions.">
+<meta property="og:url" content="https://nehem.dev/ba4aab.html">
+<meta property="og:image" content="https://nehem.dev/og/ba4aab.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Give the Boring Parts of Software Engineering to AI — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-11-02"><meta property="article:modified_time" content="2026-11-02"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="AI"><meta property="article:tag" content="AI Agents"><meta property="article:tag" content="Developer Productivity"><meta property="article:tag" content="Engineering Culture"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Give the Boring Parts of Software Engineering to AI">
+<meta name="twitter:description" content="The boring parts of engineering get rushed: logs, legacy code, PR descriptions, week-after checks. I hand them to an agent and keep the decisions.">
+<meta name="twitter:image" content="https://nehem.dev/og/ba4aab.png">
+<meta name="twitter:image:alt" content="Give the Boring Parts of Software Engineering to AI — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/ba4aab.html#article","headline":"Give the Boring Parts of Software Engineering to AI","description":"The boring parts of engineering get rushed: logs, legacy code, PR descriptions, week-after checks. I hand them to an agent and keep the decisions.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/ba4aab.png","width":1200,"height":630},"datePublished":"2026-11-02","dateModified":"2026-11-02","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/ba4aab.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/ba4aab.html","inLanguage":"en-AU","keywords":["AI","AI Agents","Developer Productivity","Engineering Culture"],"wordCount":2181,"timeRequired":"PT10M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Give the Boring Parts of Software Engineering to AI","item":"https://nehem.dev/ba4aab.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=60c47656">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e);--fab-d:url(/fabric-dark.svg?v=2693ce61);--fab-dm:url(/fabric-m-dark.svg?v=4da61d1d)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-l">
+      <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Dark theme" title="Switch to dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"/><path d="M16.2 4.2v2.6M14.9 5.5h2.6" stroke-width="1"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M5.4 18.6 7 17M17 7l1.6-1.6"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display long">Give the Boring Parts of Software Engineering to AI</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-11-02">2 Nov 2026</time></p>
+      <p>10 min read</p>
+<ul class="tags" aria-label="Tags"><li>AI</li><li>AI Agents</li><li>Developer Productivity</li><li>Engineering Culture</li></ul>    </aside>
+    <div class="prose">
+<p>Nobody talks about the boring parts of software engineering.</p>
+<p>They don't make it into tech talks or blog posts. Nobody gives a conference keynote on how they pulled thirty days of logs to find when an error started, or how they read four hundred lines of legacy code to work out why one flag exists. And yet, by my estimate, this stuff is about 70% of the job.</p>
+<p>It's also the part most engineers rush through. I know because I did it for years.</p>
+<p>This post is about what changed when I stopped doing the boring parts myself and handed them to my agentic workflow. All of them. Not because I want to do less work, but because the boring work finally gets done properly, and I get to spend my own attention on the bit that actually needs a human.</p>
+<figure class="fig"><img src="/media/ba4aab/hero.svg" alt="A page of logs, three database cylinders, a page of code, a PR document and a before-and-after bar chart ride a conveyor belt into a small robot agent. One arrow leads out of the agent to a person standing where three dashed paths fork towards three flags." width="960" height="600" loading="lazy" decoding="async"><figcaption>The boring work rides through the agent. The fork at the end is still mine.</figcaption></figure>
+<h2>What the boring parts actually look like</h2>
+<p>When people imagine software engineering, they picture the interesting part: designing a system, writing a clever fix, arguing about architecture on a whiteboard. That part is real, but it's the thin end of the week. Here's the rest, in generic terms.</p>
+<p><strong>Pulling 30 days of logs to find when an error started.</strong> A customer reports something broken. The error rate graph looks a bit higher than usual, but it's noisy. Did this start with last Tuesday's deploy? With a config change? With a third-party API that quietly changed its response format? The answer is in the logs, spread across a month and a few services, and finding the first occurrence means filtering, grouping, exporting, and squinting at timestamps in two different timezones.</p>
+<p><strong>Cross-referencing three databases to trace one customer's broken state.</strong> The orders table says the payment went through. The billing service says it didn't. The analytics warehouse has a third opinion. Somewhere between them is the moment this customer's account went wrong, and the only way to find it is to pull the same customer's rows from each system, line them up by time and spot where the story stops making sense.</p>
+<p><strong>Reading 400 lines of legacy code to understand why a flag exists.</strong> There's a boolean called something like <code>skip_legacy_sync</code> that's checked in a dozen places. Nobody on the team remembers who added it. The person who did left years ago. Before you can safely remove it, or even safely change the code around it, you have to read everything that touches it and reconstruct the reason from the code itself, the commit history and whatever tickets still exist.</p>
+<p><strong>Writing the PR description that nobody will read but everyone will need later.</strong> The fix is done. The tests pass. Now you have to write down what changed, why, what you considered and rejected, how you verified it and what to watch afterwards. Today, the reviewer will skim it. A year or two from now, someone running <code>git blame</code> at midnight during an incident will need every word of it.</p>
+<p><strong>Checking if the fix actually reduced errors a week after shipping.</strong> This is the one that almost never happens. You shipped the fix, closed the ticket and moved on. Did the errors actually go down? Or did they drop for a day and creep back, because the real cause was something else? Finding out means going back to the dashboards a week later, comparing before and after, and writing it up. By then you're three tickets deep into something else.</p>
+<p>None of this is glamorous. All of it matters.</p>
+<h2>Why the boring work gets rushed</h2>
+<p>It's not because engineers are lazy. I've worked with plenty of engineers and very few of them were lazy. The boring work gets rushed because engineers are human.</p>
+<p>We get tired. Correlating log lines at four in the afternoon is not the same as doing it at nine in the morning. By the third hour, you start skimming. You see a pattern that fits your theory and you stop looking for the one that doesn't.</p>
+<p>We context switch. There are always three other tickets open, a review waiting, a Slack thread asking for an update. Every interruption resets the careful mental model you were building of that legacy module, and rebuilding it costs more each time.</p>
+<p>We're under ticket pressure. The visible output of the job is the fix. The investigation behind it, the description around it and the follow-up after it don't show up on a board. So when time is short, those are the first things to get trimmed.</p>
+<p>And honestly, we want to get to the interesting part, so we pay the price of admission as quickly as we can. That's when shortcuts creep in: the timeline that's "probably" right, the legacy code we read half of, the PR description that just says "fixes the export bug", the week-after check that never happens.</p>
+<h2>Why it matters more than it looks</h2>
+<p>The cost of rushing the boring work doesn't show up straight away. It shows up later, and usually on someone else's afternoon.</p>
+<p>A rushed investigation means a fix for the wrong cause. The symptom goes away for a while, the ticket closes, and the real problem comes back next month with a new ticket number. A half-read legacy module means the flag you removed was load-bearing for some edge case nobody remembered, and now that edge case is an incident.</p>
+<p>A thin PR description is a debt the whole team pays. Code tells you what it does. Only the description, written at the time, tells you why it was done that way and what else was tried. When that's missing, the next engineer has to redo the investigation from scratch, or worse, guesses.</p>
+<p>And skipping the week-after check means you never actually know whether your work helped. You think it did. You moved on believing it did. That's a quiet kind of overconfidence, and it's the same trap I wrote about in <a href="/7b5ed3.html">ego in production</a>: certainty that nobody ever asked you to prove.</p>
+<p>The boring parts are where the evidence lives. Skip them and you're doing engineering by vibes.</p>
+<h2>What I hand to the agent</h2>
+<p>AI doesn't get tired. It doesn't rush because it has three other tickets open. It doesn't skip the last week of logs because it's nearly home time. It's not perfect, and I'll come back to that, but it is relentlessly thorough in exactly the places where I used to cut corners.</p>
+<p>So I gave my agentic workflow the boring work. In practice the instructions are short and blunt, because I've learnt that <a href="/54d94d.html">clear asks get clear results</a>.</p>
+<p>For the logs, it's roughly: <em>pull the logs, correlate them, show me the timeline.</em> The agent queries the last thirty days across the services involved, finds the first occurrence of the error, lines it up against deploys and config changes, and hands me a timeline with the actual log lines and queries attached. Not a summary I have to trust, but the raw evidence behind each step.</p>
+<p>For the broken customer, it's the same shape: pull the records from each system, line them up by time, show me where they disagree. An afternoon of copy-pasting between query windows becomes one table.</p>
+<p>For legacy code: <em>read it, explain what it does, tell me what breaks if I change it.</em> The agent reads every call site of that flag, the commits that touched it and any linked tickets it can find, then writes a plain-language explanation and a list of the paths that would behave differently if the flag went away. It reads all four hundred lines. Every time. I used to read the first hundred carefully and the rest hopefully.</p>
+<p>For the PR: <em>write the description, include the evidence, link the dashboards.</em> By the time the fix is ready, the agent has already been part of the investigation, so it knows what we found, what we ruled out and why. The description it drafts has the timeline, the root cause, the alternatives we rejected, how we tested it and the links to the graphs that prove it. I edit it, but I'm editing a complete draft, not staring at an empty text box at the end of a long day.</p>
+<p>And for the follow-up: <em>check the error rates next week, compare before and after, write the report.</em> This is the one I'm happiest about, because it's the one I used to skip entirely. A week after the fix ships, the agent pulls the same metrics for the same window before and after, compares them and writes a short report. Sometimes the report says the fix worked. Sometimes it says the errors dropped but a related one went up. Either way, I find out, instead of assuming.</p>
+<h2>The guardrails</h2>
+<p>I'm very pro-AI, but I'm not naive about it. Agents make mistakes. They misread a timestamp, pick the wrong join key, or confidently explain code that does something slightly different from what they said. So the way I work has a few rules that never bend.</p>
+<p>The agent gets read-only access for this kind of work. It can query logs, read databases through read-only credentials and browse the code and dashboards. It doesn't change production data, deploy anything or close tickets on its own. Investigation is reading, so the access is reading.</p>
+<p>I verify the evidence, not just the conclusion. That's why I ask for the raw log lines and the queries, not just the timeline. If the agent says the errors started at a particular deploy, I open that deploy and the first few log lines myself. It takes minutes, because the agent has already done the hours of searching.</p>
+<p>I spot-check the correlation. Things happening at the same time aren't always cause and effect. When the agent lines up an error spike with a deploy, I ask what else changed in that window, and I sometimes ask it to argue the opposite case. A good timeline survives that.</p>
+<p>And the agent proposes, the human decides. It can tell me what the flag does and what breaks if I remove it. It doesn't decide whether to remove it. It can draft the PR description. I decide whether it's true before it goes out under my name.</p>
+<p>Checking evidence is much faster than gathering it, and that's the whole trick.</p>
+<h2>The part that actually needs a human</h2>
+<p>So what do I do with the time I get back?</p>
+<p>The part that was always the actual job: deciding what to fix, how to fix it and whether the trade-offs are worth it.</p>
+<p>Deciding what to fix means looking at the timeline and the customer impact and choosing. Is this worth fixing properly now, or patching and scheduling? Is it even the most important problem this week? An agent can lay out the evidence, but it doesn't know that the finance team is mid-audit, or that this customer is about to renew, or that the team is stretched thin this sprint.</p>
+<p>Deciding how to fix it means weighing options with judgement and context. A quick guard clause, or the refactor the module has needed for years? A data migration now, or a backfill later? These calls depend on people, timing and risk appetite as much as on code.</p>
+<p>And deciding whether the trade-offs are worth it is the most human part of all. Every fix costs something: review time, deploy risk, a bit more complexity, a behaviour change someone depends on. Saying "yes, this is worth it" or "no, leave it alone" is a judgement call, and I'd rather make it with a clear head and complete evidence than after three hours of squinting at logs.</p>
+<p>There's a broader point here too. In the <a href="/539a49.html">middleman post</a> I argued that the gap between a powerful tool and the people who need it doesn't close by itself. The same is true inside an engineering team. Agents produce the evidence. Someone still has to turn that evidence into the right decision for this team, this product and this week.</p>
+<h2>The result</h2>
+<p>The boring work actually gets done now. Properly. Every time.</p>
+<p>The timelines are complete instead of probably right. The legacy code gets read end to end. The PR descriptions are good enough that future me will be grateful. And the week-after check happens, which means I actually know whether my fixes worked, rather than hoping they did.</p>
+<h2>Automate the boring parts</h2>
+<p>There's a lot of excitement about AI doing the fun parts of engineering: generating whole features, designing systems, writing the clever bit. But I think the engineers who'll really win with AI aren't the ones who automate the fun parts.</p>
+<p>They're the ones who automate the boring parts and do the fun parts better.</p>
+<p>Hand the agent the logs, the cross-checks, the legacy code, the PR description and the follow-up. Give it read-only access, check its evidence and keep the decisions for yourself. Then spend your own energy on the part that actually needs a human.</p>
+<p>What's the most tedious part of your workflow that you'd hand to an AI today?</p>
+      <p class="post-edit"><a href="https://github.com/n3h3m/nehem.dev/edit/master/content/posts/2026-11-02%20Give%20the%20Boring%20Parts%20of%20Software%20Engineering%20to%20AI/post.md" rel="nofollow noopener" aria-label="Edit this post's source on GitHub">edit</a></p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/54d94d.html"><span class="t">AI Made Me a Better Engineer by Exposing How Vague I Was</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-02">Nov 2026</time></a></li>
+  <li><a href="/539a49.html"><span class="t">AI Won&#39;t Kill the Middleman. Be the Middleman.</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-31">Oct 2026</time></a></li>
+  <li><a href="/7b5ed3.html"><span class="t">Is Your Ego Running Production?</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-10-15">Oct 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/bf3a73.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Why You Rarely Hear Live Singing in Small Indian Venues</span></a><span class="pn newer empty" aria-hidden="true"></span></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script>
+(function(){
+  var d=document.documentElement,b=document.querySelector('.theme-toggle');if(!b)return;
+  var tc=document.querySelector('meta[name=theme-color]'),cs=document.querySelector('meta[name=color-scheme]');
+  function set(t,save){
+    var dark=t==='dark';
+    if(dark)d.setAttribute('data-theme','dark');else d.removeAttribute('data-theme');
+    b.setAttribute('aria-pressed',dark?'true':'false');b.title=dark?'Switch to light theme':'Switch to dark theme';
+    if(tc)tc.content=dark?'#101114':'#ffffff';if(cs)cs.content=dark?'dark':'light';
+    if(save)try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}
+    document.dispatchEvent(new Event('themechange'));
+  }
+  set(d.getAttribute('data-theme')==='dark'?'dark':'light');
+  b.addEventListener('click',function(){set(d.getAttribute('data-theme')==='dark'?'light':'dark',true);});
+  addEventListener('storage',function(e){if(e.key==='theme')set(e.newValue==='dark'?'dark':'light');});
+})();
+</script>
+<script src="/fabric.js?v=c85b9df8" defer></script>
+</body>
+</html>
