@@ -9,6 +9,111 @@
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
   <entry>
+    <title>Cut to the Chase</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/4350e5.html"/>
+    <id>https://nehem.dev/4350e5.html</id>
+    <published>2026-11-05T00:00:00+10:00</published>
+    <updated>2026-11-05T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Let the strongest model think as long as it needs. Then hand the debrief to a fast one. Verbose is good at the wrong time and costly at the right one.</summary>
+    <category term="AI"/><category term="AI Agents"/><category term="Developer Productivity"/><category term="Engineering Culture"/>
+    <content type="html">&lt;p&gt;Cut to the chase.&lt;/p&gt;
+&lt;p&gt;Focus is expensive. I don't have time. You don't have time. Nobody has time. And yet most AI output reads like it's being paid by the word.&lt;/p&gt;
+&lt;p&gt;"Certainly! Here's a comprehensive overview of the potential considerations you might want to take into account when evaluating the various approaches to..."&lt;/p&gt;
+&lt;p&gt;Stop. I already know the approaches. I evaluated them yesterday. I just need the answer.&lt;/p&gt;
+&lt;p&gt;For a long time I treated this as a prompting problem. Add "be concise" to the system prompt, add "no preamble", add "don't repeat the question". It helps a little. Then the next task needs real depth, and the same instruction makes the agent cut corners exactly where I didn't want it to. I'd swing the dial back, and the waffle came back with it.&lt;/p&gt;
+&lt;p&gt;It took me an embarrassingly long time to see that I was trying to fix two different jobs with one setting.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4350e5/hero.svg" alt="On the left, a small agent at a desk surrounded by long, scribbled pages of notes. A single arrow leads right to a short card with one bold teal line at the top, held up to a person." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The thinking can be long. The answer shouldn't be.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Two completely different modes of work&lt;/h2&gt;
+&lt;p&gt;When I work with AI agents now, almost everything falls into one of two modes, and they need different things from the model.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Mode 1 is the agent doing the hard work.&lt;/strong&gt; Investigating a production bug. Reading thirty files. Pulling logs. Cross-referencing data. Building a timeline. Writing the fix. Running the tests. Going back when the tests fail.&lt;/p&gt;
+&lt;p&gt;This is not the time to cut corners. This is the time for maximum reasoning: the strongest model I have access to, the highest effort level, and as long as it needs to think. Let it write ten pages of analysis nobody will read. That's fine. The fluff isn't fluff here. It's the agent reasoning out loud, working through possibilities, eliminating hypotheses. That verbose internal monologue is how it gets to the right answer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Mode 2 is me making the judgment call.&lt;/strong&gt; The investigation is done. The analysis exists. The options are laid out. Now I need to understand, decide and move.&lt;/p&gt;
+&lt;p&gt;This is a debrief, not a discovery session. I don't need the agent to re-explore the entire solution space. I don't need three paragraphs of context I already have. I don't need "Great question!" before the answer. I need three things: here's what we found, here's what it means, here's what I'd do. Done.&lt;/p&gt;
+&lt;p&gt;That's where "cut to the chase" comes in.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4350e5/two-modes.svg" alt="Two horizontal lanes over time. The top lane, deep work, is long and full of dense scribbled loops, branches and crossed-out dead ends. At its end a notes file drops down to the bottom lane, debrief, which is a short, clean straight line ending in a decision tick." width="600" height="560" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Mode 1 is long and messy on purpose. Mode 2 is short and clean on purpose. The handoff between them is a file.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;You don't just change the prompt. You change the model.&lt;/h2&gt;
+&lt;p&gt;This was the part that surprised me.&lt;/p&gt;
+&lt;p&gt;My first instinct was to keep one model and change the instructions between phases. "Now summarise." It works, sort of. But a model tuned to think hard tends to keep thinking hard when you ask it for a summary. It re-opens questions. It hedges. It reaches for completeness because completeness is what made it good at the first job. You end up with a summary that is itself six paragraphs long and still mentions the three hypotheses it already ruled out.&lt;/p&gt;
+&lt;p&gt;So I split it.&lt;/p&gt;
+&lt;p&gt;For deep work, I use the strongest reasoning model available and let it run hot. The cost of thinking is nothing compared to the cost of a wrong answer. A wrong root cause on a production incident costs a second incident, a rollback, a weekend, sometimes a customer. Thinking tokens are cheap by comparison, and they get cheaper every few months.&lt;/p&gt;
+&lt;p&gt;For the debrief, I switch to a fast, articulate model. One that sounds human. Gets to the point. Doesn't pad. Doesn't hedge. Doesn't repeat my question back to me before answering it.&lt;/p&gt;
+&lt;p&gt;Think about how a good team already works. You wouldn't send your most thorough, methodical engineer to give a two-minute status update to the CTO. That engineer is exactly the person you want on the investigation. They will check the thing everyone else assumed. But ask them for a status update and you get the full history of every theory, in order, because to them the history is the point.&lt;/p&gt;
+&lt;p&gt;You'd send the person who can summarise a week of work in three sentences without losing the substance. Not because they're smarter. Because that's a different skill, and the CTO's next twenty minutes depend on it.&lt;/p&gt;
+&lt;p&gt;Same principle. Different model for a different job.&lt;/p&gt;
+&lt;h2&gt;Why the verbose part is not waste&lt;/h2&gt;
+&lt;p&gt;I want to defend the long, rambling part properly, because "AI is too verbose" has become a lazy complaint and it gets aimed at the wrong place.&lt;/p&gt;
+&lt;p&gt;When an agent investigates, its written-out reasoning is doing real work. It's the scratchpad. "The error started at 14:02. The deploy finished at 13:58. That's suspicious, but the error rate is flat for four minutes after, so maybe not the deploy. Let me check what else changed at 14:00. There's a cron job..." Every one of those sentences is a step that, if skipped, could send the investigation the wrong way. A good engineer does exactly the same thing in their head or on a notepad. We just never had to read it.&lt;/p&gt;
+&lt;p&gt;Cut that short and you don't get a faster correct answer. You get a faster guess.&lt;/p&gt;
+&lt;p&gt;So I don't want the deep-work model to be concise. I want it to be thorough, to write its notes down, and to leave them somewhere I can check if I ever need to. I just don't want to be the one reading them by default.&lt;/p&gt;
+&lt;h2&gt;The fluff problem is a timing problem&lt;/h2&gt;
+&lt;p&gt;Here's the reframe that made all of this click for me.&lt;/p&gt;
+&lt;p&gt;The fluff problem isn't that AI generates too many words. It's that it generates too many words at the wrong time.&lt;/p&gt;
+&lt;p&gt;During investigation, verbose is good. That's the agent processing. During the debrief, every unnecessary sentence is a tax on human attention.&lt;/p&gt;
+&lt;p&gt;And human attention is the most expensive resource in the entire pipeline. More expensive than compute. More expensive than tokens. More expensive than the model itself.&lt;/p&gt;
+&lt;p&gt;Look at what's actually scarce in a working day. I can buy more compute with a credit card in a minute. I can run the investigation again overnight. I can't buy more of my own focus. I get a few good hours a day where I can make careful decisions, and every one of those hours is shared between code review, incidents, design calls and the people I work with. When a debrief burns ten minutes of that on preamble, that's ten minutes I didn't spend deciding something else well.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4350e5/cost-of-attention.svg" alt="An illustrative sketch with no numbers. Two bars per stage across the pipeline: investigation, writing notes, the debrief. Machine cost, sketched in grey, is tall during investigation and tiny for the debrief. Human attention, in coral, is near zero during investigation and tall at the debrief, where it is the dominant cost." width="600" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Illustrative only, not measured and not to scale. The machine spends most during the investigation. The human spends most at the debrief, and that's the bill worth cutting.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;That picture is deliberately rough. I'm not claiming numbers. The shape is the point. The machine's cost peaks while it investigates, and that's exactly where I want to spend more, not less. My cost peaks at the moment I read the result. That's the only place where cutting words saves anything that matters.&lt;/p&gt;
+&lt;h2&gt;Paragraph six&lt;/h2&gt;
+&lt;p&gt;One more thing most people haven't realised: this isn't just about saving time. It's about decision quality.&lt;/p&gt;
+&lt;p&gt;When an agent buries the key finding inside paragraph six of a twelve-paragraph response, you're not just slower. You're more likely to miss it.&lt;/p&gt;
+&lt;p&gt;Be honest about how you read long AI responses. I know how I do. I read the first paragraph carefully. I skim the second. By the fourth I'm reading the first few words of each line, looking for something that sounds like an answer. When I find something that sounds like one, I stop and move on. I pattern-match on the first plausible conclusion.&lt;/p&gt;
+&lt;p&gt;If the real finding is in paragraph six, and paragraph two contained a plausible-sounding hypothesis the agent later ruled out, I can walk away with the ruled-out one. Not because the agent was wrong. Because the agent was right in the wrong place.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4350e5/paragraph-six.svg" alt="Two responses side by side, with a pencil eye-path drawn over each. On the left, a long response of twelve paragraphs: the eye path reads the first lines closely, then zig-zags faster and fades out around paragraph four; the key finding, highlighted in teal, sits in paragraph six, past where the path fades. On the right, a short debrief with the key finding as its first line, right where the path starts." width="600" height="640" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Most of us read long responses like this. Put the finding where the eye actually is.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;A concise debrief doesn't just respect your time. It forces the important thing to be the first thing you read. That's not a style preference. That's a design decision for better outcomes.&lt;/p&gt;
+&lt;h2&gt;What this looks like on a real bug&lt;/h2&gt;
+&lt;p&gt;Let me make this concrete with an example. It's illustrative, a composite of the kind of incident I've worked many times, not a transcript.&lt;/p&gt;
+&lt;p&gt;Checkout requests start failing intermittently on a Tuesday afternoon. Around one in fifty orders gets a 502. I hand it to the deep-work agent with the logs, the deploy history, the service map and the repo. Then I go and do something else.&lt;/p&gt;
+&lt;p&gt;It spends a long time. It reads the load balancer logs and finds the 502s cluster on one upstream. It checks the deploy history: a payment client library was bumped that morning. It reads the library's changelog and finds a default connection pool size went down. It cross-references traffic: the failures line up with the afternoon peak, not with the deploy time. It reads the client code and finds we never set the pool size explicitly. It considers and rules out a DNS change, a certificate rotation and a database lock it found in the logs. It writes a fix that sets the pool size, writes a test, runs the suite. Its notes run to many pages.&lt;/p&gt;
+&lt;p&gt;Now here are two ways that work can come back to me.&lt;/p&gt;
+&lt;p&gt;The first is what I used to get by default:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Certainly! I've completed a thorough investigation into the intermittent 502 errors affecting the checkout service. This was a complex issue with several potential contributing factors, so let me walk you through my analysis step by step.&lt;/p&gt;
+&lt;p&gt;First, I examined the overall error landscape. Errors began on Tuesday afternoon and affected roughly 2% of checkout requests. Initially, I considered whether a recent DNS change could be responsible, since DNS issues often manifest as intermittent upstream failures...&lt;/p&gt;
+&lt;p&gt;Next, I looked at the database. I noticed some lock waits around the same period, which could plausibly cause timeouts...&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(three more paragraphs of eliminated hypotheses)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Interestingly, I found that the payment client library was updated this morning, and the new version reduces the default connection pool size. Since our code doesn't set this explicitly, under peak load...&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(two paragraphs of fix details, then "I hope this helps! Let me know if you have any questions.")&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Everything in it is true. The finding is in there. It's just in paragraph six, behind a DNS theory and a database theory, both of which I could easily walk away believing if I'm reading it between two meetings.&lt;/p&gt;
+&lt;p&gt;The second is the debrief I want:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Finding:&lt;/strong&gt; The 502s come from the payment client running out of connections at peak. This morning's library upgrade lowered the default pool size, and we never set it ourselves.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it means:&lt;/strong&gt; It's not data loss. Failed checkouts weren't charged. It will get worse at the evening peak.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What I'd do:&lt;/strong&gt; Ship the one-line fix in the PR I opened, which pins the pool size to the old default. It has a test. Then add the pool size to our config so library defaults can't move it again.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Confidence:&lt;/strong&gt; High. Failures line up with pool exhaustion warnings to the second. Evidence: &lt;code&gt;notes/checkout-502.md&lt;/code&gt;, sections 3 and 4.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Not checked:&lt;/strong&gt; Whether the other two services on the same library are affected. Same risk, lower traffic.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Same investigation. Same facts. One of them I can act on in a minute, standing up. The other I have to read twice and hope I read the right part.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4350e5/verbose-vs-tight.svg" alt="Two cards side by side. The left card is long, with twelve grey paragraph lines; a small teal highlight sits in paragraph six with a coral arrow pointing at it labelled 'the finding'. The right card is short, with five labelled rows: finding (teal, first), meaning, what I'd do, confidence, not checked." width="600" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same facts, two shapes. The finding is either where you look first or where you stopped looking.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;The handoff: notes in a file, debrief in a fixed shape&lt;/h2&gt;
+&lt;p&gt;Here's how I actually wire it, because "use two models" is easy to say and easy to get wrong.&lt;/p&gt;
+&lt;p&gt;The deep-work agent's last job is to write its notes to a file. Not a summary, the notes: the timeline, the evidence with links to the log lines and commits, every hypothesis and why it was kept or ruled out, the fix, the test results. Markdown is fine. It's for the record, and for the second model.&lt;/p&gt;
+&lt;p&gt;Then a second, fast model reads that file and produces the debrief. Its instructions are short and strict. Answer in this shape and nothing else: the finding, what it means, what I'd do, how confident you are and why, and what was not checked. First line is the finding. No preamble, no sign-off. Every claim points back at a section of the notes.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4350e5/handoff.svg" alt="A pipeline sketch. On the left, a large deep-work agent with a dense scribbled page labelled notes.md. An arrow carries the file to a small, quick agent in the middle. An arrow from it leads to a short card with five labelled rows: finding, meaning, recommendation, confidence, not checked. A dashed arrow loops from the card back to notes.md, labelled 'cite'." width="600" height="700" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The deep-work model writes the record. The fast model writes the debrief, in a fixed shape, citing the record.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;There are a few reasons this works better than asking one model to do both.&lt;/p&gt;
+&lt;p&gt;The file is a clean boundary. The fast model doesn't inherit the deep model's habits, its half-explored branches, or its urge to show its work. It gets a finished body of evidence and one job.&lt;/p&gt;
+&lt;p&gt;The file outlives the conversation. If I want to check the reasoning, it's there. If I hand the incident to a colleague, I hand them the debrief and the file. The debrief is the front page; the notes are the appendix. That's how good incident reports have always worked. We just used to write both by hand.&lt;/p&gt;
+&lt;p&gt;And the shape is fixed, so I learn where to look. After a week of debriefs in the same shape, my eyes go straight to "Finding" and "Not checked". That's a small thing that makes a big difference when you read a lot of them.&lt;/p&gt;
+&lt;h2&gt;Cut to the chase is not permission to be wrong&lt;/h2&gt;
+&lt;p&gt;This is the counterintuitive part, and it's the part I care about most.&lt;/p&gt;
+&lt;p&gt;"Cut to the chase" is not "skip the hard work". It's not "give me the first thing that sounds good". It's the opposite. The agent already did the hard work. It already went through the whole universe of information: the markdown files, the proof, the citations, the progress logs, the test results, the PR descriptions. Cut to the chase means you've done the thinking, now give me the conclusion. Tight. Clean. No ceremony.&lt;/p&gt;
+&lt;p&gt;But short text has its own failure mode. A confident three-line answer reads as more certain than it is. Padding at least has the side effect of exposing doubt; a tight debrief can hide it. So the guardrails go into the shape itself.&lt;/p&gt;
+&lt;p&gt;The debrief has to cite where the evidence is. Not "I checked the logs", but which section of the notes, which log query, which commit. If it can't point at evidence, it doesn't get to say it.&lt;/p&gt;
+&lt;p&gt;It has to state its confidence and the reason for it in a sentence. "High, because the timing matches to the second" is useful. "High" on its own is decoration.&lt;/p&gt;
+&lt;p&gt;It has to list what was not checked. This is the line I read most carefully. Every investigation has edges, and the most dangerous ones are the ones nobody mentions. A verbose response often hides its gaps in paragraph nine. A good debrief puts them on the page in their own row, where I can't miss them.&lt;/p&gt;
+&lt;p&gt;And it doesn't get to add anything that isn't in the notes. The fast model is a writer, not a second investigator. If it thinks something's missing, the right move is to say so under "not checked", not to quietly fill the gap with something that sounds right.&lt;/p&gt;
+&lt;p&gt;With those four rules, short stops meaning shallow. It means compressed, with the compression made visible.&lt;/p&gt;
+&lt;h2&gt;My setup, today&lt;/h2&gt;
+&lt;p&gt;So here's where I've landed.&lt;/p&gt;
+&lt;p&gt;Deep work goes to the strongest model with maximum effort and as much thinking time as it wants. It writes everything down. I don't read it unless I need to.&lt;/p&gt;
+&lt;p&gt;The debrief goes to a fast model with a direct tone and zero padding, in the same five-part shape every time, citing the notes.&lt;/p&gt;
+&lt;p&gt;Two modes. Two models. One workflow. The agent does the hard thinking. I do the hard deciding. Nobody wastes time on ceremony.&lt;/p&gt;
+&lt;p&gt;I expect the details to change. Models get faster, and the strong ones get better at switching register on their own. Maybe one day a single model will do both jobs well. The principle won't change, though. Thinking should be as long as the problem needs, and the answer should be as short as the reader can afford. Those are two different budgets, and the second one is mine.&lt;/p&gt;
+&lt;p&gt;Cut to the chase isn't lazy. It's what happens when you respect both the work and the human reading it.&lt;/p&gt;
+&lt;p&gt;What's your setup? One model for everything, or have you started splitting the modes?&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <title>The Ticket Title Is Not the Bug</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/4037c1.html"/>
     <id>https://nehem.dev/4037c1.html</id>
