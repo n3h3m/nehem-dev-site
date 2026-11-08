@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Blackbox Testing Always Wins — Nehemiah Jacob</title>
+<meta name="description" content="Blackbox tests check what the product does, not how it&#39;s built. With AI agents writing them, a thousand real user journeys is now months of work, not years.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/d5d0f8.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/d5d0f8.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/d5d0f8.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Why Blackbox Testing Always Wins">
+<meta property="og:description" content="Blackbox tests check what the product does, not how it&#39;s built. With AI agents writing them, a thousand real user journeys is now months of work, not years.">
+<meta property="og:url" content="https://nehem.dev/d5d0f8.html">
+<meta property="og:image" content="https://nehem.dev/og/d5d0f8.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Why Blackbox Testing Always Wins — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-11-08"><meta property="article:modified_time" content="2026-11-08"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="AI"><meta property="article:tag" content="Testing"><meta property="article:tag" content="Software Engineering"><meta property="article:tag" content="AI Agents"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why Blackbox Testing Always Wins">
+<meta name="twitter:description" content="Blackbox tests check what the product does, not how it&#39;s built. With AI agents writing them, a thousand real user journeys is now months of work, not years.">
+<meta name="twitter:image" content="https://nehem.dev/og/d5d0f8.png">
+<meta name="twitter:image:alt" content="Why Blackbox Testing Always Wins — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/d5d0f8.html#article","headline":"Why Blackbox Testing Always Wins","description":"Blackbox tests check what the product does, not how it's built. With AI agents writing them, a thousand real user journeys is now months of work, not years.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/d5d0f8.png","width":1200,"height":630},"datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/d5d0f8.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/d5d0f8.html","inLanguage":"en-AU","keywords":["AI","Testing","Software Engineering","AI Agents"],"wordCount":2279,"timeRequired":"PT11M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Why Blackbox Testing Always Wins","item":"https://nehem.dev/d5d0f8.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=60c47656">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+<link rel="stylesheet" href="/code.css?v=a5120a28">
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e);--fab-d:url(/fabric-dark.svg?v=2693ce61);--fab-dm:url(/fabric-m-dark.svg?v=4da61d1d)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-l">
+      <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Dark theme" title="Switch to dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"/><path d="M16.2 4.2v2.6M14.9 5.5h2.6" stroke-width="1"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M5.4 18.6 7 17M17 7l1.6-1.6"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">Why Blackbox Testing Always Wins</h1>
+<p class="dek">Stop testing how the code works. Start testing what the system does, and let AI write the journeys.</p>  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-11-08">8 Nov 2026</time></p>
+      <p>11 min read</p>
+<ul class="tags" aria-label="Tags"><li>AI</li><li>Testing</li><li>Software Engineering</li><li>AI Agents</li></ul>    </aside>
+    <div class="prose">
+<p>Ever since LLMs arrived, there's one thing they've always been terrifyingly good at:</p>
+<p>Writing tests.</p>
+<p>Not the crap unit tests that mock everything, test nothing real and burn CI minutes on every push. I'm talking about blackbox tests. Tests that don't care <em>how</em> the system is implemented. Tests that care <em>what</em> the system does.</p>
+<p>Input goes in. Output comes out. Does it match? That's it.</p>
+<p>No mocking of your own services. No internal wiring. No "this test broke because someone renamed a private method."</p>
+<p>This post is my case for why that kind of test wins, how I get AI agents to write hundreds of them, and the honest small print that makes the difference between a suite you trust and a suite everyone learns to ignore.</p>
+<figure class="fig"><img src="/media/d5d0f8/hero.svg" alt="Two rows of the same journey, log in, get token, call /me, right user back, both passing. Under the first, hidden from the test, one Django app and Postgres. Under the second, an auth service, a token service, a profile API and a new database. The test only touches the journey, so it survives." width="960" height="620" loading="lazy" decoding="async"><figcaption>Same journey, new insides. The test only sees what a user sees, so it survives the rewrite underneath.</figcaption></figure>
+<h2>What I mean by blackbox</h2>
+<p>A blackbox test talks to the system the way a user or a client does: through its public API, its UI or its device protocol. It knows the contract. It doesn't know the code.</p>
+<p>That's a slightly different thing from "end-to-end". An end-to-end test is about <em>scope</em>, the whole chain from the front door to the database and back. Blackbox is about <em>knowledge</em>, what the test is allowed to know. Most of my tests are both: they drive a whole journey, and they only use what's visible from outside. But you can have a blackbox test of a single service, and you can have a so-called end-to-end test that peeks into tables and mocks half the world. The second one is not what I'm talking about.</p>
+<p>The thing a blackbox test protects is a <strong>behavioural contract</strong>: given this user, in this state, doing this, the system responds with that. Those contracts are what your customers actually depend on. Nobody has ever filed a support ticket about a private method.</p>
+<h2>Four journeys, four tests</h2>
+<p>Here's what I do. I point an AI agent at a real user journey and say: write a test for this. End to end. Realistic data. Realistic environment. Test the outcome, not the implementation.</p>
+<p>Some examples of the kind of journeys I mean:</p>
+<p>→ <strong>A user authenticates.</strong> Gets a token. The token works on the next call. That's a test.</p>
+<p>→ <strong>A user enters credentials.</strong> The 2FA screen is shown. A code is entered. The welcome screen appears. That's a test.</p>
+<p>→ <strong>A customer buys an episode.</strong> An entitlement is created. The episode plays. The purchase appears in billing. That's a test.</p>
+<p>→ <strong>An admin changes a plan.</strong> The change propagates to the device. The device sees the new channels. That's a test.</p>
+<p>Not one assertion. An entire journey, step by step, the way a real human uses the system.</p>
+<p>The purchase one is my favourite, because it crosses every layer that tends to break quietly.</p>
+<figure class="fig"><img src="/media/d5d0f8/purchase-chain.svg" alt="Four hops in a row: buy episode at the store API, entitlement in the rights service, playback through the player and CDN, billing in the ledger. Under each, the assertions: order id and price, entitlement for the right user and episode, a working stream, one charge of the correct amount." width="960" height="520" loading="lazy" decoding="async"><figcaption>One purchase crosses four layers. A journey test asserts at every hop, not just the first status code.</figcaption></figure>
+<p>A unit test might tell you that the purchase handler returns 201. Lovely. It won't tell you that the entitlement never got written because an event was dropped, or that the stream URL comes back 403 for this region, or that billing charged twice because a retry wasn't idempotent. Each of those has its own unit tests, and each of those unit tests passes. The customer still can't watch their episode.</p>
+<h2>Assertions are the whole game</h2>
+<p>Here's where a lot of "end-to-end" suites go wrong: they drive the whole journey and then assert almost nothing. <code>assert response.status_code == 200</code> is not a test of a product. It's a test that the server didn't crash.</p>
+<p>A good blackbox assertion is about an outcome a person would notice:</p>
+<p>→ The token works on the <em>next</em> call, for <em>this</em> user, and not for another one.</p>
+<p>→ The welcome screen shows <em>this</em> user's name.</p>
+<p>→ Billing has exactly <em>one</em> charge, for the right amount, in the right currency.</p>
+<p>→ After cancelling, the device <em>stops</em> seeing the channel.</p>
+<p>The negative ones matter as much as the positive ones. A plan downgrade that adds the new channels but forgets to remove the old ones passes a lazy test and fails a real one.</p>
+<p>My unit-test-versus-blackbox line is this: a unit test says "the add_to_cart function returns 200". A blackbox test says "a customer in Melbourne with a prepaid card can buy a subscription, see it on their device, get charged correctly, and cancel without calling support."</p>
+<p>Which one do you trust more?</p>
+<h2>Here's roughly what one looks like</h2>
+<p>This is an illustrative example, not code from any real system, but it shows the shape. It's plain Python and <code>pytest</code>, talking to a staging API over HTTP. Nothing is imported from the application.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tests.journeys.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Api</span><span class="p">,</span> <span class="n">poll_until</span>  <span class="c1"># thin HTTP helpers, no app imports</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_customer_buys_episode_and_can_watch_it</span><span class="p">(</span><span class="n">api</span><span class="p">:</span> <span class="n">Api</span><span class="p">,</span> <span class="n">sandbox_card</span><span class="p">):</span>
+    <span class="c1"># realistic, unique, disposable customer for this run only</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"journey+</span><span class="si">{</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span><span class="si">}</span><span class="s2">@example.test"</span>
+    <span class="n">customer</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">signup</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="s2">"Melbourne"</span><span class="p">,</span> <span class="n">card</span><span class="o">=</span><span class="n">sandbox_card</span><span class="p">(</span><span class="s2">"prepaid"</span><span class="p">))</span>
+
+    <span class="n">order</span> <span class="o">=</span> <span class="n">customer</span><span class="o">.</span><span class="n">buy</span><span class="p">(</span><span class="n">episode_id</span><span class="o">=</span><span class="s2">"S01E03"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">order</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">"paid"</span>
+    <span class="k">assert</span> <span class="n">order</span><span class="o">.</span><span class="n">amount</span> <span class="o">==</span> <span class="n">customer</span><span class="o">.</span><span class="n">price_of</span><span class="p">(</span><span class="s2">"S01E03"</span><span class="p">)</span>
+
+    <span class="c1"># entitlement is written asynchronously: wait for it, with a hard limit</span>
+    <span class="n">poll_until</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">customer</span><span class="o">.</span><span class="n">can_play</span><span class="p">(</span><span class="s2">"S01E03"</span><span class="p">),</span> <span class="n">timeout_s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">customer</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="s2">"S01E03"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">http_status</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">manifest_has_segments</span><span class="p">()</span>
+
+    <span class="n">charges</span> <span class="o">=</span> <span class="n">customer</span><span class="o">.</span><span class="n">billing_history</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">reference</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">charges</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>  <span class="c1"># exactly one charge</span>
+</code></pre></div>
+
+<p>Read it top to bottom and you know what the product promises. That's not an accident. I'll come back to it.</p>
+<h2>Determinism is designed, not hoped for</h2>
+<p>The biggest reason people distrust journey tests is that they've seen bad ones. Tests that pass on Tuesday and fail on Wednesday. Tests that only work if run in a particular order. The fix isn't to write fewer of them. It's to build them properly.</p>
+<p><strong>Fixtures.</strong> Every test creates its own data: its own user, its own account, its own order. Synthetic but realistic: real-looking names, real postcodes, real plan combinations, card types that exist. Never real customer data. A test that depends on "the demo user" will eventually fight another test over it.</p>
+<p><strong>Setup and teardown.</strong> Whatever a test creates, it cleans up, or it creates it in a namespace that gets thrown away. Leftover data from the last run is one of the most common sources of mysterious failures.</p>
+<p><strong>Payments.</strong> Always sandbox. Test cards, a payment provider's test mode, a ledger that can't move real money. Nobody should get a real charge because a test ran.</p>
+<p><strong>Waiting.</strong> Modern systems are eventually consistent. Entitlements are written by a consumer, plans propagate through a cache, a device picks up changes on its next sync. The wrong answer is <code>sleep(5)</code>. That's too slow when the system is fast and too short when it's slow. The right answer is to poll for the outcome with a bounded timeout, like <code>poll_until</code> above, and fail with a clear message if the deadline passes. "Eventually" must still have a deadline, otherwise you're not testing a promise.</p>
+<h2>The three objections</h2>
+<p>There are three objections I hear every time.</p>
+<p><strong>"It's slow."</strong></p>
+<p>Run them in parallel. Massively parallel. If the journeys are independent, every worker gets its own users and its own data, and a few hundred tests across tens of workers finish in minutes rather than hours.</p>
+<p>The honest small print is that parallelism has a ceiling, and it's usually not the number of workers.</p>
+<figure class="fig"><img src="/media/d5d0f8/parallel-workers.svg" alt="A suite queue fans out to many workers, each with its own user, data and namespace. All of them funnel back into shared dependencies: a shared test database, an auth rate limit, a payment sandbox and one slow service, which set the real clock." width="960" height="560" loading="lazy" decoding="async"><figcaption>Workers scale out. Shared dependencies don't. Your suite time is the slowest journey plus whatever everyone queues on.</figcaption></figure>
+<p>Fifty workers all logging in at once will find your auth rate limit. They'll find the one small staging database, the payment sandbox's request limit, the service everyone calls that only has one replica. Suite time ends up being roughly the slowest journey plus the queueing at whatever is shared. So the work is: make tests independent, give the environment enough capacity, and treat a sudden slowdown as information about your system, not just a CI annoyance.</p>
+<p><strong>"It's flaky."</strong></p>
+<p>A flaky test is a signal, not a nuisance. Often it's telling you the product isn't behaving deterministically: a race between two writes, a retry that double-charges, an event lost under load, a cache serving a stale plan. Those are product bugs, and some of them are exactly the bugs your customers hit once in a hundred times and you can never reproduce. Fix the product.</p>
+<p>But I want to be precise here, because "every flaky test is a product bug" isn't true, and believing it wastes days.</p>
+<figure class="fig"><img src="/media/d5d0f8/flaky-fork.svg" alt="A flaky test forks two ways. The product: a race between writes, a retry that double-charges, a lost event, a stale cache, so fix the product. The harness or environment: sleeps instead of polling, shared users, leftover data, a staging dependency down, so fix the test or environment." width="960" height="560" loading="lazy" decoding="async"><figcaption>A flaky test is always a signal. Find out which branch it's on before you blame the product or the test.</figcaption></figure>
+<p>Flakiness can also come from the test harness (a sleep instead of polling, two tests sharing a user, an order dependency) or from the environment (a staging dependency that's down, a noisy neighbour, a clock that's off). The discipline is to find out which branch you're on. Rerun with request ids, timings and logs. If it's the product, fix the product. If it's the test or the environment, fix that, properly, not by adding a retry that hides both.</p>
+<p>What makes outcome-based tests stable is that they aren't coupled to incidental details. If the login journey returns a valid token, it doesn't matter which microservice generated it or which database it hit. The outcome stays the same when the internals change.</p>
+<p><strong>"It's hard to write."</strong></p>
+<p>It was. Before LLMs.</p>
+<h2>Where the AI comes in</h2>
+<p>Now you describe the journey in plain English and the agent writes the test. With realistic data. With proper assertions. With setup and teardown. You review it, tune it and add it to the suite.</p>
+<p>The review is not optional, and it's where my time actually goes.</p>
+<figure class="fig"><img src="/media/d5d0f8/ai-review-loop.svg" alt="A loop: journey in plain English, agent drafts the test, human review, run against a real environment, evidence with ids, logs and diffs, then back to the journey. In the middle the review asks: does it assert the outcome, or just echo the code, and would it fail if the product were broken?" width="960" height="600" loading="lazy" decoding="async"><figcaption>The AI writes it. You decide if it's true. Review asks one question: would this fail if the product were broken?</figcaption></figure>
+<p>The main failure mode of an AI-written test is that it parrots the implementation. If you let the agent read the code first, it will happily write a test that asserts whatever the code currently does, bugs included. So I give it the journey and the public contract, not the internals. Then I review with a few questions:</p>
+<p>→ Does it assert the outcome a user would notice, or just a status code?</p>
+<p>→ Would it fail if the product were broken? (The quickest check: break it on purpose, and watch the test go red.)</p>
+<p>→ Is the data realistic, unique and cleaned up?</p>
+<p>→ Does it wait for outcomes with a deadline, or with sleeps?</p>
+<p>Then it runs against a real environment, and the evidence comes back: pass or fail, with ids, logs and diffs I can actually act on. That loop is fast enough that the bottleneck stops being typing tests and becomes knowing which journeys matter.</p>
+<p>For me, that went from "we should write more integration tests" to "we have about a thousand blackbox tests" in months. Not years. That's my own experience on my own projects, not a benchmark, and your mileage will depend on how testable your environment is. But the shift in what's practical is real.</p>
+<h2>The suite is the spec</h2>
+<p>Here's the part that will really cook your brain: these tests double as documentation.</p>
+<figure class="fig"><img src="/media/d5d0f8/living-spec.svg" alt="A short illustrative test: a prepaid customer in Melbourne subscribes to Sports, the device sees it, billing shows one charge, they cancel, the device no longer sees it, no support tickets. Arrows: a new developer reads what the product does, and CI checks it is still true every deploy." width="960" height="500" loading="lazy" decoding="async"><figcaption>A suite that reads like a spec, and proves itself on every deploy.</figcaption></figure>
+<p>Read a blackbox test and you know exactly what the system does. Not what the code says. What the system actually does when a real user touches it.</p>
+<p>New developer joins the team? Don't just give them a wiki. Give them the test suite. Every user journey, spelled out, with realistic data, verified against a real environment. Unlike the wiki, it can't silently go out of date, because the day it stops being true, CI goes red.</p>
+<p>That's not a test suite. That's a living specification.</p>
+<h2>What happens when you refactor</h2>
+<p>Internal refactors stop breaking tests.</p>
+<p>Because the tests don't know about the internals, they don't care that you rewrote the payment module from scratch. They care that the customer can still buy things and get charged correctly. Rewrite modules, swap databases, split a monolith into services: if the outcomes still match, you're good.</p>
+<p>The one caveat worth saying out loud: if a refactor changes something users can see, a response field, an error message, a timing a device depends on, the blackbox suite <em>will</em> break. That's not a weakness. That's the suite doing its job, telling you that your "internal" change wasn't internal.</p>
+<p>Try getting that signal from 3,000 unit tests coupled to internal method signatures. I'll wait.</p>
+<h2>Where unit tests still belong</h2>
+<p>I'm deliberately provocative about unit tests, so let me be fair to them. A pure function that calculates GST, parses a date format or rounds a currency amount has dozens of edge cases, and a unit test is the fastest, cheapest place to pin them down. I still write those.</p>
+<p>What I don't write any more is the mock-everything kind: tests that stub out the database, the queue and three of my own services, then assert that a function called another function. Those tests break on every refactor and pass through every real outage. They measure the wrong thing.</p>
+<p>The balance I've landed on: unit tests for logic with many edge cases, blackbox tests for every journey a user or client depends on. When I have to choose where to spend effort, the journeys win.</p>
+<h2>Start today</h2>
+<p>Every blackbox test you don't write is a user journey you're not protecting.</p>
+<p>Every journey you're not protecting is a production incident waiting to happen.</p>
+<p>Every production incident is a week of your life you're not getting back.</p>
+<p>If you're relying on unit tests and manual QA alone to tell you the product works, you're flying with instruments that measure the wrong thing.</p>
+<p>Stop testing how the code works. Start testing what the system does.</p>
+<p>Pick your five most important user journeys. Describe each one in plain English. Hand them to an agent, review what it writes against the questions above, and run them on every deploy. Not next sprint. Not next quarter. Today.</p>
+<p>The AI will write the tests. You just need to describe the journeys.</p>
+<p>What's stopping you?</p>
+<p><em>All drawings and code here are illustrative, not taken from any production system.</em></p>
+      <p class="post-edit"><a href="https://github.com/n3h3m/nehem.dev/edit/master/content/posts/2026-11-08%20Why%20Blackbox%20Testing%20Always%20Wins/post.md" rel="nofollow noopener" aria-label="Edit this post's source on GitHub">edit</a></p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/c93c8c.html"><span class="t">The Cheapest Line Item</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-06">Nov 2026</time></a></li>
+  <li><a href="/4350e5.html"><span class="t">Cut to the Chase</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-05">Nov 2026</time></a></li>
+  <li><a href="/4037c1.html"><span class="t">The Ticket Title Is Not the Bug</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-05">Nov 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/b3667c.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Nobody Builds a Road to Nowhere</span></a><span class="pn newer empty" aria-hidden="true"></span></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script>
+(function(){
+  var d=document.documentElement,b=document.querySelector('.theme-toggle');if(!b)return;
+  var tc=document.querySelector('meta[name=theme-color]'),cs=document.querySelector('meta[name=color-scheme]');
+  function set(t,save){
+    var dark=t==='dark';
+    if(dark)d.setAttribute('data-theme','dark');else d.removeAttribute('data-theme');
+    b.setAttribute('aria-pressed',dark?'true':'false');b.title=dark?'Switch to light theme':'Switch to dark theme';
+    if(tc)tc.content=dark?'#101114':'#ffffff';if(cs)cs.content=dark?'dark':'light';
+    if(save)try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}
+    document.dispatchEvent(new Event('themechange'));
+  }
+  set(d.getAttribute('data-theme')==='dark'?'dark':'light');
+  b.addEventListener('click',function(){set(d.getAttribute('data-theme')==='dark'?'light':'dark',true);});
+  addEventListener('storage',function(e){if(e.key==='theme')set(e.newValue==='dark'?'dark':'light');});
+})();
+</script>
+<script src="/fabric.js?v=c85b9df8" defer></script>
+</body>
+</html>

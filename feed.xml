@@ -9,6 +9,132 @@
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
   <entry>
+    <title>Why Blackbox Testing Always Wins</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/d5d0f8.html"/>
+    <id>https://nehem.dev/d5d0f8.html</id>
+    <published>2026-11-08T00:00:00+10:00</published>
+    <updated>2026-11-08T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Blackbox tests check what the product does, not how it's built. With AI agents writing them, a thousand real user journeys is now months of work, not years.</summary>
+    <category term="AI"/><category term="Testing"/><category term="Software Engineering"/><category term="AI Agents"/>
+    <content type="html">&lt;p&gt;Ever since LLMs arrived, there's one thing they've always been terrifyingly good at:&lt;/p&gt;
+&lt;p&gt;Writing tests.&lt;/p&gt;
+&lt;p&gt;Not the crap unit tests that mock everything, test nothing real and burn CI minutes on every push. I'm talking about blackbox tests. Tests that don't care &lt;em&gt;how&lt;/em&gt; the system is implemented. Tests that care &lt;em&gt;what&lt;/em&gt; the system does.&lt;/p&gt;
+&lt;p&gt;Input goes in. Output comes out. Does it match? That's it.&lt;/p&gt;
+&lt;p&gt;No mocking of your own services. No internal wiring. No "this test broke because someone renamed a private method."&lt;/p&gt;
+&lt;p&gt;This post is my case for why that kind of test wins, how I get AI agents to write hundreds of them, and the honest small print that makes the difference between a suite you trust and a suite everyone learns to ignore.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/d5d0f8/hero.svg" alt="Two rows of the same journey, log in, get token, call /me, right user back, both passing. Under the first, hidden from the test, one Django app and Postgres. Under the second, an auth service, a token service, a profile API and a new database. The test only touches the journey, so it survives." width="960" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same journey, new insides. The test only sees what a user sees, so it survives the rewrite underneath.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;What I mean by blackbox&lt;/h2&gt;
+&lt;p&gt;A blackbox test talks to the system the way a user or a client does: through its public API, its UI or its device protocol. It knows the contract. It doesn't know the code.&lt;/p&gt;
+&lt;p&gt;That's a slightly different thing from "end-to-end". An end-to-end test is about &lt;em&gt;scope&lt;/em&gt;, the whole chain from the front door to the database and back. Blackbox is about &lt;em&gt;knowledge&lt;/em&gt;, what the test is allowed to know. Most of my tests are both: they drive a whole journey, and they only use what's visible from outside. But you can have a blackbox test of a single service, and you can have a so-called end-to-end test that peeks into tables and mocks half the world. The second one is not what I'm talking about.&lt;/p&gt;
+&lt;p&gt;The thing a blackbox test protects is a &lt;strong&gt;behavioural contract&lt;/strong&gt;: given this user, in this state, doing this, the system responds with that. Those contracts are what your customers actually depend on. Nobody has ever filed a support ticket about a private method.&lt;/p&gt;
+&lt;h2&gt;Four journeys, four tests&lt;/h2&gt;
+&lt;p&gt;Here's what I do. I point an AI agent at a real user journey and say: write a test for this. End to end. Realistic data. Realistic environment. Test the outcome, not the implementation.&lt;/p&gt;
+&lt;p&gt;Some examples of the kind of journeys I mean:&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;A user authenticates.&lt;/strong&gt; Gets a token. The token works on the next call. That's a test.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;A user enters credentials.&lt;/strong&gt; The 2FA screen is shown. A code is entered. The welcome screen appears. That's a test.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;A customer buys an episode.&lt;/strong&gt; An entitlement is created. The episode plays. The purchase appears in billing. That's a test.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;An admin changes a plan.&lt;/strong&gt; The change propagates to the device. The device sees the new channels. That's a test.&lt;/p&gt;
+&lt;p&gt;Not one assertion. An entire journey, step by step, the way a real human uses the system.&lt;/p&gt;
+&lt;p&gt;The purchase one is my favourite, because it crosses every layer that tends to break quietly.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/d5d0f8/purchase-chain.svg" alt="Four hops in a row: buy episode at the store API, entitlement in the rights service, playback through the player and CDN, billing in the ledger. Under each, the assertions: order id and price, entitlement for the right user and episode, a working stream, one charge of the correct amount." width="960" height="520" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;One purchase crosses four layers. A journey test asserts at every hop, not just the first status code.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;A unit test might tell you that the purchase handler returns 201. Lovely. It won't tell you that the entitlement never got written because an event was dropped, or that the stream URL comes back 403 for this region, or that billing charged twice because a retry wasn't idempotent. Each of those has its own unit tests, and each of those unit tests passes. The customer still can't watch their episode.&lt;/p&gt;
+&lt;h2&gt;Assertions are the whole game&lt;/h2&gt;
+&lt;p&gt;Here's where a lot of "end-to-end" suites go wrong: they drive the whole journey and then assert almost nothing. &lt;code&gt;assert response.status_code == 200&lt;/code&gt; is not a test of a product. It's a test that the server didn't crash.&lt;/p&gt;
+&lt;p&gt;A good blackbox assertion is about an outcome a person would notice:&lt;/p&gt;
+&lt;p&gt;→ The token works on the &lt;em&gt;next&lt;/em&gt; call, for &lt;em&gt;this&lt;/em&gt; user, and not for another one.&lt;/p&gt;
+&lt;p&gt;→ The welcome screen shows &lt;em&gt;this&lt;/em&gt; user's name.&lt;/p&gt;
+&lt;p&gt;→ Billing has exactly &lt;em&gt;one&lt;/em&gt; charge, for the right amount, in the right currency.&lt;/p&gt;
+&lt;p&gt;→ After cancelling, the device &lt;em&gt;stops&lt;/em&gt; seeing the channel.&lt;/p&gt;
+&lt;p&gt;The negative ones matter as much as the positive ones. A plan downgrade that adds the new channels but forgets to remove the old ones passes a lazy test and fails a real one.&lt;/p&gt;
+&lt;p&gt;My unit-test-versus-blackbox line is this: a unit test says "the add_to_cart function returns 200". A blackbox test says "a customer in Melbourne with a prepaid card can buy a subscription, see it on their device, get charged correctly, and cancel without calling support."&lt;/p&gt;
+&lt;p&gt;Which one do you trust more?&lt;/p&gt;
+&lt;h2&gt;Here's roughly what one looks like&lt;/h2&gt;
+&lt;p&gt;This is an illustrative example, not code from any real system, but it shows the shape. It's plain Python and &lt;code&gt;pytest&lt;/code&gt;, talking to a staging API over HTTP. Nothing is imported from the application.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;uuid&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;tests.journeys.client&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Api&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;poll_until&lt;/span&gt;  &lt;span class="c1"&gt;# thin HTTP helpers, no app imports&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;test_customer_buys_episode_and_can_watch_it&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Api&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sandbox_card&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c1"&gt;# realistic, unique, disposable customer for this run only&lt;/span&gt;
+    &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"journey+&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uuid4&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;@example.test"&lt;/span&gt;
+    &lt;span class="n"&gt;customer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;signup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;city&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"Melbourne"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;card&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;sandbox_card&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"prepaid"&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="n"&gt;order&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;buy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;episode_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"S01E03"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;"paid"&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;amount&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;price_of&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"S01E03"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# entitlement is written asynchronously: wait for it, with a hard limit&lt;/span&gt;
+    &lt;span class="n"&gt;poll_until&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;can_play&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"S01E03"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;timeout_s&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;stream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;play&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"S01E03"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;http_status&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;manifest_has_segments&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;charges&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;customer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;billing_history&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reference&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;charges&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;  &lt;span class="c1"&gt;# exactly one charge&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Read it top to bottom and you know what the product promises. That's not an accident. I'll come back to it.&lt;/p&gt;
+&lt;h2&gt;Determinism is designed, not hoped for&lt;/h2&gt;
+&lt;p&gt;The biggest reason people distrust journey tests is that they've seen bad ones. Tests that pass on Tuesday and fail on Wednesday. Tests that only work if run in a particular order. The fix isn't to write fewer of them. It's to build them properly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Fixtures.&lt;/strong&gt; Every test creates its own data: its own user, its own account, its own order. Synthetic but realistic: real-looking names, real postcodes, real plan combinations, card types that exist. Never real customer data. A test that depends on "the demo user" will eventually fight another test over it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Setup and teardown.&lt;/strong&gt; Whatever a test creates, it cleans up, or it creates it in a namespace that gets thrown away. Leftover data from the last run is one of the most common sources of mysterious failures.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Payments.&lt;/strong&gt; Always sandbox. Test cards, a payment provider's test mode, a ledger that can't move real money. Nobody should get a real charge because a test ran.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Waiting.&lt;/strong&gt; Modern systems are eventually consistent. Entitlements are written by a consumer, plans propagate through a cache, a device picks up changes on its next sync. The wrong answer is &lt;code&gt;sleep(5)&lt;/code&gt;. That's too slow when the system is fast and too short when it's slow. The right answer is to poll for the outcome with a bounded timeout, like &lt;code&gt;poll_until&lt;/code&gt; above, and fail with a clear message if the deadline passes. "Eventually" must still have a deadline, otherwise you're not testing a promise.&lt;/p&gt;
+&lt;h2&gt;The three objections&lt;/h2&gt;
+&lt;p&gt;There are three objections I hear every time.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;"It's slow."&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Run them in parallel. Massively parallel. If the journeys are independent, every worker gets its own users and its own data, and a few hundred tests across tens of workers finish in minutes rather than hours.&lt;/p&gt;
+&lt;p&gt;The honest small print is that parallelism has a ceiling, and it's usually not the number of workers.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/d5d0f8/parallel-workers.svg" alt="A suite queue fans out to many workers, each with its own user, data and namespace. All of them funnel back into shared dependencies: a shared test database, an auth rate limit, a payment sandbox and one slow service, which set the real clock." width="960" height="560" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Workers scale out. Shared dependencies don't. Your suite time is the slowest journey plus whatever everyone queues on.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Fifty workers all logging in at once will find your auth rate limit. They'll find the one small staging database, the payment sandbox's request limit, the service everyone calls that only has one replica. Suite time ends up being roughly the slowest journey plus the queueing at whatever is shared. So the work is: make tests independent, give the environment enough capacity, and treat a sudden slowdown as information about your system, not just a CI annoyance.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;"It's flaky."&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A flaky test is a signal, not a nuisance. Often it's telling you the product isn't behaving deterministically: a race between two writes, a retry that double-charges, an event lost under load, a cache serving a stale plan. Those are product bugs, and some of them are exactly the bugs your customers hit once in a hundred times and you can never reproduce. Fix the product.&lt;/p&gt;
+&lt;p&gt;But I want to be precise here, because "every flaky test is a product bug" isn't true, and believing it wastes days.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/d5d0f8/flaky-fork.svg" alt="A flaky test forks two ways. The product: a race between writes, a retry that double-charges, a lost event, a stale cache, so fix the product. The harness or environment: sleeps instead of polling, shared users, leftover data, a staging dependency down, so fix the test or environment." width="960" height="560" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;A flaky test is always a signal. Find out which branch it's on before you blame the product or the test.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Flakiness can also come from the test harness (a sleep instead of polling, two tests sharing a user, an order dependency) or from the environment (a staging dependency that's down, a noisy neighbour, a clock that's off). The discipline is to find out which branch you're on. Rerun with request ids, timings and logs. If it's the product, fix the product. If it's the test or the environment, fix that, properly, not by adding a retry that hides both.&lt;/p&gt;
+&lt;p&gt;What makes outcome-based tests stable is that they aren't coupled to incidental details. If the login journey returns a valid token, it doesn't matter which microservice generated it or which database it hit. The outcome stays the same when the internals change.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;"It's hard to write."&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It was. Before LLMs.&lt;/p&gt;
+&lt;h2&gt;Where the AI comes in&lt;/h2&gt;
+&lt;p&gt;Now you describe the journey in plain English and the agent writes the test. With realistic data. With proper assertions. With setup and teardown. You review it, tune it and add it to the suite.&lt;/p&gt;
+&lt;p&gt;The review is not optional, and it's where my time actually goes.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/d5d0f8/ai-review-loop.svg" alt="A loop: journey in plain English, agent drafts the test, human review, run against a real environment, evidence with ids, logs and diffs, then back to the journey. In the middle the review asks: does it assert the outcome, or just echo the code, and would it fail if the product were broken?" width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The AI writes it. You decide if it's true. Review asks one question: would this fail if the product were broken?&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;The main failure mode of an AI-written test is that it parrots the implementation. If you let the agent read the code first, it will happily write a test that asserts whatever the code currently does, bugs included. So I give it the journey and the public contract, not the internals. Then I review with a few questions:&lt;/p&gt;
+&lt;p&gt;→ Does it assert the outcome a user would notice, or just a status code?&lt;/p&gt;
+&lt;p&gt;→ Would it fail if the product were broken? (The quickest check: break it on purpose, and watch the test go red.)&lt;/p&gt;
+&lt;p&gt;→ Is the data realistic, unique and cleaned up?&lt;/p&gt;
+&lt;p&gt;→ Does it wait for outcomes with a deadline, or with sleeps?&lt;/p&gt;
+&lt;p&gt;Then it runs against a real environment, and the evidence comes back: pass or fail, with ids, logs and diffs I can actually act on. That loop is fast enough that the bottleneck stops being typing tests and becomes knowing which journeys matter.&lt;/p&gt;
+&lt;p&gt;For me, that went from "we should write more integration tests" to "we have about a thousand blackbox tests" in months. Not years. That's my own experience on my own projects, not a benchmark, and your mileage will depend on how testable your environment is. But the shift in what's practical is real.&lt;/p&gt;
+&lt;h2&gt;The suite is the spec&lt;/h2&gt;
+&lt;p&gt;Here's the part that will really cook your brain: these tests double as documentation.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/d5d0f8/living-spec.svg" alt="A short illustrative test: a prepaid customer in Melbourne subscribes to Sports, the device sees it, billing shows one charge, they cancel, the device no longer sees it, no support tickets. Arrows: a new developer reads what the product does, and CI checks it is still true every deploy." width="960" height="500" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;A suite that reads like a spec, and proves itself on every deploy.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Read a blackbox test and you know exactly what the system does. Not what the code says. What the system actually does when a real user touches it.&lt;/p&gt;
+&lt;p&gt;New developer joins the team? Don't just give them a wiki. Give them the test suite. Every user journey, spelled out, with realistic data, verified against a real environment. Unlike the wiki, it can't silently go out of date, because the day it stops being true, CI goes red.&lt;/p&gt;
+&lt;p&gt;That's not a test suite. That's a living specification.&lt;/p&gt;
+&lt;h2&gt;What happens when you refactor&lt;/h2&gt;
+&lt;p&gt;Internal refactors stop breaking tests.&lt;/p&gt;
+&lt;p&gt;Because the tests don't know about the internals, they don't care that you rewrote the payment module from scratch. They care that the customer can still buy things and get charged correctly. Rewrite modules, swap databases, split a monolith into services: if the outcomes still match, you're good.&lt;/p&gt;
+&lt;p&gt;The one caveat worth saying out loud: if a refactor changes something users can see, a response field, an error message, a timing a device depends on, the blackbox suite &lt;em&gt;will&lt;/em&gt; break. That's not a weakness. That's the suite doing its job, telling you that your "internal" change wasn't internal.&lt;/p&gt;
+&lt;p&gt;Try getting that signal from 3,000 unit tests coupled to internal method signatures. I'll wait.&lt;/p&gt;
+&lt;h2&gt;Where unit tests still belong&lt;/h2&gt;
+&lt;p&gt;I'm deliberately provocative about unit tests, so let me be fair to them. A pure function that calculates GST, parses a date format or rounds a currency amount has dozens of edge cases, and a unit test is the fastest, cheapest place to pin them down. I still write those.&lt;/p&gt;
+&lt;p&gt;What I don't write any more is the mock-everything kind: tests that stub out the database, the queue and three of my own services, then assert that a function called another function. Those tests break on every refactor and pass through every real outage. They measure the wrong thing.&lt;/p&gt;
+&lt;p&gt;The balance I've landed on: unit tests for logic with many edge cases, blackbox tests for every journey a user or client depends on. When I have to choose where to spend effort, the journeys win.&lt;/p&gt;
+&lt;h2&gt;Start today&lt;/h2&gt;
+&lt;p&gt;Every blackbox test you don't write is a user journey you're not protecting.&lt;/p&gt;
+&lt;p&gt;Every journey you're not protecting is a production incident waiting to happen.&lt;/p&gt;
+&lt;p&gt;Every production incident is a week of your life you're not getting back.&lt;/p&gt;
+&lt;p&gt;If you're relying on unit tests and manual QA alone to tell you the product works, you're flying with instruments that measure the wrong thing.&lt;/p&gt;
+&lt;p&gt;Stop testing how the code works. Start testing what the system does.&lt;/p&gt;
+&lt;p&gt;Pick your five most important user journeys. Describe each one in plain English. Hand them to an agent, review what it writes against the questions above, and run them on every deploy. Not next sprint. Not next quarter. Today.&lt;/p&gt;
+&lt;p&gt;The AI will write the tests. You just need to describe the journeys.&lt;/p&gt;
+&lt;p&gt;What's stopping you?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;All drawings and code here are illustrative, not taken from any production system.&lt;/em&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <title>Nobody Builds a Road to Nowhere</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/b3667c.html"/>
     <id>https://nehem.dev/b3667c.html</id>
