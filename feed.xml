@@ -5,9 +5,145 @@
   <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
   <id>https://nehem.dev/writing/</id>
-  <updated>2026-11-08T00:00:00+10:00</updated>
+  <updated>2026-11-12T00:00:00+10:00</updated>
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
+  <entry>
+    <title>Mise en Place for Developers</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/4d6cd9.html"/>
+    <id>https://nehem.dev/4d6cd9.html</id>
+    <published>2026-11-12T00:00:00+10:00</published>
+    <updated>2026-11-12T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>Fast developers don't type faster. They never stop to fix their environment mid-problem. Mise en place for developers: one flow, one command, no walking.</summary>
+    <category term="Developer Productivity"/><category term="Software Engineering"/><category term="DevOps"/><category term="Docker"/>
+    <content type="html">&lt;p&gt;Treat your dev environment like a chef treats his kitchen.&lt;/p&gt;
+&lt;p&gt;A great chef doesn't cook faster by being more talented. He cooks faster because everything is already in place before the first flame is lit.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Mise en place.&lt;/em&gt; Everything in its place.&lt;/p&gt;
+&lt;p&gt;Knives sharpened. Ingredients prepped. Pans in reach. Spices lined up in order. The cutting board is clean before the next vegetable hits it.&lt;/p&gt;
+&lt;p&gt;A chef who has to stop mid-service to find the salt, wash a pan, or figure out which burner works is not a slow chef. He's a chef with a bad kitchen.&lt;/p&gt;
+&lt;p&gt;This post is about the developer version of that kitchen: what "walking" looks like in software, the setup I built to stop doing it, and the small daily habits that keep it from rotting.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4d6cd9/hero.svg" alt="Two lines drawn one above the other. The kitchen: refrigerator, prep station, mini sink, burner, plating, main sink, every arrow pointing the same way. The dev environment: ticket, codebase, local stack, gather evidence, fix, tests, PR, also flowing one way. Same shape, same rule: never double back." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;One direction, two kitchens. The stations are different, the rule is the same: never double back.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Minimise walking&lt;/h2&gt;
+&lt;p&gt;The best kitchens in the world are designed around one principle:&lt;/p&gt;
+&lt;p&gt;Minimise walking.&lt;/p&gt;
+&lt;p&gt;Think about a professionally designed kitchen. It flows in one direction:&lt;/p&gt;
+&lt;p&gt;Refrigerator → Prep station → Mini sink → Burner → Plating → Main sink.&lt;/p&gt;
+&lt;p&gt;You start at the fridge, pull what you need, move to the prep station right next to it, wash at the built-in sink, cook on the burner beside it, plate, and clean up at the end. You never double back. You never cross the room to find something. Every station is exactly where you need it, exactly when you need it.&lt;/p&gt;
+&lt;p&gt;That mini sink is my favourite detail. Somebody looked at a cook walking to the main sink twenty times a service, just to rinse herbs, and decided that walk was worth a whole extra piece of plumbing. That's the mindset. Not "how do I move faster between stations?" but "why is this station so far away?"&lt;/p&gt;
+&lt;p&gt;The enemy of speed in a kitchen is not slow hands. It's walking.&lt;/p&gt;
+&lt;h2&gt;In software, walking is context switching&lt;/h2&gt;
+&lt;p&gt;Every time you leave your editor to find a credential, that's walking. Every time you open a browser to check a dashboard that should be in your terminal, that's walking. Every time you SSH into a box to check something your local environment should already have, that's walking. Every time you alt-tab through nine windows to find the one with the error log, that's walking.&lt;/p&gt;
+&lt;p&gt;None of those trips is long. That's exactly why we don't notice them. Thirty seconds to find a password. A minute to remember which tab had the Grafana panel. Two minutes to get onto the bastion because the VPN dropped. Each one feels too small to fix.&lt;/p&gt;
+&lt;p&gt;But the clock is not the real cost. The real cost is what you were holding in your head when you left. You were three steps into a hypothesis about why a webhook fired twice, and now you're reading a Slack thread from March looking for a connection string. By the time you're back in the editor, the hypothesis has gone cold. You re-read the code. You rebuild the picture. Then you walk again.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4d6cd9/walking.svg" alt="A messy kitchen seen from above: a cook's path loops from the stove to a far-off spice rack, back to the sink, across the room to a drawer and back again. Next to it the developer's version: from the editor out to Slack for a credential, to a browser dashboard, to an SSH session, through nine windows for a log, and back to the editor each time. Every loop is a walk." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Every loop back to the editor is a walk across the kitchen mid-service.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;One direction, one flow&lt;/h2&gt;
+&lt;p&gt;An optimally designed dev environment works like an optimally designed kitchen. One direction. One flow:&lt;/p&gt;
+&lt;p&gt;Ticket → Codebase → Local stack → Gather Evidence → Fix → Tests → PR&lt;/p&gt;
+&lt;p&gt;You read the ticket in context (not in a browser tab you have to find). Your editor already knows the repo. The local stack is running. Logs stream where you can see them. You fix, the tests run, the PR writes itself. No backtracking. No hunting. No friction.&lt;/p&gt;
+&lt;p&gt;Each station deserves its own design:&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Ticket.&lt;/strong&gt; The ticket shows up next to the code, not in a tab you have to go and find. I want to read the ticket and the codebase in the same field of view.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Codebase.&lt;/strong&gt; The editor already knows the repo: it's cloned, indexed, the virtualenv is active, the right Python version is the one that runs.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Local stack.&lt;/strong&gt; Already up. Not "I'll start it when I need it". If the stack is the burner, the burner is lit before service.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Gather evidence.&lt;/strong&gt; Logs, queries and metrics are a command away, in the terminal I'm already in. This is the station most setups forget, and it's where most of the walking happens.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Fix.&lt;/strong&gt; The only station that should take real thinking.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Tests.&lt;/strong&gt; They run locally against the same stack, with the same data shapes, and they're fast enough that I actually run them.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;PR.&lt;/strong&gt; The branch, the description and the evidence are already sitting there. The PR is plating, not cooking.&lt;/p&gt;
+&lt;p&gt;Every extra click, every extra tab, every "wait, where was that?" is walking across the kitchen mid-service.&lt;/p&gt;
+&lt;h2&gt;Look at your own kitchen&lt;/h2&gt;
+&lt;p&gt;Now look at your setup. How many times a day do you walk?&lt;/p&gt;
+&lt;p&gt;→ How long does it take you to go from "I just cloned the repo" to "I can run the app locally"?&lt;/p&gt;
+&lt;p&gt;→ When a production bug comes in, how many tabs do you open before you see your first log line?&lt;/p&gt;
+&lt;p&gt;→ How many times a week do you restart Docker because something got into a weird state?&lt;/p&gt;
+&lt;p&gt;→ How many credentials are you copy-pasting from Slack messages and sticky notes?&lt;/p&gt;
+&lt;p&gt;→ When was the last time your local stack matched production closely enough that a local repro actually meant something?&lt;/p&gt;
+&lt;p&gt;Be honest. Most dev environments are messy kitchens.&lt;/p&gt;
+&lt;p&gt;And we accept it. We work around it. We tell ourselves "it works on my machine" and move on. The new joiner spends their first week getting the app to boot, and we call that onboarding. The senior engineer has a private folder of scripts nobody else knows about, and we call that experience. It's neither. It's a kitchen where only one cook knows where the salt is.&lt;/p&gt;
+&lt;h2&gt;My dev environment is a product&lt;/h2&gt;
+&lt;p&gt;Here's what I did instead:&lt;/p&gt;
+&lt;p&gt;I treated my dev environment as a first-class product.&lt;/p&gt;
+&lt;p&gt;Not a side project. Not a "when I get time" thing. A product with requirements, maintenance and a definition of done.&lt;/p&gt;
+&lt;p&gt;Requirements means I wrote down what "working" means: the whole stack boots from cold with one command, a bug from production can be reproduced locally, a new person is productive on day one. Maintenance means it gets fixed when it breaks, the same way I'd fix a bug in the app, not worked around. Definition of done means a feature isn't finished until the local stack knows about it too.&lt;/p&gt;
+&lt;p&gt;Five things made the biggest difference.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. One command to bring up the entire local stack.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Databases, caches, queues, the API, the admin, the background workers. One command. If it takes more than one, automate it until it doesn't.&lt;/p&gt;
+&lt;p&gt;The command itself doesn't matter. &lt;code&gt;make up&lt;/code&gt;, &lt;code&gt;just up&lt;/code&gt;, a shell script, a Docker Compose profile. What matters is that it's the only thing anyone needs to remember, and that it works from a fresh clone. The README that says "first install these seven things, then run these four commands in this order, then if you see this error do that" is a recipe written for a chef who has time to read during service.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Dev data that matches production patterns.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Not empty databases. Not "test user 1, test user 2." Real-shaped data with real edge cases. When you reproduce a bug locally, you need to see the same shapes you'd see in prod.&lt;/p&gt;
+&lt;p&gt;Real-shaped doesn't mean real. Never copy customer data onto a laptop. It means the same &lt;em&gt;distributions&lt;/em&gt;: customers with ten years of history next to customers created yesterday, names with apostrophes and accents, accounts with a cancelled plan and a pending refund at the same time, the one tenant with forty thousand rows in a table everyone assumes is small. Those are the shapes production bugs hide in. An empty database can't reproduce anything except the happy path.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Credentials managed, not memorised.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Every connection string, every API key, every SSH tunnel in config. Not in your head. Not in a Slack thread from six months ago.&lt;/p&gt;
+&lt;p&gt;For a local stack that means a &lt;code&gt;.env&lt;/code&gt; the boot script generates or pulls from a secrets manager, never one you assemble by hand. For the real environments, it means a proper secret store and named tunnels in your SSH config, so "connect to the staging database" is one command and not an archaeology project. The test is simple: could a new developer get to every environment they're allowed to see without asking anyone for a password in a DM?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Local monitoring that mirrors production.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you debug with print statements locally but Grafana dashboards in prod, you're practising for a different sport than the one you play.&lt;/p&gt;
+&lt;p&gt;Run the same log format, the same structured fields, ideally the same dashboards against your local stack. When an incident comes in, you want your hands to already know where everything is. A chef doesn't use a different knife at home and a different one at work and expect the same cuts.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. A boot script that checks health.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Not just "did the containers start." Did the database accept connections? Is Redis reachable? Is Sentinel pointing to the right master? Did the background workers actually pick up the queue?&lt;/p&gt;
+&lt;p&gt;"Container is running" is the most misleading green light in software. A Postgres container can be running and still replaying its startup. A worker can be running and connected to the wrong broker. A Sentinel can be running and pointing at a master that no longer exists. The boot script's job isn't to start things. It's to prove they work, and to fail loudly, with the exact reason, when they don't.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4d6cd9/boot-health.svg" alt="A boot flow: one command starts the stack, then a chain of checks, each one a real question. Does Postgres accept a connection and answer a query? Does Redis answer PING? Does Sentinel name the right master? Did a worker pick up a test job from the queue? Each check either passes to the next or stops the boot with the exact reason. At the end: ready to cook." width="960" height="700" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;A boot script that proves the stack works, not one that just starts containers.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Here's roughly what that looks like. It's an illustrative sketch rather than my actual script, for a typical Django stack with Postgres, Redis behind Sentinel and Celery workers:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/usr/bin/env bash&lt;/span&gt;
+&lt;span class="c1"&gt;# up.sh: one command, from a fresh clone to a stack that's proven healthy&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-euo&lt;span class="w"&gt; &lt;/span&gt;pipefail
+
+fail&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"BOOT FAILED: &lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+wait_for&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# wait_for "&amp;lt;description&amp;gt;" &amp;lt;seconds&amp;gt; &amp;lt;command...&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;what&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;secs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;shift&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;_&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;seq&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$secs&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;/dev/null&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"ok  &lt;/span&gt;&lt;span class="nv"&gt;$what&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sleep&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;fail&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$what&lt;/span&gt;&lt;span class="s2"&gt; (gave up after &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;secs&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;s)"&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;up&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;--wait
+
+wait_for&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"postgres accepts queries"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;60&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-T&lt;span class="w"&gt; &lt;/span&gt;db&lt;span class="w"&gt; &lt;/span&gt;psql&lt;span class="w"&gt; &lt;/span&gt;-U&lt;span class="w"&gt; &lt;/span&gt;app&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;app&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"select 1"&lt;/span&gt;
+wait_for&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"redis answers PING"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;30&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-T&lt;span class="w"&gt; &lt;/span&gt;redis&lt;span class="w"&gt; &lt;/span&gt;redis-cli&lt;span class="w"&gt; &lt;/span&gt;ping
+wait_for&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"sentinel names the right master"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;30&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bash&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s1"&gt;'[ "$(docker compose exec -T sentinel redis-cli -p 26379 sentinel get-master-addr-by-name main | head -1)" = "redis" ]'&lt;/span&gt;
+
+docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-T&lt;span class="w"&gt; &lt;/span&gt;api&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;manage.py&lt;span class="w"&gt; &lt;/span&gt;migrate&lt;span class="w"&gt; &lt;/span&gt;--noinput
+docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-T&lt;span class="w"&gt; &lt;/span&gt;api&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;manage.py&lt;span class="w"&gt; &lt;/span&gt;seed_dev_data&lt;span class="w"&gt; &lt;/span&gt;--if-empty
+
+&lt;span class="c1"&gt;# the real test: a worker must actually pick up a job&lt;/span&gt;
+docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-T&lt;span class="w"&gt; &lt;/span&gt;api&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;manage.py&lt;span class="w"&gt; &lt;/span&gt;enqueue_healthcheck_job
+wait_for&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"worker picked up the healthcheck job"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;60&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;compose&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-T&lt;span class="w"&gt; &lt;/span&gt;api&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;manage.py&lt;span class="w"&gt; &lt;/span&gt;healthcheck_job_done
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"stack is ready: http://localhost:8000"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The details will differ for your stack. The pattern doesn't: every check asks a question a real request would ask, and the script refuses to say "ready" until all of them pass.&lt;/p&gt;
+&lt;p&gt;This isn't over-engineering. This is the engineering equivalent of a clean kitchen.&lt;/p&gt;
+&lt;h2&gt;A fast developer doesn't type fast&lt;/h2&gt;
+&lt;p&gt;Here's the part most people miss:&lt;/p&gt;
+&lt;p&gt;A fast developer isn't someone who types fast. A fast developer is someone who never has to stop and fix their environment in the middle of fixing the actual problem.&lt;/p&gt;
+&lt;p&gt;Every minute you spend fighting Docker, hunting for credentials, or wondering why your local stack doesn't match prod is a minute you're not spending on the work that matters.&lt;/p&gt;
+&lt;p&gt;And it compounds.&lt;/p&gt;
+&lt;p&gt;Five minutes of environment friction, ten times a day, fifty weeks a year. That's over 200 hours a year. Five full working weeks. Lost to a messy kitchen.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4d6cd9/compounding.svg" alt="Five minutes of friction, drawn as a small block. Ten blocks make a day: fifty minutes. Five days make a week: about four hours. Fifty weeks make a year: over two hundred hours, the same as five full working weeks, drawn as five long bars. Then the same stack repeated for every developer on the team." width="960" height="640" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Five minutes, ten times a day, fifty weeks a year. That's over 200 hours, five full working weeks.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Now multiply that by every developer on your team.&lt;/p&gt;
+&lt;p&gt;And the hours aren't even the whole story. The friction tends to land at the worst possible moments: in the middle of an incident, during a tricky debugging session, when someone new is trying to get their first change out. The cost of walking is highest exactly when your head is fullest.&lt;/p&gt;
+&lt;h2&gt;Clean as you go&lt;/h2&gt;
+&lt;p&gt;Here's another thing chefs know:&lt;/p&gt;
+&lt;p&gt;You clean as you go. Not at the end of the night.&lt;/p&gt;
+&lt;p&gt;A kitchen doesn't get messy in one go. It gets messy one unwiped board at a time. Dev environments rot the same way: one undocumented workaround, one service added to prod but not to the local stack, one config value someone tweaked on staging and never mentioned.&lt;/p&gt;
+&lt;p&gt;The dev equivalent:&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Container acting weird?&lt;/strong&gt; Fix it now. Don't restart and hope. A restart that "fixes" something hides a bug you'll meet again, usually at a worse time.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;New service added to the stack?&lt;/strong&gt; Update the boot script today. Not "when someone else needs it." The person who added it is the only one who knows what healthy looks like.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Config changed in prod?&lt;/strong&gt; Mirror it locally before you forget what changed. Drift between local and prod is how a local repro stops meaning anything.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Something took you 20 minutes to figure out?&lt;/strong&gt; Write it down in 2 minutes so it never costs 20 again. Better still, put it in the script so nobody has to read it.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/4d6cd9/clean-as-you-go.svg" alt="A small loop: something breaks or changes, fix it now, put the fix in the script or config, the kitchen stays clean, back to cooking. A dashed side path labelled restart and hope leads to a growing pile of dirty dishes, the debt you pay later, mid-service." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Clean as you go: every fix lands in the script, so the mess never piles up.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Discipline, not equipment&lt;/h2&gt;
+&lt;p&gt;The best kitchens in the world aren't impressive because of the equipment. They're impressive because of the discipline.&lt;/p&gt;
+&lt;p&gt;Same with dev environments.&lt;/p&gt;
+&lt;p&gt;You don't need a fancier laptop. You don't need more RAM. You don't need a new tool.&lt;/p&gt;
+&lt;p&gt;I've watched people buy their way out of this problem: a faster machine, a new terminal, a shiny dev-container product. Sometimes those help. But a fast laptop running a stack that needs eleven manual steps is still a messy kitchen, just with better lighting. The win comes from deciding the environment is your job, and keeping it that way every single day.&lt;/p&gt;
+&lt;p&gt;This matters even more now that a lot of my work runs through AI agents. An agent dropped into a messy kitchen walks just as much as a human, it just walks faster and gets lost more confidently. Give it one command to boot, health checks that say what's wrong, and logs in the terminal, and it can go from ticket to PR without asking me where the salt is.&lt;/p&gt;
+&lt;p&gt;You need everything in its place, ready to go, before the ticket lands.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Mise en place.&lt;/em&gt; For developers.&lt;/p&gt;
+&lt;p&gt;How long does your local stack take to boot from cold? Be honest.&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Why Blackbox Testing Always Wins</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/d5d0f8.html"/>
