@@ -5,9 +5,97 @@
   <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
   <id>https://nehem.dev/writing/</id>
-  <updated>2026-11-12T00:00:00+10:00</updated>
+  <updated>2026-11-14T00:00:00+10:00</updated>
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
+  <entry>
+    <title>The Best Engineers I Know Are Lazy</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/7837ff.html"/>
+    <id>https://nehem.dev/7837ff.html</id>
+    <published>2026-11-14T00:00:00+10:00</published>
+    <updated>2026-11-14T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>The best engineers refuse to do the same thing twice. Manual once, automated twice, runs itself the third time. Why compounded laziness wins, especially with AI.</summary>
+    <category term="Developer Productivity"/><category term="Automation"/><category term="AI"/><category term="Software Engineering"/>
+    <content type="html">&lt;p&gt;The best engineers I know are lazy.&lt;/p&gt;
+&lt;p&gt;Not lazy as in they don't work hard. Lazy as in they refuse to do the same thing twice.&lt;/p&gt;
+&lt;p&gt;The first time, they do it manually. Fine. You have to learn the shape of the problem.&lt;/p&gt;
+&lt;p&gt;The second time, they automate it.&lt;/p&gt;
+&lt;p&gt;The third time, it runs itself.&lt;/p&gt;
+&lt;p&gt;I've been watching this pattern my entire career and it's the single most reliable predictor of who becomes a 10x engineer.&lt;/p&gt;
+&lt;p&gt;It's not typing speed. It's not knowing more languages. It's not working weekends.&lt;/p&gt;
+&lt;p&gt;It's an allergic reaction to repetition.&lt;/p&gt;
+&lt;p&gt;This post is about that allergy: what it looks like day to day, why my whole AI setup is really just a pile of it, the maths that makes it worth it, and why it matters more now that we have agents than it ever did before.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7837ff/hero.svg" alt="A staircase of three steps. On the first, a person does the task by hand and learns the shape of the problem. On the second, they write it down as a script. On the third, the script runs on its own, triggered by a hook or a schedule, while the person has walked off to the next problem." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;First time manual, second time automated, third time it runs itself.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Three times, three different jobs&lt;/h2&gt;
+&lt;p&gt;Each of those three times is doing a different job, and skipping any of them is a mistake.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The first time is research.&lt;/strong&gt; You do it by hand because you don't know the problem yet. Which server? Which flags? What does "healthy" actually look like on that dashboard? What breaks if you get the order wrong? People who automate on the first pass usually automate the wrong thing, because they're guessing at a shape they haven't seen. Doing it once, slowly, with your own hands, is how you find out what the task really is.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The second time is recognition.&lt;/strong&gt; This is the moment that separates the lazy engineer from everybody else. Most people do the task a second time and feel nothing. The lazy engineer does it a second time and feels an itch: &lt;em&gt;I've been here before.&lt;/em&gt; That itch is the whole skill. The second time, they write it down, not in a wiki, in something that can run.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The third time is the payoff.&lt;/strong&gt; The third time it isn't "run my script", it's that the script runs itself. It's wired into a hook, a schedule, a deploy pipeline, an agent workflow. The engineer doesn't even have to remember it exists. That's the difference between a tool and infrastructure: you use a tool, infrastructure just happens.&lt;/p&gt;
+&lt;h2&gt;The allergy, in practice&lt;/h2&gt;
+&lt;p&gt;Here's what the allergy looks like in a normal week.&lt;/p&gt;
+&lt;p&gt;→ Typed the same SSH command three days in a row? Now it's a shell function.&lt;/p&gt;
+&lt;p&gt;→ Manually checked the same five dashboards after every deploy? Now it's a health check script.&lt;/p&gt;
+&lt;p&gt;→ Copied credentials from a Slack thread for the third time? Now they're in config.&lt;/p&gt;
+&lt;p&gt;→ Wrote the same PR description structure again? Now the agent writes it.&lt;/p&gt;
+&lt;p&gt;→ Investigated a bug the same way you investigated the last one? Now there's a workflow for it.&lt;/p&gt;
+&lt;p&gt;None of these are impressive on their own. A shell function is three lines. A health check is a loop over some URLs. That's exactly the point. The allergy isn't triggered by big painful problems, everyone fixes those. It's triggered by small ones. The ones everybody else has decided are just part of the job.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7837ff/allergy.svg" alt="Five small repeated chores, each drawn as a stack of the same card copied three times: an SSH command, five dashboards after a deploy, credentials from a Slack thread, a PR description, a bug investigation. Each stack passes through the sentence I'm not doing this again and comes out as one thing: a shell function, a health check script, config, an agent, a workflow." width="960" height="640" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The allergy: the same task, a third time, turns into something that runs.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;The SSH one is my favourite because it's so small. It's literally this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# ~/.bashrc: written the third morning I typed the same thing&lt;/span&gt;
+stg&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;ssh&lt;span class="w"&gt; &lt;/span&gt;-t&lt;span class="w"&gt; &lt;/span&gt;staging-bastion&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"cd /srv/app &amp;amp;&amp;amp; exec bash -l"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+logs&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;ssh&lt;span class="w"&gt; &lt;/span&gt;staging-bastion&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"journalctl -u app -n &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;200&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; --no-pager"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Ugly. Undocumented. Saves me a few seconds and, more importantly, a tiny bit of remembering, every single day. Multiply that by a hundred little things and you get an environment that feels like it reads your mind.&lt;/p&gt;
+&lt;h2&gt;My AI setup is accumulated laziness&lt;/h2&gt;
+&lt;p&gt;Every shortcut I've built, every steering file, every hook, every agentic workflow exists for one reason:&lt;/p&gt;
+&lt;p&gt;I got tired of doing it by hand.&lt;/p&gt;
+&lt;p&gt;My entire AI setup is just accumulated laziness turned into infrastructure.&lt;/p&gt;
+&lt;p&gt;The MCP integrations connecting Jira, GitLab, Grafana, Slack? Laziness. I got tired of switching tabs. The agent can read the ticket, look at the merge request, pull the panel and check the incident channel itself, instead of me being the human copy-paste layer between four browser tabs.&lt;/p&gt;
+&lt;p&gt;The steering files that tell the agent how this codebase works? Laziness. I got tired of re-explaining context. How the services fit together, where the tests live, which patterns we use and which we've banned, how to run things locally. Explaining it once in a file beats explaining it in every conversation.&lt;/p&gt;
+&lt;p&gt;The hooks that block bad patterns before they reach a commit? Laziness. I got tired of catching them in review. If I've left the same review comment three times, it shouldn't be a comment any more. It should be a check that runs before anyone, human or agent, can commit it.&lt;/p&gt;
+&lt;p&gt;The workflow that takes a ticket from investigation to PR? Laziness. I got tired of doing each step manually. Read the ticket, gather evidence from logs and metrics, reproduce, fix, test, write the PR. Every step was something I'd done by hand dozens of times before it became a workflow.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7837ff/ai-setup.svg" alt="A cross-section of rock strata, oldest at the bottom. Shell functions and aliases. Config instead of credentials in Slack. MCP integrations for Jira, GitLab, Grafana and Slack. Steering files that explain the codebase. Hooks that block bad patterns. On top, the ticket to PR workflow. Each layer is labelled with the thing I got tired of." width="960" height="640" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;My AI setup, in cross-section: every layer is a thing I got tired of doing by hand.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;None of this was a grand plan. It was a series of small refusals.&lt;/p&gt;
+&lt;p&gt;"I'm not doing this again."&lt;/p&gt;
+&lt;p&gt;That sentence, repeated enough times, builds systems.&lt;/p&gt;
+&lt;p&gt;I think that's worth saying because people look at a mature agentic setup and assume it came from a design document. Mine didn't. Nobody sat down and architected it. Each layer was a reaction to a specific Tuesday afternoon when I caught myself doing something for the third time.&lt;/p&gt;
+&lt;h2&gt;The maths of a five-minute function&lt;/h2&gt;
+&lt;p&gt;Here's the thing nobody tells you about automation:&lt;/p&gt;
+&lt;p&gt;It doesn't save time the day you build it. It saves time every day after.&lt;/p&gt;
+&lt;p&gt;A shell function takes 5 minutes to write. It saves 2 minutes a day. In a month, you've saved an hour. In a year, you've saved days.&lt;/p&gt;
+&lt;p&gt;On build day you're behind. You spent five minutes and saved two. By the third day you're ahead, and you stay ahead for as long as the function exists. Nothing else you do at work has a return like that, and it's just sitting there in the boring corners of your day.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7837ff/payoff.svg" alt="A line chart of time saved by one shell function. It starts below zero on build day, five minutes spent. It climbs two minutes a day, crosses zero within the first few days, reaches about an hour after a month and keeps climbing to days by the end of the year. A note: the friction of remembering is not on this chart." width="960" height="580" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;It doesn't save time the day you build it. It saves time every day after.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;And that's one function. The lazy engineer doesn't have one. They have dozens, each paying out a couple of minutes a day, every day, for years.&lt;/p&gt;
+&lt;p&gt;The chart also leaves out the most important thing.&lt;/p&gt;
+&lt;h2&gt;The hidden cost is context load&lt;/h2&gt;
+&lt;p&gt;And you've also saved something that doesn't show up on a timesheet: the mental friction of remembering how to do it.&lt;/p&gt;
+&lt;p&gt;Because that's the hidden cost of manual work. It's not just the minutes. It's the context load. Every manual step is a thing you have to remember, a thing you can get wrong, a thing that lives in your head instead of in code.&lt;/p&gt;
+&lt;p&gt;Your head has limited room. Every "remember to run the migration before the seed", every "the staging box needs the other key", every "check the queue depth after deploy, but only on Mondays when the batch runs" is taking up space that should be holding the actual problem. When you're in the middle of an incident at the end of a long day, that's exactly when one of those half-remembered steps gets skipped.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7837ff/context-load.svg" alt="Two heads side by side. The first is crowded with half-remembered steps: run the migration first, which key for staging, check five dashboards, the PR template, how we debugged this last time. The second head has room for one thing, the actual problem, while the steps sit outside it in a small script that never forgets." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Every manual step lives in your head. Every automated one lives in code.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Automated things don't forget. They don't get tired. They don't skip steps on a Friday afternoon.&lt;/p&gt;
+&lt;h2&gt;Ugly scripts, compounded&lt;/h2&gt;
+&lt;p&gt;The most productive developers I've worked with all share this trait. Their environments are full of small, ugly, undocumented scripts that solve exactly one problem each. They didn't build them for anyone else. They built them because doing it manually one more time felt physically painful.&lt;/p&gt;
+&lt;p&gt;I want to defend the ugly part. The urge to make every helper beautiful, generic and documented is often what stops people writing them at all. A script that solves one problem for one person is allowed to be ugly. If it turns out other people need it, &lt;em&gt;that's&lt;/em&gt; when it graduates into the repo, gets a test and a README. Most never need to.&lt;/p&gt;
+&lt;p&gt;And over the years, those ugly scripts add up to something that looks, from the outside, like superhuman productivity.&lt;/p&gt;
+&lt;p&gt;It's not. It's just compounded laziness.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/7837ff/compounding.svg" alt="From a distance, the outline of a giant figure striding forward, labelled superhuman productivity. Up close, the figure is made of dozens of tiny, scruffy boxes, each one a small script: stg, logs, deploy-check, seed, pr-desc, tail-errors, and many more." width="960" height="640" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;From the outside it looks superhuman. Up close it's a hundred small, ugly scripts.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;A lazy person for a hard job&lt;/h2&gt;
+&lt;p&gt;There's a quote I think about often:&lt;/p&gt;
+&lt;p&gt;"I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it."&lt;/p&gt;
+&lt;p&gt;That's not about cutting corners. That's about refusing to accept friction as permanent.&lt;/p&gt;
+&lt;p&gt;There's a version of laziness that really is a problem: skipping the tests, not reading the error, shipping it and hoping. That's not what I mean. Cutting corners leaves the friction where it is and hides it. The good kind of laziness goes after the friction itself and removes it, so that the right way becomes the easy way. A hook that blocks a bad pattern is lazy. It's also the most disciplined thing in the repo.&lt;/p&gt;
+&lt;h2&gt;The laziest tool we've ever had&lt;/h2&gt;
+&lt;p&gt;The engineers who will thrive in the AI era are the same ones who thrived before it. The lazy ones. The ones who see repetition and feel an itch they can't ignore.&lt;/p&gt;
+&lt;p&gt;AI agents are just the most powerful laziness tool we've ever been given.&lt;/p&gt;
+&lt;p&gt;Before agents, the allergy had a ceiling. You could automate the mechanical stuff, the commands and checks and templates, but anything that needed judgement stayed manual. Investigating a bug, writing a PR description, working out which logs matter, those were "you have to do it yourself" jobs.&lt;/p&gt;
+&lt;p&gt;That ceiling is gone. Now the same reflex applies to judgement-shaped work. Did the same kind of investigation twice? Write it down as a workflow and let the agent run it. Explained the codebase twice? Put it in a steering file. Gave the same review feedback twice? Make it a hook the agent has to pass.&lt;/p&gt;
+&lt;p&gt;The people who get the most out of agents won't be the ones who type the cleverest prompts. They'll be the ones who keep noticing what they're doing for the third time, and never do it a fourth.&lt;/p&gt;
+&lt;p&gt;The gap between a productive engineer and an unproductive one has never been about effort.&lt;/p&gt;
+&lt;p&gt;It's about what they refuse to do twice.&lt;/p&gt;
+&lt;p&gt;So here's a small challenge for this week: next time you catch yourself doing something for the third time, stop, and spend the five minutes.&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Mise en Place for Developers</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/4d6cd9.html"/>
