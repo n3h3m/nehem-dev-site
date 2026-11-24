@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing code is no longer the bottleneck — Nehemiah Jacob</title>
+<meta name="description" content="AI agents write code faster than ever. The bottleneck has moved to review, verification and judgement, and that&#39;s where engineers now earn their keep.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/f06970.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/f06970.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/f06970.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Writing code is no longer the bottleneck">
+<meta property="og:description" content="AI agents write code faster than ever. The bottleneck has moved to review, verification and judgement, and that&#39;s where engineers now earn their keep.">
+<meta property="og:url" content="https://nehem.dev/f06970.html">
+<meta property="og:image" content="https://nehem.dev/og/f06970.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Writing code is no longer the bottleneck — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-11-25"><meta property="article:modified_time" content="2026-11-25"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="AI"><meta property="article:tag" content="Agentic Development"><meta property="article:tag" content="Code Review"><meta property="article:tag" content="Software Engineering"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Writing code is no longer the bottleneck">
+<meta name="twitter:description" content="AI agents write code faster than ever. The bottleneck has moved to review, verification and judgement, and that&#39;s where engineers now earn their keep.">
+<meta name="twitter:image" content="https://nehem.dev/og/f06970.png">
+<meta name="twitter:image:alt" content="Writing code is no longer the bottleneck — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/f06970.html#article","headline":"Writing code is no longer the bottleneck","description":"AI agents write code faster than ever. The bottleneck has moved to review, verification and judgement, and that's where engineers now earn their keep.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/f06970.png","width":1200,"height":630},"datePublished":"2026-11-25","dateModified":"2026-11-25","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/f06970.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/f06970.html","inLanguage":"en-AU","keywords":["AI","Agentic Development","Code Review","Software Engineering"],"wordCount":626,"timeRequired":"PT3M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Writing code is no longer the bottleneck","item":"https://nehem.dev/f06970.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=60c47656">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e);--fab-d:url(/fabric-dark.svg?v=2693ce61);--fab-dm:url(/fabric-m-dark.svg?v=4da61d1d)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-l">
+      <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Dark theme" title="Switch to dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"/><path d="M16.2 4.2v2.6M14.9 5.5h2.6" stroke-width="1"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M5.4 18.6 7 17M17 7l1.6-1.6"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">Writing code is no longer the bottleneck</h1>
+  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-11-25">25 Nov 2026</time></p>
+      <p>3 min read</p>
+<ul class="tags" aria-label="Tags"><li>AI</li><li>Agentic Development</li><li>Code Review</li><li>Software Engineering</li></ul>    </aside>
+    <div class="prose">
+<p>That sentence would have been ridiculous two years ago. Now it's just Tuesday.</p>
+<p>AI agents can investigate a bug, write the fix, write the tests, and have a PR ready before lunch. What used to take a day takes an hour. Sometimes less.</p>
+<figure class="fig"><img src="/media/f06970/review-queue.jpg" alt="A developer at a desk facing a long queue of pull requests waiting for review." width="1152" height="864" loading="lazy" decoding="async"><figcaption>The new bottleneck: the review queue.</figcaption></figure>
+<p>So where does the work actually pile up now?</p>
+<p>In the review queue.</p>
+<p>Three PRs waiting for review. Reviewer is in meetings until 3pm. By then there's a fourth. Tomorrow there's a conflict. Day after that someone asks a question that takes another round trip. By Friday the fix that took an hour to write has spent four days sitting in a queue.</p>
+<p>Sound familiar?</p>
+<p>We spent years optimising the wrong side of the pipeline.</p>
+<p>Faster editors. Better autocomplete. AI pair programmers. Code generation. All of it optimises the part that was already getting faster on its own.</p>
+<p>Meanwhile, the review queue hasn't changed in a decade. Same process. Same bottleneck. Same "I'll get to it after standup."</p>
+<p>Here's the math that nobody talks about:</p>
+<p>→ Time to write a fix with AI: 1-2 hours.
+→ Time that fix sits in review: 1-5 days.
+→ Ratio of productive time to waiting time: roughly 1:20.</p>
+<p>You just 10x'd your writing speed and your delivery speed didn't change. Because delivery includes review, and review is still a human, with a calendar, with other priorities.</p>
+<p>This isn't a people problem. Reviewers aren't lazy. They're busy. They have their own PRs, their own investigations, their own meetings. Review is important work that competes with every other kind of important work.</p>
+<p>It's a system problem. And it gets worse with AI, not better.</p>
+<p>Because AI increases the throughput on one side of the bottleneck. More PRs, produced faster, by fewer people. Same number of reviewers. Same 24 hours in a day.</p>
+<p>What actually helps:</p>
+<p>→ PR descriptions that answer the review before it starts. If the reviewer has to investigate your change to understand it, you've shipped the wrong deliverable. The description should contain the problem, the root cause, the decisions, the evidence and the test results. A stranger should be able to approve it from the description alone.</p>
+<p>→ Smaller PRs. A 50-line change with a clear description gets reviewed in 10 minutes. A 400-line change with "fix stuff" in the title sits for three days because nobody has a 45-minute block to understand it.</p>
+<p>→ Agent-assisted review. The same AI that wrote the code can review someone else's code. Not as the final approval. As the first pass. Catch the obvious issues before a human spends time on them. The human review becomes focused on judgment: is the approach right, are the trade-offs acceptable, does this fit the system.</p>
+<p>→ Review SLAs that the team actually tracks. Not "review when you can." A number. 4 hours. 8 hours. Whatever fits your team. Measure it. Make the queue visible. Treat it like you treat deployment frequency, because it is deployment frequency.</p>
+<p>→ Stop celebrating PR creation speed. Start celebrating merge-to-deploy time. That's the number that tells you how fast value reaches the customer.</p>
+<p>The uncomfortable truth:</p>
+<p>If your team generates PRs twice as fast but reviews them at the same speed, you haven't improved. You've just built a bigger pile.</p>
+<p>A PR that takes an hour to write and four days to merge is not a one-hour fix. It's a four-day fix. The calendar doesn't care which part was fast.</p>
+<p>AI changed the economics of writing code. It hasn't changed the economics of reviewing it. That's the gap.</p>
+<p>The teams that figure this out will ship circles around the teams that don't.</p>
+<p>The bottleneck moved. Has your process moved with it?</p>
+<h2>AI #AgenticDevelopment #SoftwareEngineering #CodeReview #DeveloperProductivity #ShippingFaster #TechLeadership #EngineeringCulture #DevOps #Python</h2>
+      <p class="post-edit"><a href="https://github.com/n3h3m/nehem.dev/edit/master/content/posts/2026-11-25%20Writing%20code%20is%20no%20longer%20the%20bottleneck/post.md" rel="nofollow noopener" aria-label="Edit this post's source on GitHub">edit</a></p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/7837ff.html"><span class="t">The Best Engineers I Know Are Lazy</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-14">Nov 2026</time></a></li>
+  <li><a href="/d5d0f8.html"><span class="t">Why Blackbox Testing Always Wins</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-08">Nov 2026</time></a></li>
+  <li><a href="/4d6cd9.html"><span class="t">Mise en Place for Developers</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-12">Nov 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/7837ff.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">The Best Engineers I Know Are Lazy</span></a><span class="pn newer empty" aria-hidden="true"></span></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script>
+(function(){
+  var d=document.documentElement,b=document.querySelector('.theme-toggle');if(!b)return;
+  var tc=document.querySelector('meta[name=theme-color]'),cs=document.querySelector('meta[name=color-scheme]');
+  function set(t,save){
+    var dark=t==='dark';
+    if(dark)d.setAttribute('data-theme','dark');else d.removeAttribute('data-theme');
+    b.setAttribute('aria-pressed',dark?'true':'false');b.title=dark?'Switch to light theme':'Switch to dark theme';
+    if(tc)tc.content=dark?'#101114':'#ffffff';if(cs)cs.content=dark?'dark':'light';
+    if(save)try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}
+    document.dispatchEvent(new Event('themechange'));
+  }
+  set(d.getAttribute('data-theme')==='dark'?'dark':'light');
+  b.addEventListener('click',function(){set(d.getAttribute('data-theme')==='dark'?'light':'dark',true);});
+  addEventListener('storage',function(e){if(e.key==='theme')set(e.newValue==='dark'?'dark':'light');});
+})();
+</script>
+<script src="/fabric.js?v=c85b9df8" defer></script>
+</body>
+</html>

@@ -5,9 +5,50 @@
   <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
   <id>https://nehem.dev/writing/</id>
-  <updated>2026-11-14T00:00:00+10:00</updated>
+  <updated>2026-11-25T00:00:00+10:00</updated>
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
+  <entry>
+    <title>Writing code is no longer the bottleneck</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/f06970.html"/>
+    <id>https://nehem.dev/f06970.html</id>
+    <published>2026-11-25T00:00:00+10:00</published>
+    <updated>2026-11-25T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>AI agents write code faster than ever. The bottleneck has moved to review, verification and judgement, and that's where engineers now earn their keep.</summary>
+    <category term="AI"/><category term="Agentic Development"/><category term="Code Review"/><category term="Software Engineering"/>
+    <content type="html">&lt;p&gt;That sentence would have been ridiculous two years ago. Now it's just Tuesday.&lt;/p&gt;
+&lt;p&gt;AI agents can investigate a bug, write the fix, write the tests, and have a PR ready before lunch. What used to take a day takes an hour. Sometimes less.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/review-queue.jpg" alt="A developer at a desk facing a long queue of pull requests waiting for review." width="1152" height="864" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The new bottleneck: the review queue.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;So where does the work actually pile up now?&lt;/p&gt;
+&lt;p&gt;In the review queue.&lt;/p&gt;
+&lt;p&gt;Three PRs waiting for review. Reviewer is in meetings until 3pm. By then there's a fourth. Tomorrow there's a conflict. Day after that someone asks a question that takes another round trip. By Friday the fix that took an hour to write has spent four days sitting in a queue.&lt;/p&gt;
+&lt;p&gt;Sound familiar?&lt;/p&gt;
+&lt;p&gt;We spent years optimising the wrong side of the pipeline.&lt;/p&gt;
+&lt;p&gt;Faster editors. Better autocomplete. AI pair programmers. Code generation. All of it optimises the part that was already getting faster on its own.&lt;/p&gt;
+&lt;p&gt;Meanwhile, the review queue hasn't changed in a decade. Same process. Same bottleneck. Same "I'll get to it after standup."&lt;/p&gt;
+&lt;p&gt;Here's the math that nobody talks about:&lt;/p&gt;
+&lt;p&gt;→ Time to write a fix with AI: 1-2 hours.
+→ Time that fix sits in review: 1-5 days.
+→ Ratio of productive time to waiting time: roughly 1:20.&lt;/p&gt;
+&lt;p&gt;You just 10x'd your writing speed and your delivery speed didn't change. Because delivery includes review, and review is still a human, with a calendar, with other priorities.&lt;/p&gt;
+&lt;p&gt;This isn't a people problem. Reviewers aren't lazy. They're busy. They have their own PRs, their own investigations, their own meetings. Review is important work that competes with every other kind of important work.&lt;/p&gt;
+&lt;p&gt;It's a system problem. And it gets worse with AI, not better.&lt;/p&gt;
+&lt;p&gt;Because AI increases the throughput on one side of the bottleneck. More PRs, produced faster, by fewer people. Same number of reviewers. Same 24 hours in a day.&lt;/p&gt;
+&lt;p&gt;What actually helps:&lt;/p&gt;
+&lt;p&gt;→ PR descriptions that answer the review before it starts. If the reviewer has to investigate your change to understand it, you've shipped the wrong deliverable. The description should contain the problem, the root cause, the decisions, the evidence and the test results. A stranger should be able to approve it from the description alone.&lt;/p&gt;
+&lt;p&gt;→ Smaller PRs. A 50-line change with a clear description gets reviewed in 10 minutes. A 400-line change with "fix stuff" in the title sits for three days because nobody has a 45-minute block to understand it.&lt;/p&gt;
+&lt;p&gt;→ Agent-assisted review. The same AI that wrote the code can review someone else's code. Not as the final approval. As the first pass. Catch the obvious issues before a human spends time on them. The human review becomes focused on judgment: is the approach right, are the trade-offs acceptable, does this fit the system.&lt;/p&gt;
+&lt;p&gt;→ Review SLAs that the team actually tracks. Not "review when you can." A number. 4 hours. 8 hours. Whatever fits your team. Measure it. Make the queue visible. Treat it like you treat deployment frequency, because it is deployment frequency.&lt;/p&gt;
+&lt;p&gt;→ Stop celebrating PR creation speed. Start celebrating merge-to-deploy time. That's the number that tells you how fast value reaches the customer.&lt;/p&gt;
+&lt;p&gt;The uncomfortable truth:&lt;/p&gt;
+&lt;p&gt;If your team generates PRs twice as fast but reviews them at the same speed, you haven't improved. You've just built a bigger pile.&lt;/p&gt;
+&lt;p&gt;A PR that takes an hour to write and four days to merge is not a one-hour fix. It's a four-day fix. The calendar doesn't care which part was fast.&lt;/p&gt;
+&lt;p&gt;AI changed the economics of writing code. It hasn't changed the economics of reviewing it. That's the gap.&lt;/p&gt;
+&lt;p&gt;The teams that figure this out will ship circles around the teams that don't.&lt;/p&gt;
+&lt;p&gt;The bottleneck moved. Has your process moved with it?&lt;/p&gt;
+&lt;h2&gt;AI #AgenticDevelopment #SoftwareEngineering #CodeReview #DeveloperProductivity #ShippingFaster #TechLeadership #EngineeringCulture #DevOps #Python&lt;/h2&gt;</content>
+  </entry>
   <entry>
     <title>The Best Engineers I Know Are Lazy</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/7837ff.html"/>
