@@ -15,39 +15,90 @@
     <published>2026-11-25T00:00:00+10:00</published>
     <updated>2026-11-25T00:00:00+10:00</updated>
     <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
-    <summary>AI agents write code faster than ever. The bottleneck has moved to review, verification and judgement, and that's where engineers now earn their keep.</summary>
+    <summary>AI agents write a fix in an hour, then it waits days for review. Why the bottleneck moved to code review, and what helps: better PRs, smaller PRs, agent review.</summary>
     <category term="AI"/><category term="Agentic Development"/><category term="Code Review"/><category term="Software Engineering"/>
-    <content type="html">&lt;p&gt;That sentence would have been ridiculous two years ago. Now it's just Tuesday.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Writing code is no longer the bottleneck.&lt;/p&gt;
+&lt;p&gt;That sentence would have been ridiculous two years ago. Now it's just Tuesday.&lt;/p&gt;
 &lt;p&gt;AI agents can investigate a bug, write the fix, write the tests, and have a PR ready before lunch. What used to take a day takes an hour. Sometimes less.&lt;/p&gt;
-&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/review-queue.jpg" alt="A developer at a desk facing a long queue of pull requests waiting for review." width="1152" height="864" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The new bottleneck: the review queue.&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;p&gt;So where does the work actually pile up now?&lt;/p&gt;
+&lt;p&gt;I work with agents every day, and I'm not going back. I'd happily take more of this, faster. But something has been bugging me for months, and it's not the agents. It's what happens to their work after it's done.&lt;/p&gt;
+&lt;p&gt;This post is about where the work piles up now, why every tool we've built so far has made that pile worse rather than better, the maths nobody puts on a slide, and the handful of boring changes that actually move delivery speed.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/hero.svg" alt="Two horizontal pipelines, ticket to ship, where width is time. Two years ago the widest block was investigate, write and test, with review after it. Now the agent block is a sliver, about an hour, and the hatched review block stretches across most of the row: one to five days of waiting." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same pipeline, two years apart. AI shrank the writing. The review didn't move.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;So where does the work pile up now?&lt;/h2&gt;
 &lt;p&gt;In the review queue.&lt;/p&gt;
+&lt;p&gt;Here's a week I've lived more than once.&lt;/p&gt;
 &lt;p&gt;Three PRs waiting for review. Reviewer is in meetings until 3pm. By then there's a fourth. Tomorrow there's a conflict. Day after that someone asks a question that takes another round trip. By Friday the fix that took an hour to write has spent four days sitting in a queue.&lt;/p&gt;
 &lt;p&gt;Sound familiar?&lt;/p&gt;
+&lt;p&gt;Nothing in that week is anyone doing anything wrong. The reviewer went to their meetings. The fourth PR was real work from someone else. The conflict happened because main kept moving while my branch sat still. The question was a fair question. Every single step was reasonable, and the sum of them was a four-day fix.&lt;/p&gt;
+&lt;p&gt;That last part is the trap. Waiting doesn't just add time, it creates more work. The longer a PR sits, the more main drifts, the more likely a conflict, the more context the reviewer has to rebuild, and the more context &lt;em&gt;I&lt;/em&gt; have to rebuild when the question finally arrives on Thursday about something I wrote on Monday. Idle PRs rot.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/week.svg" alt="A Monday to Friday timeline. On Monday morning a tiny teal block: write and test, about an hour. Then a long hatched coral bar labelled waiting runs to Friday, marked with what happens along the way: the reviewer is in meetings until 3pm, a fourth PR lands in the queue, a merge conflict, a question and another round trip, a re-review. A tick on Friday: merged. A note: productive to waiting time is roughly one to twenty." width="960" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;One hour of work, four days in a queue. Every step was reasonable. The total wasn't.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;We optimised the wrong side of the pipeline&lt;/h2&gt;
 &lt;p&gt;We spent years optimising the wrong side of the pipeline.&lt;/p&gt;
 &lt;p&gt;Faster editors. Better autocomplete. AI pair programmers. Code generation. All of it optimises the part that was already getting faster on its own.&lt;/p&gt;
 &lt;p&gt;Meanwhile, the review queue hasn't changed in a decade. Same process. Same bottleneck. Same "I'll get to it after standup."&lt;/p&gt;
-&lt;p&gt;Here's the math that nobody talks about:&lt;/p&gt;
-&lt;p&gt;→ Time to write a fix with AI: 1-2 hours.
-→ Time that fix sits in review: 1-5 days.
-→ Ratio of productive time to waiting time: roughly 1:20.&lt;/p&gt;
+&lt;p&gt;Anyone who's read a bit about manufacturing will recognise the shape. A pipeline only moves as fast as its slowest stage. Speed up any other stage and you don't get more out of the end, you just get more inventory stacked up in front of the slow one. In a factory that inventory is boxes on the floor. In software it's open PRs.&lt;/p&gt;
+&lt;p&gt;For most of my career the slow stage really was writing. Understanding a codebase, finding the bug, typing the fix, getting the tests green. That's where the hours went, so that's where all the tooling went, and fair enough.&lt;/p&gt;
+&lt;p&gt;Agents collapsed that stage. Investigation that took me a morning of grepping, reading logs and stepping through code now takes an agent a few minutes, with the evidence attached. The fix and the tests come with it. The stage that used to dominate the timeline is now a sliver.&lt;/p&gt;
+&lt;p&gt;Which means the slowest stage is now something else. And we haven't touched it.&lt;/p&gt;
+&lt;h2&gt;The maths nobody talks about&lt;/h2&gt;
+&lt;p&gt;Here's the maths that nobody talks about:&lt;/p&gt;
+&lt;p&gt;→ Time to write a fix with AI: 1-2 hours.&lt;/p&gt;
+&lt;p&gt;→ Time that fix sits in review: 1-5 days.&lt;/p&gt;
+&lt;p&gt;→ Ratio of productive time to waiting time: roughly 1:20.&lt;/p&gt;
+&lt;p&gt;These are my numbers, from my own week, not a study. But I'd be surprised if yours look very different.&lt;/p&gt;
 &lt;p&gt;You just 10x'd your writing speed and your delivery speed didn't change. Because delivery includes review, and review is still a human, with a calendar, with other priorities.&lt;/p&gt;
+&lt;p&gt;Do the arithmetic properly and it's even starker. Say a fix used to be a day of writing plus three days in review: four days. Now it's an hour of writing plus three days in review. You made the writing eight times faster and the delivery went from four days to just over three. That's the whole improvement. Most of the time a change spends between "started" and "in production" was never time anyone was working on it.&lt;/p&gt;
+&lt;p&gt;A PR that takes an hour to write and four days to merge is not a one-hour fix. It's a four-day fix. The calendar doesn't care which part was fast.&lt;/p&gt;
+&lt;h2&gt;It's a system problem, not a people problem&lt;/h2&gt;
+&lt;p&gt;I want to be careful here, because this is the bit that turns into blame very quickly.&lt;/p&gt;
 &lt;p&gt;This isn't a people problem. Reviewers aren't lazy. They're busy. They have their own PRs, their own investigations, their own meetings. Review is important work that competes with every other kind of important work.&lt;/p&gt;
+&lt;p&gt;And it's usually the worst-rewarded kind. Nobody's demo on Friday is "I reviewed eleven PRs". Your own ticket has your name on it. Someone else's review doesn't. So review gets done in the gaps, after standup, after lunch, after my own thing is done, and the gaps are exactly the part of the day that meetings eat first.&lt;/p&gt;
 &lt;p&gt;It's a system problem. And it gets worse with AI, not better.&lt;/p&gt;
 &lt;p&gt;Because AI increases the throughput on one side of the bottleneck. More PRs, produced faster, by fewer people. Same number of reviewers. Same 24 hours in a day.&lt;/p&gt;
-&lt;p&gt;What actually helps:&lt;/p&gt;
-&lt;p&gt;→ PR descriptions that answer the review before it starts. If the reviewer has to investigate your change to understand it, you've shipped the wrong deliverable. The description should contain the problem, the root cause, the decisions, the evidence and the test results. A stranger should be able to approve it from the description alone.&lt;/p&gt;
-&lt;p&gt;→ Smaller PRs. A 50-line change with a clear description gets reviewed in 10 minutes. A 400-line change with "fix stuff" in the title sits for three days because nobody has a 45-minute block to understand it.&lt;/p&gt;
-&lt;p&gt;→ Agent-assisted review. The same AI that wrote the code can review someone else's code. Not as the final approval. As the first pass. Catch the obvious issues before a human spends time on them. The human review becomes focused on judgment: is the approach right, are the trade-offs acceptable, does this fit the system.&lt;/p&gt;
-&lt;p&gt;→ Review SLAs that the team actually tracks. Not "review when you can." A number. 4 hours. 8 hours. Whatever fits your team. Measure it. Make the queue visible. Treat it like you treat deployment frequency, because it is deployment frequency.&lt;/p&gt;
-&lt;p&gt;→ Stop celebrating PR creation speed. Start celebrating merge-to-deploy time. That's the number that tells you how fast value reaches the customer.&lt;/p&gt;
-&lt;p&gt;The uncomfortable truth:&lt;/p&gt;
+&lt;p&gt;There's a second-order effect too. The reviewers are usually the same people producing PRs with their own agents. The faster their agents work, the more of their own output is waiting on &lt;em&gt;someone else's&lt;/em&gt; review, and the more review requests are waiting on &lt;em&gt;them&lt;/em&gt;. Everyone's producing more and everyone's reviewing at the same speed. The queue isn't one person's problem, it's the whole team's inventory.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/funnel.svg" alt="Two funnels side by side. Before: three PRs drop into a funnel whose narrow neck is review, and they flow through. With agents: nine PRs drop into the same funnel with the same narrow neck, and a pile of PRs builds up inside it. Out of the bottom of both, merges trickle out at the same rate." width="960" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;AI widened the pipe into review. It didn't widen review.&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;p&gt;If your team generates PRs twice as fast but reviews them at the same speed, you haven't improved. You've just built a bigger pile.&lt;/p&gt;
-&lt;p&gt;A PR that takes an hour to write and four days to merge is not a one-hour fix. It's a four-day fix. The calendar doesn't care which part was fast.&lt;/p&gt;
+&lt;p&gt;So what actually helps? None of this is exotic. Most of it is stuff we always knew was good practice and got away with ignoring, because writing was slow enough to hide it. It isn't any more.&lt;/p&gt;
+&lt;h2&gt;Write the PR description that answers the review&lt;/h2&gt;
+&lt;p&gt;The first one is the one I care about most.&lt;/p&gt;
+&lt;p&gt;If the reviewer has to investigate your change to understand it, you've shipped the wrong deliverable.&lt;/p&gt;
+&lt;p&gt;Think about what a reviewer actually does with a bare PR. They open the diff. They try to work out what problem it's solving. They go and find the ticket. They try to reconstruct why you did it this way and not the obvious other way. They wonder whether you tested the case they're worried about. In other words, they redo half of your investigation, with less context than you had, in a gap between two meetings. No wonder it gets put off until later.&lt;/p&gt;
+&lt;p&gt;The description should contain the problem, the root cause, the decisions, the evidence and the test results. A stranger should be able to approve it from the description alone.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;The problem.&lt;/strong&gt; What the user or the system sees, in plain words, with the ticket.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;The root cause.&lt;/strong&gt; Why it happens. Point at the line, the query, the race. Not "fixed the bug", but what the bug actually was.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;The decisions.&lt;/strong&gt; What I chose, and what I considered and rejected. This is where most round trips come from: "why didn't you just...?" Answer it before it's asked.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;The evidence.&lt;/strong&gt; The log line, the query result, the before and after. Proof that the root cause is the root cause.&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;The tests.&lt;/strong&gt; What ran, and what each one proves. Not "tests pass", but which behaviour is now pinned down.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/pr-description.svg" alt="On the left, a PR titled fix stuff, crossed out: the reviewer has to reverse-engineer it. On the right, a PR description drawn as a document with five sections: problem, what the user sees; root cause, why it happens; decisions, what was chosen and rejected; evidence, logs and before and after; tests, what ran and what it proves. A note: one sitting, no investigation, no round trips." width="960" height="660" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The description is the deliverable. The diff is the evidence.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Here's the part that makes this a no-brainer now: the agent already has all of this. It did the investigation. It has the logs it read, the hypothesis it tested, the alternatives it dropped, the test output. Writing it down is nearly free. In my own setup, the PR description is the last step of the ticket-to-PR workflow, and it isn't optional. A PR with a thin description is an unfinished PR.&lt;/p&gt;
+&lt;p&gt;The goal is that the review takes one sitting. No investigation, no round trips. Every question the description answers is a day that doesn't get added to the calendar.&lt;/p&gt;
+&lt;h2&gt;Make the PR small enough to fit in a gap&lt;/h2&gt;
+&lt;p&gt;A 50-line change with a clear description gets reviewed in 10 minutes. A 400-line change with "fix stuff" in the title sits for three days because nobody has a 45-minute block to understand it.&lt;/p&gt;
+&lt;p&gt;That's not a rule about lines of code, it's a rule about calendars. Look at any reviewer's afternoon. It's meetings with gaps between them. Ten minutes here, fifteen there. A small PR fits in any of those gaps. A big one fits in none of them, so it gets opened, scrolled, closed, and filed under "later". Later is Thursday.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/pr-size.svg" alt="Left: a 50-line PR with a clear description, short to read, reviewed in about ten minutes between two meetings and merged today. Right: a 400-line PR titled fix stuff, a wall of lines that needs a 45-minute block to understand, so it sits for three days. Underneath, a reviewer's afternoon of meetings with small gaps: the small PR fits in any gap, the big one fits in none." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The small PR fits in any gap in a reviewer's day. The big one fits in none.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;Agents make this easier, not harder, if you ask them to. The temptation with an agent is to let it do everything in one go, because it can. Resist that. Ask for the refactor as one PR and the behaviour change as another. Ask for the migration first, then the code that uses it. Splitting work used to cost me time, so I skipped it. With an agent, splitting is almost free, and every split is a PR that lands in somebody's ten-minute gap instead of their "later".&lt;/p&gt;
+&lt;h2&gt;Let the agent take the first pass&lt;/h2&gt;
+&lt;p&gt;The same AI that wrote the code can review someone else's code.&lt;/p&gt;
+&lt;p&gt;Not as the final approval. As the first pass.&lt;/p&gt;
+&lt;p&gt;Catch the obvious issues before a human spends time on them. Does the code actually do what the description says? Is there an edge case nobody handled? A missing test? An error swallowed? A pattern the team has banned? A leftover debug line? An agent can check all of that in minutes, at any hour, without waiting for a gap in anyone's calendar.&lt;/p&gt;
+&lt;p&gt;That changes what the human review is for. The human review becomes focused on judgement: is the approach right, are the trade-offs acceptable, does this fit the system.&lt;/p&gt;
+&lt;p&gt;That's the part only someone who knows the system can do, and it's the part that was always getting squeezed. When a reviewer spends their fifteen minutes pointing out a missing null check, they've spent their fifteen minutes. When the agent has already caught the null check, the reviewer's fifteen minutes go on the question that actually matters: should we be doing it this way at all?&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/f06970/review-layers.svg" alt="A PR flows into two stages. First an agent pass, which checks that the code matches the description, obvious bugs and edge cases, missing tests, unhandled errors, banned patterns and leftover debug code, in minutes at any hour. Then a human stage for judgement: is the approach right, are the trade-offs acceptable, does this fit the system. Underneath: stop counting PRs opened, start counting time to first review and merge-to-deploy time, with a review SLA that is a tracked, visible number." width="960" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The agent catches the obvious. The human spends their time on judgement.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;I'll go further than that: the author should run the agent review &lt;em&gt;before&lt;/em&gt; asking a human. If an agent can find it, a colleague shouldn't have to. Every comment the agent leaves on my own PR is a round trip that never happens.&lt;/p&gt;
+&lt;h2&gt;Give the queue a number&lt;/h2&gt;
+&lt;p&gt;Review SLAs that the team actually tracks. Not "review when you can." A number. 4 hours. 8 hours. Whatever fits your team.&lt;/p&gt;
+&lt;p&gt;Measure it. Make the queue visible. Treat it like you treat deployment frequency, because it is deployment frequency.&lt;/p&gt;
+&lt;p&gt;"When you can" is how we got here. Without a number, review always loses to whatever feels more urgent, and something always feels more urgent. With a number, a PR that's been waiting six hours on a four-hour SLA is visibly late, the same way a failing build is visibly red. Nobody has to nag. The queue nags.&lt;/p&gt;
+&lt;p&gt;Making it visible matters as much as the number. A list of open PRs with how long each has been waiting, somewhere the whole team sees it every day. Most of the four-day waits I've seen weren't anyone deciding not to review. They were nobody noticing.&lt;/p&gt;
+&lt;h2&gt;Celebrate the right number&lt;/h2&gt;
+&lt;p&gt;Stop celebrating PR creation speed. Start celebrating merge-to-deploy time. That's the number that tells you how fast value reaches the customer.&lt;/p&gt;
+&lt;p&gt;This one matters more as agents get better, because PR creation is about to become the easiest number in the world to inflate. An agent can open ten PRs before you've had your coffee. If that's the number on the dashboard, you'll get a lot of PRs, and the pile will grow, and delivery won't move.&lt;/p&gt;
+&lt;p&gt;The customer doesn't see a PR. They see the change when it's in production. Everything before that moment is inventory. The number worth watching is how long it takes a change to get from "ready" to "running", and how much of that time anyone was actually working on it.&lt;/p&gt;
+&lt;h2&gt;The bottleneck moved&lt;/h2&gt;
 &lt;p&gt;AI changed the economics of writing code. It hasn't changed the economics of reviewing it. That's the gap.&lt;/p&gt;
+&lt;p&gt;I don't think the answer is to slow the agents down. That would be optimising for the bottleneck instead of removing it. The answer is to treat review as part of the system you engineer, with the same seriousness we gave to build times and deploy pipelines. Descriptions that answer the review. PRs small enough to fit in a gap. Agents doing the first pass. A number on the queue. The right thing on the dashboard.&lt;/p&gt;
+&lt;p&gt;None of that is glamorous. All of it is cheaper than it has ever been, because the same agents that created the pile can do most of the work of draining it.&lt;/p&gt;
 &lt;p&gt;The teams that figure this out will ship circles around the teams that don't.&lt;/p&gt;
-&lt;p&gt;The bottleneck moved. Has your process moved with it?&lt;/p&gt;
-&lt;h2&gt;AI #AgenticDevelopment #SoftwareEngineering #CodeReview #DeveloperProductivity #ShippingFaster #TechLeadership #EngineeringCulture #DevOps #Python&lt;/h2&gt;</content>
+&lt;p&gt;The bottleneck moved. Has your process moved with it?&lt;/p&gt;</content>
   </entry>
   <entry>
     <title>The Best Engineers I Know Are Lazy</title>
