@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Read First, Then Act — Nehemiah Jacob</title>
+<meta name="description" content="The best debugging skill isn&#39;t writing code, it&#39;s reading: the full error, the logs in order, the ticket, the callers and the history. Read first, then act.">
+<meta name="author" content="Nehemiah Jacob">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="https://nehem.dev/cebc28.html">
+<link rel="alternate" hreflang="en-AU" href="https://nehem.dev/cebc28.html">
+<link rel="alternate" hreflang="x-default" href="https://nehem.dev/cebc28.html"><link rel="alternate" type="application/atom+xml" title="nehem.dev — Writing by Nehemiah Jacob" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest"><meta property="og:type" content="article">
+<meta property="og:site_name" content="nehem.dev">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Read First, Then Act">
+<meta property="og:description" content="The best debugging skill isn&#39;t writing code, it&#39;s reading: the full error, the logs in order, the ticket, the callers and the history. Read first, then act.">
+<meta property="og:url" content="https://nehem.dev/cebc28.html">
+<meta property="og:image" content="https://nehem.dev/og/cebc28.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Read First, Then Act — an essay by Nehemiah Jacob on nehem.dev"><meta property="article:published_time" content="2026-11-26"><meta property="article:modified_time" content="2026-11-26"><meta property="article:author" content="https://nehem.dev/"><meta property="article:tag" content="Debugging"><meta property="article:tag" content="Software Engineering"><meta property="article:tag" content="Developer Productivity"><meta property="article:tag" content="Engineering Culture"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Read First, Then Act">
+<meta name="twitter:description" content="The best debugging skill isn&#39;t writing code, it&#39;s reading: the full error, the logs in order, the ticket, the callers and the history. Read first, then act.">
+<meta name="twitter:image" content="https://nehem.dev/og/cebc28.png">
+<meta name="twitter:image:alt" content="Read First, Then Act — an essay by Nehemiah Jacob on nehem.dev">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nehem.dev/cebc28.html#article","headline":"Read First, Then Act","description":"The best debugging skill isn't writing code, it's reading: the full error, the logs in order, the ticket, the callers and the history. Read first, then act.","image":{"@type":"ImageObject","url":"https://nehem.dev/og/cebc28.png","width":1200,"height":630},"datePublished":"2026-11-26","dateModified":"2026-11-26","author":{"@type":"Person","@id":"https://nehem.dev/#person","name":"Nehemiah Jacob","url":"https://nehem.dev/"},"publisher":{"@id":"https://nehem.dev/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nehem.dev/cebc28.html"},"isPartOf":{"@id":"https://nehem.dev/writing/#blog"},"url":"https://nehem.dev/cebc28.html","inLanguage":"en-AU","keywords":["Debugging","Software Engineering","Developer Productivity","Engineering Culture"],"wordCount":2398,"timeRequired":"PT11M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nehem.dev/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://nehem.dev/writing/"},{"@type":"ListItem","position":3,"name":"Read First, Then Act","item":"https://nehem.dev/cebc28.html"}]}]}</script>
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<script>(function(d){d.className+=' js';try{if(localStorage.getItem('theme')==='dark'){d.setAttribute('data-theme','dark');document.querySelector('meta[name=theme-color]').content='#101114';document.querySelector('meta[name=color-scheme]').content='dark';}}catch(e){}})(document.documentElement);</script>
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=60c47656">
+<script>if(window.IntersectionObserver&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.className+=' fx';</script>
+</head>
+<body class="post" style="--fab:url(/fabric.svg?v=4ca02211);--fab-m:url(/fabric-m.svg?v=e928d64e);--fab-d:url(/fabric-dark.svg?v=2693ce61);--fab-dm:url(/fabric-m-dark.svg?v=4da61d1d)">
+<div class="fabric" aria-hidden="true" data-fab='{"d":{"W":1440,"H":1800,"C":0.62,"nz":30,"gx":205,"off":2.5,"sx":20,"sz":24,"swell":44,"shear":14,"wave":[0,6,120,700],"wells":[[1215,330,150,128,"#3b36b8"],[210,1060,125,104,"#e4533b"],[1330,1560,85,68,"#11968a"]],"rings":[[0,215,"#11968a",0.55],[0,360,"#1a1a1a",0.2],[1,185,"#e9a321",0.6],[2,125,"#3b36b8",0.45]],"oa":[0.32,0.23,0.31,0.28,0.23,0.3,0.23,0.29,0.23,0.23,0.29,0.35,0.24,0.26,0.32,0.37,0.31,0.28,0.38,0.23,0.36,0.27,0.24,0.24,0.27,0.35,0.25,0.31,0.32,0.28],"ov":[0.16,0.18,0.23,0.2,0.19,0.22,0.2,0.19]},"m":{"W":390,"H":1000,"C":0.62,"nz":17,"gx":120,"off":15.0,"sx":10,"sz":14,"swell":22,"shear":6,"wave":[0,3,70,360],"wells":[[338,250,72,62,"#3b36b8"],[52,760,62,52,"#e4533b"]],"rings":[[0,112,"#11968a",0.5],[1,96,"#e9a321",0.55]],"oa":[0.21,0.16,0.2,0.18,0.16,0.2,0.15,0.19,0.16,0.16,0.19,0.22,0.16,0.17,0.21,0.24,0.2],"ov":[0.11,0.16,0.12,0.11]}}'><div class="fab-move"><div class="fab-sheet"><svg class="fab-pulse fab-pulse-d" aria-hidden="true" focusable="false" viewBox="0 0 1440 5400" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="1215" cy="383.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="1081.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="1586.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="2183.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="2881.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="3386.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="1215" cy="3983.5" rx="200" ry="124" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="210" cy="4681.7" rx="170" ry="105.4" stroke="#1a1a1a"/>
+<ellipse class="pl p2" cx="1330" cy="5186.1" rx="110" ry="68.2" stroke="#1a1a1a"/>
+</svg>
+<svg class="fab-pulse fab-pulse-m" aria-hidden="true" focusable="false" viewBox="0 0 390 3000" preserveAspectRatio="xMidYMin slice" fill="none" stroke-width="1">
+<ellipse class="pl p0" cx="338" cy="254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="1254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="1782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+<ellipse class="pl p0" cx="338" cy="2254.9" rx="90" ry="55.8" stroke="#1a1a1a"/>
+<ellipse class="pl p1" cx="52" cy="2782.9" rx="80" ry="49.6" stroke="#1a1a1a"/>
+</svg>
+</div></div></div>
+<div class="selvedge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-l">
+      <a class="brand" href="/" aria-label="Nehemiah Jacob, home">NJ</a>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Dark theme" title="Switch to dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"/><path d="M16.2 4.2v2.6M14.9 5.5h2.6" stroke-width="1"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M5.4 18.6 7 17M17 7l1.6-1.6"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <a href="/#about" class="secondary">About</a>
+      <a href="/#experience" class="secondary">Experience</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/subscribe/" class="secondary">Subscribe</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+<div class="progress" aria-hidden="true"></div>
+<article class="article">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li></ol></nav>
+    <h1 class="display">Read First, Then Act</h1>
+<p class="dek">The gap between junior and senior engineers isn't years, languages or design patterns. It's the willingness to read before you react.</p>  </header>
+  <div class="sec post-body">
+    <aside class="post-meta" aria-label="Post details">
+      <p><time datetime="2026-11-26">26 Nov 2026</time></p>
+      <p>11 min read</p>
+<ul class="tags" aria-label="Tags"><li>Debugging</li><li>Software Engineering</li><li>Developer Productivity</li><li>Engineering Culture</li></ul>    </aside>
+    <div class="prose">
+<p>The best debugging skill isn't writing code.</p>
+<p>It's reading.</p>
+<p>Reading the error message. Actually reading it. Not glancing at the first line and guessing. The full stack trace. The line number. The variable it's complaining about.</p>
+<p>You'd be amazed how many production incidents I've seen where the answer was literally in the error message and somebody spent two hours looking elsewhere.</p>
+<p>I don't say that to sneer at anyone. I've been that somebody more times than I'd like to admit. The pull to start doing something is strong, especially when a thing is broken, people are watching and a channel is filling up with questions. Typing feels like progress. Reading feels like standing still.</p>
+<p>This post is about why that feeling is wrong, what "reading" actually means when you're debugging, and the habit that took me far too long to build: sit still, read first, then act.</p>
+<figure class="fig"><img src="/media/cebc28/hero.svg" alt="Two paths from the same error. The top path, labelled reacting: change code, add a try-catch, tweak a parameter, restart, and loop back to the start, about two hours and still guessing. The bottom path, labelled reading: about ten minutes of reading the logs, the ticket, the last three commits and Tuesday's config change, then one line changed and a tick: fixed." width="960" height="620" loading="lazy" decoding="async"><figcaption>Same error, two engineers. One starts typing. One starts reading.</figcaption></figure>
+<h2>Same error, two engineers</h2>
+<p>Here's what I mean.</p>
+<p>A junior developer sees an error and immediately starts changing code. Adding try-catch blocks. Tweaking parameters. Commenting things out. Restarting services. They're writing before they've finished reading.</p>
+<p>Every one of those moves is a guess. Some of them even make the error go away, which is worse, because now the symptom is hidden and the cause is still there. A try-catch around the failing call doesn't fix anything. It just moves the failure somewhere quieter, where it will turn up later as wrong data instead of a loud stack trace.</p>
+<p>A senior developer sees the same error and does nothing for ten minutes. Opens the logs. Reads them top to bottom. Reads the ticket description again. Reads the last three commits to that file. Reads the config that changed on Tuesday.</p>
+<p>Then they change one line and it's fixed.</p>
+<p>From the outside it looks like experience. From the inside it's just reading comprehension.</p>
+<p>That's the part I want people to sit with. When you watch someone senior fix a bug in one line, it's tempting to file it under talent, or intuition, or "they've seen this before". Sometimes they have. But much more often, they just looked at more of the evidence before they touched anything. The one line wasn't a flash of genius. It was the obvious conclusion of ten minutes nobody saw.</p>
+<p>The gap between junior and senior is not what you think it is.</p>
+<p>It's not years. It's not languages. It's not design patterns.</p>
+<p>It's the willingness to read before you react.</p>
+<h2>Read the error message. The whole thing.</h2>
+<p>Not the first line.</p>
+<p>Error messages are written by people who knew, at that exact point in the code, what had gone wrong. They're often clumsy and sometimes misleading, but they are first-hand evidence from the scene. The first line tells you the category. The rest tells you the story.</p>
+<p>A stack trace has a shape. The top is where it blew up, the bottom is where the journey started, and somewhere in the middle is the frame where your code handed something bad to someone else's code. The line number is a gift. The variable name it's complaining about is a gift. "Expected a string, got None" is telling you exactly what question to ask next: where was this supposed to be set, and why wasn't it?</p>
+<p>I've lost count of the times I've seen someone paste only the first line of an error into a chat and ask what it means. The answer was usually three lines further down, in the part they didn't copy.</p>
+<p>And if the error has a "caused by" section, read that too. The exception you're looking at is frequently a wrapper around the one that actually matters.</p>
+<p>There's a reason this is hard. An error message arrives at the worst possible moment, usually as a wall of red text, and our brains are very good at deciding we've seen it before. We recognise the shape, match it to the last time something similar happened, and stop reading. Most of the time that shortcut is harmless. When it's wrong, it sends you confidently in the wrong direction, and the more confident you are, the longer it takes to turn around.</p>
+<h2>Read the logs like a story</h2>
+<p>Read the logs. Not grep for the keyword you expect. Read what actually happened, in order.</p>
+<p>This is the one I've seen cost the most time. I've watched engineers spend an entire afternoon on a bug that the log file explained in the first three lines. They didn't read the logs. They searched the logs. For the keyword they expected. And when it wasn't there, they assumed the logs were useless.</p>
+<p>The logs weren't useless. The search was wrong.</p>
+<p>If they'd read the logs sequentially, like a story, they would have seen the real failure two lines above the one they were looking for.</p>
+<p>Searching is a fine tool when you already know what you're looking for. The trouble is that when you're debugging, you don't. If you knew, you'd have fixed it. A search for the keyword you expect can only confirm your theory or come back empty. It can never show you the thing you didn't think of, and the thing you didn't think of is usually the bug.</p>
+<p>Reading in order gives you causality. This happened, then this, then this went wrong. A warning that nobody cared about at 2:14 explains the error at 2:15. A connection pool that quietly filled up explains the timeouts that came after it. You only see that if you read the lines around the failure, not just the failure.</p>
+<figure class="fig"><img src="/media/cebc28/logs.svg" alt="A log file drawn as a column of lines. A magnifying glass labelled grep for the expected keyword hovers over the lower lines and finds nothing. Two lines above the line it was hunting for, a line is circled in coral: the real failure. An arrow labelled read in order runs down the left side of the file from the top." width="960" height="640" loading="lazy" decoding="async"><figcaption>The logs weren't useless. The search was wrong.</figcaption></figure>
+<h2>Read the ticket, not the title</h2>
+<p>Read the ticket. Not the title. The comments. The history. The thing the reporter said in paragraph three that everyone skipped.</p>
+<p>Ticket titles are compressed. Someone took a confusing experience and squeezed it into eight words, usually while annoyed. The title is their guess at what the problem is. The body is what they actually saw.</p>
+<p>That difference matters. A title that says "checkout is broken" might come with a description that says it only happens on the second attempt, only on mobile, only since the morning. Each of those details rules out whole areas of the system before you've opened an editor. Paragraph three is where people put the detail they weren't sure was relevant, and it is very often the most relevant thing in the whole ticket.</p>
+<p>The comments matter too. Somebody might already have tried the obvious fix. Somebody might have attached a screenshot that contradicts the title. Somebody might have said "this also happened last month", which turns a mystery into a regression with a date on it.</p>
+<h2>Read the code, and the code around it</h2>
+<p>Read the code you're about to change. Not the function. The callers. The callers of the callers. The test that covers it. The commit message that introduced it.</p>
+<p>Same with code as with logs.</p>
+<p>People read code the way they read their own code. They jump to the function, read it in isolation, and assume they understand what it does. But the function was written by someone who left two years ago, in a context that no longer exists, with assumptions that are buried in a commit message from 2018.</p>
+<p>When you read your own code, you bring the context with you. You remember why that odd check is there, what that magic number means, which edge case bit you. When you read someone else's code the same way, you fill those gaps with your own assumptions, and you don't notice you're doing it.</p>
+<p>The callers tell you what the function is actually used for, which is often different from what its name says. The callers of the callers tell you which assumptions are load-bearing. The test tells you what someone once cared enough to protect. Change the function without reading those, and your one-line fix becomes three new bugs somewhere you never looked.</p>
+<p>Each of these takes minutes. And each one eliminates an entire class of wrong guesses.</p>
+<figure class="fig"><img src="/media/cebc28/layers.svg" alt="Five nested rings drawn around a bug, each labelled with what to read and the wrong guess it removes. The error message, in full: guessing the cause from line one. The logs, in order: assuming the logs are useless. The ticket, beyond the title: fixing the wrong symptom. The code with its callers and tests: breaking something you never looked at. The PR and commit history: undoing a decision you didn't know was made." width="960" height="660" loading="lazy" decoding="async"><figcaption>Each one takes minutes. Each one removes a whole class of wrong guesses.</figcaption></figure>
+<h2>The code is the final draft</h2>
+<p>Read the PR description from the last person who touched this file. That's where the "why" lives.</p>
+<p>You can't understand code by reading a function. You understand code by reading the conversation: the commit, the PR, the review, the ticket, the person who argued against it and the person who overruled them.</p>
+<p>The code is the final draft. The reasoning is in the history.</p>
+<p>This is the bit that gets skipped most, because the history is one more click away and it doesn't look like the bug. But that strange line you're itching to delete might be the fix for an incident from three years ago. That clumsy-looking retry might be there because a downstream service misbehaves on Mondays. The code can only tell you what it does. It can't tell you what it's protecting against.</p>
+<p><code>git blame</code> and the PR it points to are the closest thing we have to asking the original author. Often the review thread has the exact debate you're about to restart: someone proposed the simpler approach, someone else explained why it doesn't work, and the code ended up the way it is for a reason that's written down, just not in the code.</p>
+<p>That's also why I care so much about writing good commit messages and PR descriptions myself. Every one of them is a note to the person who'll be reading this code at 2am in two years. Sometimes that person is me.</p>
+<figure class="fig"><img src="/media/cebc28/history.svg" alt="A single sheet labelled the code, the final draft, sits in front of a stack of sheets fanned out behind it: the ticket, the commit, the PR description, the review thread, the person who argued against it, and the person who overruled them. A note under the stack: the why lives here." width="960" height="620" loading="lazy" decoding="async"><figcaption>The code is the final draft. The reasoning is in the history.</figcaption></figure>
+<h2>Reading is slow, and that's the point</h2>
+<p>Here's the uncomfortable part:</p>
+<p>Reading is slow. It doesn't feel productive. You're not typing. You're not shipping. You're just sitting there with your eyes moving across a screen.</p>
+<p>And when something is on fire, sitting still is socially hard. People want updates. Someone senior is asking for an ETA. It feels much better to say "I'm trying a fix" than "I'm reading the logs". The first sounds like action. The second sounds like you haven't started.</p>
+<p>But every minute spent reading saves ten minutes of guessing.</p>
+<p>Guessing has a hidden cost structure. Each guess needs a change, a build, a deploy or a restart, and a wait to see whether it worked. When it doesn't, you've learned almost nothing, because you changed one thing based on a theory you never checked. Worse, you've now got a modified system to debug instead of the original one. Stack up a few wrong guesses and you're debugging your own debugging.</p>
+<p>Reading compounds the other way. Each thing you read narrows the space. By the time you change something, you're not guessing anymore. You're confirming.</p>
+<p>There's a quieter benefit too. When you've read properly, you can explain the fix. You can tell the team what happened, why, and why this change stops it happening again. A fix found by guessing can only be explained as "I tried a few things and this one worked", which is another way of saying nobody knows if it's really fixed.</p>
+<p>It's also worth saying: none of this gets less true because AI can read faster than we can. An agent will happily skim a log, pattern-match the first error it sees and propose a confident fix. If you want it to do better, you have to point it at the full trace, the ticket, the history, and ask it to read before it writes. The habit transfers. The tool doesn't replace it.</p>
+<h2>The best readers read differently</h2>
+<p>One more thing.</p>
+<p>The best readers I've worked with don't just read more. They read differently.</p>
+<p>They read with suspicion. "The ticket says database issue. Does the evidence actually say that?" A ticket is a hypothesis written by someone under stress. An alert name is a guess someone configured months ago. Treat them as claims to verify, not facts to build on.</p>
+<p>They read with timestamps. "This log line is from 3am. The deploy was at 2am. What happened in between?" Time is the cheapest correlation tool there is. Lining up when things happened against when things changed rules things in and out faster than almost anything else.</p>
+<p>They read with questions. "This function catches every exception. Why? Who was afraid of what?" Strange code is rarely random. It's a fossil of some past problem. Asking who was afraid of what turns a confusing line into a clue.</p>
+<p>What these three have in common is that they slow the jump from evidence to conclusion. A suspicious reader doesn't accept the first explanation offered. A reader with timestamps checks the order before the story. A reader with questions treats every oddity as information rather than noise. None of it requires genius. It requires refusing to be satisfied too early.</p>
+<figure class="fig"><img src="/media/cebc28/lenses.svg" alt="Three lenses side by side. Suspicion: a ticket saying database issue, with the question does the evidence actually say that. Timestamps: a timeline with deploy at 2am and an error at 3am, and the gap between them circled with the question what happened in between. Questions: a function that catches every exception, with the question why, who was afraid of what." width="960" height="600" loading="lazy" decoding="async"><figcaption>Read with suspicion, with timestamps, with questions.</figcaption></figure>
+<h2>A habit, not a tutorial</h2>
+<p>That's not a skill you learn from a tutorial. It's a habit you build from every bug you've ever been wrong about.</p>
+<p>Every time I jumped to a conclusion without reading properly, I got burned. Every single time. And slowly, painfully, over twenty years, I learned to sit still and read first.</p>
+<p>The lesson didn't arrive in one go. It arrived as a long series of small embarrassments. The fix that made it worse. The afternoon spent on the wrong service. The confident theory in the incident channel that the next log line disproved. Each one left a little scar, and the scars added up to a reflex: before I touch anything, I read.</p>
+<p>If you're earlier in your career, you don't have to wait twenty years for the scars. You can borrow the habit now. Next time an error appears, set yourself a rule: no code changes until you've read the full trace, the logs around it in order, the ticket body and the last few commits to the file. It will feel slow the first few times. Then you'll notice how often the answer was already sitting there.</p>
+<h2>Read first. Then act.</h2>
+<p>It's not glamorous. Nobody gives a conference talk about reading log files carefully.</p>
+<p>But it's the skill that separates the engineer who fixes things from the engineer who makes things worse while trying.</p>
+<p>Read first. Then act.</p>
+      <p class="post-edit"><a href="https://github.com/n3h3m/nehem.dev/edit/master/content/posts/2026-11-26%20Read%20First%2C%20Then%20Act/post.md" rel="nofollow noopener" aria-label="Edit this post's source on GitHub">edit</a></p>
+    </div>
+  </div>
+</article>
+
+<aside class="sec author rv" aria-label="About the author">
+  <p class="sec-label">Written by</p>
+  <div class="author-b">
+    <p class="author-name"><a href="/" rel="author">Nehemiah Jacob</a></p>
+    <p class="author-bio">Senior software developer · Python, Django &amp; AWS</p>
+    <a class="btn primary" href="/contact/">Get in touch</a>
+  </div>
+</aside>
+
+<section class="subscribe rv" aria-labelledby="sub-h">
+  <div class="sub-copy"><p class="sub-kicker">Newsletter</p><h2 id="sub-h" class="sub-h">Get new writing by email</h2></div>
+<form class="sub-form" action="https://buttondown.com/api/emails/embed-subscribe/nehem" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/nehem', 'popupwindow')">
+  <label for="bd-email">Email address</label>
+  <div class="sub-row">
+    <input type="email" name="email" id="bd-email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <input type="hidden" value="1" name="embed">
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <p class="sub-alt">Occasional notes on Python, Django, AWS and building software. No spam, unsubscribe anytime. Prefer a feed reader? <a href="/feed.xml">RSS</a>.</p>
+</form>
+</section>
+
+<section class="sec related rv" aria-labelledby="related-h">
+  <div class="sec-h"><h2 id="related-h">Related writing</h2></div>
+  <div class="sec-b"><ul class="posts">
+  <li><a href="/7837ff.html"><span class="t">The Best Engineers I Know Are Lazy</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-14">Nov 2026</time></a></li>
+  <li><a href="/4d6cd9.html"><span class="t">Mise en Place for Developers</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-12">Nov 2026</time></a></li>
+  <li><a href="/c93c8c.html"><span class="t">The Cheapest Line Item</span><span class="arr" aria-hidden="true">→</span><time datetime="2026-11-06">Nov 2026</time></a></li>
+</ul></div>
+</section>
+
+<nav class="post-nav rv" aria-label="Older and newer posts">
+<a class="pn older" href="/f06970.html" rel="prev"><span class="pn-label">← Older</span><span class="pn-title">Writing code is no longer the bottleneck</span></a><span class="pn newer empty" aria-hidden="true"></span></nav>
+</main>
+<footer class="foot rv">
+  <div class="wrap">
+    <div class="tblock">
+      <div class="tb-cell tb-name"><span class="tb-k">Name</span><span class="tb-v">Nehemiah Jacob</span></div>
+      <div class="tb-cell"><span class="tb-k">Role</span><span class="tb-v">Senior Software Developer</span></div>
+      <div class="tb-cell"><span class="tb-k">Location</span><span class="tb-v">Sydney, Australia</span></div>
+      <div class="tb-cell"><span class="tb-k">Links</span><span class="tb-v"><a href="/contact/">Contact</a> · <a href="/subscribe/">Subscribe</a> · <a href="/feed.xml">RSS</a></span></div>
+      <div class="tb-cell tb-year"><span class="tb-k">©</span><span class="tb-v">2026</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  if(!/\bfx\b/.test(d.className))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var n=parseInt(el.textContent,10);if(!(n>1))return;
+    var t0=null,dur=1400;el.textContent='0';
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    setTimeout(function(){requestAnimationFrame(step);},500);
+  });
+})();
+</script>
+<script>
+(function(){
+  var d=document.documentElement,b=document.querySelector('.theme-toggle');if(!b)return;
+  var tc=document.querySelector('meta[name=theme-color]'),cs=document.querySelector('meta[name=color-scheme]');
+  function set(t,save){
+    var dark=t==='dark';
+    if(dark)d.setAttribute('data-theme','dark');else d.removeAttribute('data-theme');
+    b.setAttribute('aria-pressed',dark?'true':'false');b.title=dark?'Switch to light theme':'Switch to dark theme';
+    if(tc)tc.content=dark?'#101114':'#ffffff';if(cs)cs.content=dark?'dark':'light';
+    if(save)try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}
+    document.dispatchEvent(new Event('themechange'));
+  }
+  set(d.getAttribute('data-theme')==='dark'?'dark':'light');
+  b.addEventListener('click',function(){set(d.getAttribute('data-theme')==='dark'?'light':'dark',true);});
+  addEventListener('storage',function(e){if(e.key==='theme')set(e.newValue==='dark'?'dark':'light');});
+})();
+</script>
+<script src="/fabric.js?v=c85b9df8" defer></script>
+</body>
+</html>

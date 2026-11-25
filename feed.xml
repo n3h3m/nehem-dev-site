@@ -5,9 +5,99 @@
   <link rel="self" type="application/atom+xml" href="https://nehem.dev/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://nehem.dev/writing/"/>
   <id>https://nehem.dev/writing/</id>
-  <updated>2026-11-25T00:00:00+10:00</updated>
+  <updated>2026-11-26T00:00:00+10:00</updated>
   <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
   <icon>https://nehem.dev/favicon-192.png</icon>
+  <entry>
+    <title>Read First, Then Act</title>
+    <link rel="alternate" type="text/html" href="https://nehem.dev/cebc28.html"/>
+    <id>https://nehem.dev/cebc28.html</id>
+    <published>2026-11-26T00:00:00+10:00</published>
+    <updated>2026-11-26T00:00:00+10:00</updated>
+    <author><name>Nehemiah Jacob</name><uri>https://nehem.dev/</uri></author>
+    <summary>The best debugging skill isn't writing code, it's reading: the full error, the logs in order, the ticket, the callers and the history. Read first, then act.</summary>
+    <category term="Debugging"/><category term="Software Engineering"/><category term="Developer Productivity"/><category term="Engineering Culture"/>
+    <content type="html">&lt;p&gt;The best debugging skill isn't writing code.&lt;/p&gt;
+&lt;p&gt;It's reading.&lt;/p&gt;
+&lt;p&gt;Reading the error message. Actually reading it. Not glancing at the first line and guessing. The full stack trace. The line number. The variable it's complaining about.&lt;/p&gt;
+&lt;p&gt;You'd be amazed how many production incidents I've seen where the answer was literally in the error message and somebody spent two hours looking elsewhere.&lt;/p&gt;
+&lt;p&gt;I don't say that to sneer at anyone. I've been that somebody more times than I'd like to admit. The pull to start doing something is strong, especially when a thing is broken, people are watching and a channel is filling up with questions. Typing feels like progress. Reading feels like standing still.&lt;/p&gt;
+&lt;p&gt;This post is about why that feeling is wrong, what "reading" actually means when you're debugging, and the habit that took me far too long to build: sit still, read first, then act.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/cebc28/hero.svg" alt="Two paths from the same error. The top path, labelled reacting: change code, add a try-catch, tweak a parameter, restart, and loop back to the start, about two hours and still guessing. The bottom path, labelled reading: about ten minutes of reading the logs, the ticket, the last three commits and Tuesday's config change, then one line changed and a tick: fixed." width="960" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Same error, two engineers. One starts typing. One starts reading.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Same error, two engineers&lt;/h2&gt;
+&lt;p&gt;Here's what I mean.&lt;/p&gt;
+&lt;p&gt;A junior developer sees an error and immediately starts changing code. Adding try-catch blocks. Tweaking parameters. Commenting things out. Restarting services. They're writing before they've finished reading.&lt;/p&gt;
+&lt;p&gt;Every one of those moves is a guess. Some of them even make the error go away, which is worse, because now the symptom is hidden and the cause is still there. A try-catch around the failing call doesn't fix anything. It just moves the failure somewhere quieter, where it will turn up later as wrong data instead of a loud stack trace.&lt;/p&gt;
+&lt;p&gt;A senior developer sees the same error and does nothing for ten minutes. Opens the logs. Reads them top to bottom. Reads the ticket description again. Reads the last three commits to that file. Reads the config that changed on Tuesday.&lt;/p&gt;
+&lt;p&gt;Then they change one line and it's fixed.&lt;/p&gt;
+&lt;p&gt;From the outside it looks like experience. From the inside it's just reading comprehension.&lt;/p&gt;
+&lt;p&gt;That's the part I want people to sit with. When you watch someone senior fix a bug in one line, it's tempting to file it under talent, or intuition, or "they've seen this before". Sometimes they have. But much more often, they just looked at more of the evidence before they touched anything. The one line wasn't a flash of genius. It was the obvious conclusion of ten minutes nobody saw.&lt;/p&gt;
+&lt;p&gt;The gap between junior and senior is not what you think it is.&lt;/p&gt;
+&lt;p&gt;It's not years. It's not languages. It's not design patterns.&lt;/p&gt;
+&lt;p&gt;It's the willingness to read before you react.&lt;/p&gt;
+&lt;h2&gt;Read the error message. The whole thing.&lt;/h2&gt;
+&lt;p&gt;Not the first line.&lt;/p&gt;
+&lt;p&gt;Error messages are written by people who knew, at that exact point in the code, what had gone wrong. They're often clumsy and sometimes misleading, but they are first-hand evidence from the scene. The first line tells you the category. The rest tells you the story.&lt;/p&gt;
+&lt;p&gt;A stack trace has a shape. The top is where it blew up, the bottom is where the journey started, and somewhere in the middle is the frame where your code handed something bad to someone else's code. The line number is a gift. The variable name it's complaining about is a gift. "Expected a string, got None" is telling you exactly what question to ask next: where was this supposed to be set, and why wasn't it?&lt;/p&gt;
+&lt;p&gt;I've lost count of the times I've seen someone paste only the first line of an error into a chat and ask what it means. The answer was usually three lines further down, in the part they didn't copy.&lt;/p&gt;
+&lt;p&gt;And if the error has a "caused by" section, read that too. The exception you're looking at is frequently a wrapper around the one that actually matters.&lt;/p&gt;
+&lt;p&gt;There's a reason this is hard. An error message arrives at the worst possible moment, usually as a wall of red text, and our brains are very good at deciding we've seen it before. We recognise the shape, match it to the last time something similar happened, and stop reading. Most of the time that shortcut is harmless. When it's wrong, it sends you confidently in the wrong direction, and the more confident you are, the longer it takes to turn around.&lt;/p&gt;
+&lt;h2&gt;Read the logs like a story&lt;/h2&gt;
+&lt;p&gt;Read the logs. Not grep for the keyword you expect. Read what actually happened, in order.&lt;/p&gt;
+&lt;p&gt;This is the one I've seen cost the most time. I've watched engineers spend an entire afternoon on a bug that the log file explained in the first three lines. They didn't read the logs. They searched the logs. For the keyword they expected. And when it wasn't there, they assumed the logs were useless.&lt;/p&gt;
+&lt;p&gt;The logs weren't useless. The search was wrong.&lt;/p&gt;
+&lt;p&gt;If they'd read the logs sequentially, like a story, they would have seen the real failure two lines above the one they were looking for.&lt;/p&gt;
+&lt;p&gt;Searching is a fine tool when you already know what you're looking for. The trouble is that when you're debugging, you don't. If you knew, you'd have fixed it. A search for the keyword you expect can only confirm your theory or come back empty. It can never show you the thing you didn't think of, and the thing you didn't think of is usually the bug.&lt;/p&gt;
+&lt;p&gt;Reading in order gives you causality. This happened, then this, then this went wrong. A warning that nobody cared about at 2:14 explains the error at 2:15. A connection pool that quietly filled up explains the timeouts that came after it. You only see that if you read the lines around the failure, not just the failure.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/cebc28/logs.svg" alt="A log file drawn as a column of lines. A magnifying glass labelled grep for the expected keyword hovers over the lower lines and finds nothing. Two lines above the line it was hunting for, a line is circled in coral: the real failure. An arrow labelled read in order runs down the left side of the file from the top." width="960" height="640" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The logs weren't useless. The search was wrong.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Read the ticket, not the title&lt;/h2&gt;
+&lt;p&gt;Read the ticket. Not the title. The comments. The history. The thing the reporter said in paragraph three that everyone skipped.&lt;/p&gt;
+&lt;p&gt;Ticket titles are compressed. Someone took a confusing experience and squeezed it into eight words, usually while annoyed. The title is their guess at what the problem is. The body is what they actually saw.&lt;/p&gt;
+&lt;p&gt;That difference matters. A title that says "checkout is broken" might come with a description that says it only happens on the second attempt, only on mobile, only since the morning. Each of those details rules out whole areas of the system before you've opened an editor. Paragraph three is where people put the detail they weren't sure was relevant, and it is very often the most relevant thing in the whole ticket.&lt;/p&gt;
+&lt;p&gt;The comments matter too. Somebody might already have tried the obvious fix. Somebody might have attached a screenshot that contradicts the title. Somebody might have said "this also happened last month", which turns a mystery into a regression with a date on it.&lt;/p&gt;
+&lt;h2&gt;Read the code, and the code around it&lt;/h2&gt;
+&lt;p&gt;Read the code you're about to change. Not the function. The callers. The callers of the callers. The test that covers it. The commit message that introduced it.&lt;/p&gt;
+&lt;p&gt;Same with code as with logs.&lt;/p&gt;
+&lt;p&gt;People read code the way they read their own code. They jump to the function, read it in isolation, and assume they understand what it does. But the function was written by someone who left two years ago, in a context that no longer exists, with assumptions that are buried in a commit message from 2018.&lt;/p&gt;
+&lt;p&gt;When you read your own code, you bring the context with you. You remember why that odd check is there, what that magic number means, which edge case bit you. When you read someone else's code the same way, you fill those gaps with your own assumptions, and you don't notice you're doing it.&lt;/p&gt;
+&lt;p&gt;The callers tell you what the function is actually used for, which is often different from what its name says. The callers of the callers tell you which assumptions are load-bearing. The test tells you what someone once cared enough to protect. Change the function without reading those, and your one-line fix becomes three new bugs somewhere you never looked.&lt;/p&gt;
+&lt;p&gt;Each of these takes minutes. And each one eliminates an entire class of wrong guesses.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/cebc28/layers.svg" alt="Five nested rings drawn around a bug, each labelled with what to read and the wrong guess it removes. The error message, in full: guessing the cause from line one. The logs, in order: assuming the logs are useless. The ticket, beyond the title: fixing the wrong symptom. The code with its callers and tests: breaking something you never looked at. The PR and commit history: undoing a decision you didn't know was made." width="960" height="660" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Each one takes minutes. Each one removes a whole class of wrong guesses.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;The code is the final draft&lt;/h2&gt;
+&lt;p&gt;Read the PR description from the last person who touched this file. That's where the "why" lives.&lt;/p&gt;
+&lt;p&gt;You can't understand code by reading a function. You understand code by reading the conversation: the commit, the PR, the review, the ticket, the person who argued against it and the person who overruled them.&lt;/p&gt;
+&lt;p&gt;The code is the final draft. The reasoning is in the history.&lt;/p&gt;
+&lt;p&gt;This is the bit that gets skipped most, because the history is one more click away and it doesn't look like the bug. But that strange line you're itching to delete might be the fix for an incident from three years ago. That clumsy-looking retry might be there because a downstream service misbehaves on Mondays. The code can only tell you what it does. It can't tell you what it's protecting against.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git blame&lt;/code&gt; and the PR it points to are the closest thing we have to asking the original author. Often the review thread has the exact debate you're about to restart: someone proposed the simpler approach, someone else explained why it doesn't work, and the code ended up the way it is for a reason that's written down, just not in the code.&lt;/p&gt;
+&lt;p&gt;That's also why I care so much about writing good commit messages and PR descriptions myself. Every one of them is a note to the person who'll be reading this code at 2am in two years. Sometimes that person is me.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/cebc28/history.svg" alt="A single sheet labelled the code, the final draft, sits in front of a stack of sheets fanned out behind it: the ticket, the commit, the PR description, the review thread, the person who argued against it, and the person who overruled them. A note under the stack: the why lives here." width="960" height="620" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;The code is the final draft. The reasoning is in the history.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;Reading is slow, and that's the point&lt;/h2&gt;
+&lt;p&gt;Here's the uncomfortable part:&lt;/p&gt;
+&lt;p&gt;Reading is slow. It doesn't feel productive. You're not typing. You're not shipping. You're just sitting there with your eyes moving across a screen.&lt;/p&gt;
+&lt;p&gt;And when something is on fire, sitting still is socially hard. People want updates. Someone senior is asking for an ETA. It feels much better to say "I'm trying a fix" than "I'm reading the logs". The first sounds like action. The second sounds like you haven't started.&lt;/p&gt;
+&lt;p&gt;But every minute spent reading saves ten minutes of guessing.&lt;/p&gt;
+&lt;p&gt;Guessing has a hidden cost structure. Each guess needs a change, a build, a deploy or a restart, and a wait to see whether it worked. When it doesn't, you've learned almost nothing, because you changed one thing based on a theory you never checked. Worse, you've now got a modified system to debug instead of the original one. Stack up a few wrong guesses and you're debugging your own debugging.&lt;/p&gt;
+&lt;p&gt;Reading compounds the other way. Each thing you read narrows the space. By the time you change something, you're not guessing anymore. You're confirming.&lt;/p&gt;
+&lt;p&gt;There's a quieter benefit too. When you've read properly, you can explain the fix. You can tell the team what happened, why, and why this change stops it happening again. A fix found by guessing can only be explained as "I tried a few things and this one worked", which is another way of saying nobody knows if it's really fixed.&lt;/p&gt;
+&lt;p&gt;It's also worth saying: none of this gets less true because AI can read faster than we can. An agent will happily skim a log, pattern-match the first error it sees and propose a confident fix. If you want it to do better, you have to point it at the full trace, the ticket, the history, and ask it to read before it writes. The habit transfers. The tool doesn't replace it.&lt;/p&gt;
+&lt;h2&gt;The best readers read differently&lt;/h2&gt;
+&lt;p&gt;One more thing.&lt;/p&gt;
+&lt;p&gt;The best readers I've worked with don't just read more. They read differently.&lt;/p&gt;
+&lt;p&gt;They read with suspicion. "The ticket says database issue. Does the evidence actually say that?" A ticket is a hypothesis written by someone under stress. An alert name is a guess someone configured months ago. Treat them as claims to verify, not facts to build on.&lt;/p&gt;
+&lt;p&gt;They read with timestamps. "This log line is from 3am. The deploy was at 2am. What happened in between?" Time is the cheapest correlation tool there is. Lining up when things happened against when things changed rules things in and out faster than almost anything else.&lt;/p&gt;
+&lt;p&gt;They read with questions. "This function catches every exception. Why? Who was afraid of what?" Strange code is rarely random. It's a fossil of some past problem. Asking who was afraid of what turns a confusing line into a clue.&lt;/p&gt;
+&lt;p&gt;What these three have in common is that they slow the jump from evidence to conclusion. A suspicious reader doesn't accept the first explanation offered. A reader with timestamps checks the order before the story. A reader with questions treats every oddity as information rather than noise. None of it requires genius. It requires refusing to be satisfied too early.&lt;/p&gt;
+&lt;figure class="fig"&gt;&lt;img src="https://nehem.dev/media/cebc28/lenses.svg" alt="Three lenses side by side. Suspicion: a ticket saying database issue, with the question does the evidence actually say that. Timestamps: a timeline with deploy at 2am and an error at 3am, and the gap between them circled with the question what happened in between. Questions: a function that catches every exception, with the question why, who was afraid of what." width="960" height="600" loading="lazy" decoding="async"&gt;&lt;figcaption&gt;Read with suspicion, with timestamps, with questions.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2&gt;A habit, not a tutorial&lt;/h2&gt;
+&lt;p&gt;That's not a skill you learn from a tutorial. It's a habit you build from every bug you've ever been wrong about.&lt;/p&gt;
+&lt;p&gt;Every time I jumped to a conclusion without reading properly, I got burned. Every single time. And slowly, painfully, over twenty years, I learned to sit still and read first.&lt;/p&gt;
+&lt;p&gt;The lesson didn't arrive in one go. It arrived as a long series of small embarrassments. The fix that made it worse. The afternoon spent on the wrong service. The confident theory in the incident channel that the next log line disproved. Each one left a little scar, and the scars added up to a reflex: before I touch anything, I read.&lt;/p&gt;
+&lt;p&gt;If you're earlier in your career, you don't have to wait twenty years for the scars. You can borrow the habit now. Next time an error appears, set yourself a rule: no code changes until you've read the full trace, the logs around it in order, the ticket body and the last few commits to the file. It will feel slow the first few times. Then you'll notice how often the answer was already sitting there.&lt;/p&gt;
+&lt;h2&gt;Read first. Then act.&lt;/h2&gt;
+&lt;p&gt;It's not glamorous. Nobody gives a conference talk about reading log files carefully.&lt;/p&gt;
+&lt;p&gt;But it's the skill that separates the engineer who fixes things from the engineer who makes things worse while trying.&lt;/p&gt;
+&lt;p&gt;Read first. Then act.&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Writing code is no longer the bottleneck</title>
     <link rel="alternate" type="text/html" href="https://nehem.dev/f06970.html"/>
